@@ -1,0 +1,5 @@
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.bytedance.sdk:pangle-sdk:3.4.1.1"/>
+    </androidPackages>
+</dependencies>
