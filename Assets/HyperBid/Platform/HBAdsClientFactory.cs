@@ -2,10 +2,9 @@
 using HyperBid.Api;
 using HyperBid.Common;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-
-using System;
 
 namespace HyperBid
 {
@@ -174,11 +173,7 @@ namespace HyperBid
         public event EventHandler<HBAdEventArgs> onAdEndVideo;  // called when ad video has finished
 
        public void loadInterstitialAd(string unitId, string mapJson){
-            onAdLoadFailed?.Invoke(unitId, true, "Unsupported platform, HyperBid only supports Android and iOS");
-       }
-       
-       public void setListener(HBInterstitialAdListener listener){
-            this.listener = listener;
+            onAdLoadFailed?.Invoke(new HBAdEventArgs(unitId, true, "Unsupported platform, HyperBid only supports Android and iOS"));
        }
 
        public bool hasInterstitialAdReady(string unitId) { return false; }
