@@ -8,7 +8,7 @@ namespace HyperBid.Common
         // use this class to implement your own callbacks
         public class HBAdEventArgs : EventArgs {
             // empty parameter
-            static public readonly string noValue = string.Empty;
+            static public readonly string noValue = null;
 
             //the placement id for the given ad (taken from the HyperBid dashboarf)
             public string placementId {get;}
@@ -25,7 +25,7 @@ namespace HyperBid.Common
             // true if an error has occured
             public bool isError {get;}
 
-            public HBAdEventArgs(string id, bool failure = false, string error = noValue, string errCode = noValue, string json = noValue) {
+            public HBAdEventArgs(string id, bool failure = false, string error = "", string errCode = "", string json = "") {
                 placementId = id;
                 errorMessage = error;
                 errorCode = errCode;
