@@ -5,6 +5,8 @@ using HyperBid.Common;
 using System.Collections;
 using System.Collections.Generic;
 
+using System;
+
 namespace HyperBid
 {
     public class HBAdsClientFactory
