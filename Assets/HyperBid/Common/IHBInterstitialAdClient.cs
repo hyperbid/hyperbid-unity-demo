@@ -38,11 +38,6 @@ namespace HyperBid.Common
 		 * 
 		 * @param listener  
 		 */
-        void setListener(HBInterstitialAdListener listener);
-        /**
-		 * 是否存在可以展示的广告
-		 * @param unityid
-		 */
         bool hasInterstitialAdReady(string placementId);
         /**
         * 获取广告状态信息（是否正在加载、是否存在可以展示广告、广告缓存详细信息）
