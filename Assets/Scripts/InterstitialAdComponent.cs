@@ -2,40 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_ANDROID
-    using HyperBid.Android;
-#elif UNITY_IOS
-    using HyperBid.iOS;
-#endif
-
 using HyperBid.Common;
 using HyperBid.Api;
 using HyperBidDemo;
 
+using UnityEngine.UI;
+
 public class InterstitialAdComponent : MonoBehaviour
 {
     static protected readonly string _placementId = "b60ac576327734";
-    protected HBInterstitialAdClient _adClient;
-    protected string _jsonMap = "";
+    protected Text _messageText;
+
+    protected void OnAdLoad(object sender, HBAdEventArgs args) {
+        _messageText.text = "On callback";
+    }
 
     public void Start() {
-        _adClient = new HBInterstitialAdClient();
+        HBInterstitialAd.Instance.onAdLoad += OnAdLoad;
+        _messageText = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
     }
 
     public void LoadAd() {
         if(!string.IsNullOrEmpty(_placementId)) {
-            _adClient.loadInterstitialAd(_placementId, _jsonMap);
+            HBInterstitialAd.Instance.loadInterstitialAd(_placementId, new Dictionary<string, string>());
         }
-
     }
-    
-    public bool IsAdReady() {
-        return _adClient.hasInterstitialAdReady(_placementId);
+
+    public void IsAdReady() {
+        bool isReady = HBInterstitialAd.Instance.hasInterstitialAdReady(_placementId);
+        _messageText.text = isReady ? "Ad is ready" : "Ad is not ready";
     }
 
     public void ShowAd() {
-        if(IsAdReady()) {
-            _adClient.showInterstitialAd(_placementId, _jsonMap);
+        if(HBInterstitialAd.Instance.hasInterstitialAdReady(_placementId)) {
+            HBInterstitialAd.Instance.showInterstitialAd(_placementId);
         }
     }
 }
