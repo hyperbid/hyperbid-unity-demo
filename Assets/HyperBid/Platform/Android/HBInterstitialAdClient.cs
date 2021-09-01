@@ -110,7 +110,6 @@ namespace HyperBid.Android
 			}
         }
 
-
         public void cleanCache(string placementId)
         {
 			
@@ -165,7 +164,7 @@ namespace HyperBid.Android
         public void onInterstitialAdLoadFail(string placementId,string code, string error)
         {
             Debug.Log("onInterstitialAdFailed...unity3d.");
-            onAdLoadFailed?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdLoadFailed?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
         }
 
         //开始播放
