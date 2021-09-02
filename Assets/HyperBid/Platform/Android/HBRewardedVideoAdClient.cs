@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,21 +9,24 @@ namespace HyperBid.Android
 {
     public class HBRewardedVideoAdClient : AndroidJavaProxy,IHBRewardedVideoAdClient
     {
-
         private Dictionary<string, AndroidJavaObject> videoHelperMap = new Dictionary<string, AndroidJavaObject>();
 
-		//private  AndroidJavaObject videoHelper;
-        private  HBRewardedVideoListener anyThinkListener;
+		public event EventHandler<HBAdEventArgs> onVideoAdLoaded;       // triggers when a rewarded video has been loaded
+        public event EventHandler<HBAdEventArgs> onVideoAdLoadFail;     // triggers when a rewarded video has failed to load (or none have been returned)
+        public event EventHandler<HBAdEventArgs> onVideoAdPlayStart;    // triggers on video start
+        public event EventHandler<HBAdEventArgs> onVideoAdPlayEnd;      // triggers on video end
+        public event EventHandler<HBAdEventArgs> onVideoAdPlayFail;     // triggers if the video fails to play
+        public event EventHandler<HBAdEventArgs> onVideoAdPlayClosed;   // triggers when the user has closed the ad
+        public event EventHandler<HBAdEventArgs> onVideoAdPlayClicked;  // triggers when the user has clicked the ad
+        public event EventHandler<HBAdEventArgs> onGiveReward;          // triggers when the user has finsihed watching the ad and should be rewarded
 
         public HBRewardedVideoAdClient() : base("com.hyperbid.unitybridge.videoad.VideoListener")
         {
             
         }
 
-
         public void loadVideoAd(string placementId, string mapJson)
         {
-
             //如果不存在则直接创建对应广告位的helper
             if(!videoHelperMap.ContainsKey(placementId))
             {
@@ -44,12 +48,6 @@ namespace HyperBid.Android
 				Debug.Log ("HBRewardedVideoAdClient :  error."+e.Message);
             }
 
-
-        }
-
-        public void setListener(HBRewardedVideoListener listener)
-        {
-            anyThinkListener = listener;
         }
 
         public bool hasAdReady(string placementId)
@@ -102,82 +100,59 @@ namespace HyperBid.Android
 			}
         }
 
-
         //广告加载成功
         public void onRewardedVideoAdLoaded(string placementId)
         {
             Debug.Log("onRewardedVideoAdLoaded...unity3d.");
-            if(anyThinkListener != null){
-                anyThinkListener.onRewardedVideoAdLoaded(placementId);
-            }
+            onRewardedVideoAdLoaded(placementId);
+            
         }
 
         //广告加载失败
         public void onRewardedVideoAdFailed(string placementId,string code, string error)
         {
             Debug.Log("onRewardedVideoAdFailed...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdLoadFail(placementId, code, error);
-            }
+            onVideoAdLoadFail?.Invoke(this, new HBAdEventArgs(placementId, true, code, error));
         }
 
         //开始播放
         public void onRewardedVideoAdPlayStart(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayStart...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdPlayStart(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onVideoAdPlayStart?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //结束播放
         public void onRewardedVideoAdPlayEnd(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayEnd...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdPlayEnd(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onVideoAdPlayEnd?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //播放失败
         public void onRewardedVideoAdPlayFailed(string placementId,string code, string error)
         {
             Debug.Log("onRewardedVideoAdPlayFailed...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdPlayFail(placementId, code, error);
-            }
+            onVideoAdPlayFail?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
         }
         //广告关闭
         public void onRewardedVideoAdClosed(string placementId,bool isRewarded, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdClosed...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdPlayClosed(placementId,isRewarded, new HBCallbackInfo(callbackJson));
-            }
+            onVideoAdPlayClosed?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson, isRewarded));
         }
         //广告点击
         public void onRewardedVideoAdPlayClicked(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayClicked...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onRewardedVideoAdPlayClicked(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onVideoAdPlayClicked?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //广告激励下发
         public void onReward(string placementId, string callbackJson)
         {
             Debug.Log("onReward...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onReward(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onGiveReward?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
        
     }

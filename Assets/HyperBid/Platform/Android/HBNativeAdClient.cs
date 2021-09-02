@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HyperBid.Common;
@@ -8,9 +9,16 @@ namespace HyperBid.Android
 {
     public class HBNativeAdClient : AndroidJavaProxy, IHBNativeAdClient
     {
-		
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoProgressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClosedEvent;
+
         private Dictionary<string, AndroidJavaObject> nativeAdHelperMap = new Dictionary<string, AndroidJavaObject>();
-        private HBNativeAdListener mlistener;
 
         public HBNativeAdClient(): base("com.hyperbid.unitybridge.nativead.NativeListener")
         {
@@ -72,11 +80,6 @@ namespace HyperBid.Android
             return adStatusJsonString;
         }
 
-        public void setListener(HBNativeAdListener listener)
-        {
-            mlistener = listener;
-        }
-
 		public void renderAdToScene(string placementId, HBNativeAdView anyThinkNativeAdView, string mapJson)
         {	
 			string showconfig = anyThinkNativeAdView.toJSON ();
@@ -110,8 +113,6 @@ namespace HyperBid.Android
 
         public void onApplicationForces(string placementId, HBNativeAdView anyThinkNativeAdView)
         {
-
-
 			Debug.Log ("onApplicationForces.... ");
 			try{
 
@@ -131,8 +132,6 @@ namespace HyperBid.Android
 
 			Debug.Log ("onApplicationPasue.... ");
 			try{
-				
-
 				if (nativeAdHelperMap.ContainsKey(placementId)) {
 					nativeAdHelperMap[placementId].Call ("onPause");
 				}
@@ -163,9 +162,7 @@ namespace HyperBid.Android
         public void onAdImpressed(string placementId, string callbackJson)
         {
             Debug.Log("onAdImpressed...unity3d.");
-            if(mlistener != null){
-                mlistener.onAdImpressed(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         /**
@@ -176,10 +173,7 @@ namespace HyperBid.Android
         public void onAdClicked(string placementId, string callbackJson)
         {
             Debug.Log("onAdClicked...unity3d.");
-            if (mlistener != null)
-            {
-                mlistener.onAdClicked(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         /**
@@ -190,10 +184,7 @@ namespace HyperBid.Android
         public void onAdVideoStart(string placementId)
         {
             Debug.Log("onAdVideoStart...unity3d.");
-            if (mlistener != null)
-            {
-                mlistener.onAdVideoStart(placementId);
-            }
+            onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementId));
         }
 
         /**
@@ -204,10 +195,7 @@ namespace HyperBid.Android
         public void onAdVideoEnd(string placementId)
         {
             Debug.Log("onAdVideoEnd...unity3d.");
-            if (mlistener != null)
-            {
-                mlistener.onAdVideoEnd(placementId);
-            }
+            onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementId));
         }
 
         /**
@@ -218,10 +206,7 @@ namespace HyperBid.Android
         public void onAdVideoProgress(string placementId,int progress)
         {
             Debug.Log("onAdVideoProgress...progress[" + progress + "]");
-            if (mlistener != null)
-            {
-                mlistener.onAdVideoProgress(placementId, progress);
-            }
+            onAdVideoProgressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, HBAdEventArgs.noValue, false, progress));
         }
 
         /**
@@ -232,38 +217,27 @@ namespace HyperBid.Android
         public void onAdCloseButtonClicked(string placementId, string callbackJson)
         {
             Debug.Log("onAdCloseButtonClicked...unity3d");
-            if (mlistener != null)
-            {
-                mlistener.onAdCloseButtonClicked(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdClosedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
 
         /**
      * 广告加载成功
      */
-        public void onNativeAdLoaded(string placementId)
+        public void onAdLoaded(string placementId)
         {
             Debug.Log("onNativeAdLoaded...unity3d.");
-            if (mlistener != null)
-            {
-                mlistener.onAdLoaded(placementId);
-            }
-
+            onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementId));
         }
 
         /**
      * 广告加载失败
      */
-        public void onNativeAdLoadFail(string placementId,string code, string msg)
+        public void onAdLoadFail(string placementId,string code, string msg)
         {
             Debug.Log("onNativeAdLoadFail...unity3d. code:" + code + " msg:" + msg);
-            if (mlistener != null)
-            {
-                mlistener.onAdLoadFail(placementId, code, msg);
-            }
+            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
         }
-
 
     }
 }

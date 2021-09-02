@@ -1,27 +1,48 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using HyperBid.Common;
 using HyperBid.Api;
+
 namespace HyperBid.Android
 {
     public class HBBannerAdClient : AndroidJavaProxy, IHBBannerAdClient
     {
-
         private Dictionary<string, AndroidJavaObject> bannerHelperMap = new Dictionary<string, AndroidJavaObject>();
 
-        private  HBBannerAdListener anyThinkListener;
+        // triggers when a banner ad has been succesfully loaded
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+
+        // triggers when a banner ad has failed to load
+        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+
+        // triggers when a banner ad generates an impression
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+
+        // triggers when the user clicks a banner ad
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
+
+        // triggers when the ad refreshes
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
+
+        // triggers when the ad fails to auto refresh
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailEvent;
+
+        // triggers when the banner ad is closed
+        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
+
+        // triggers when the users closes the ad via the button
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
 
         public HBBannerAdClient() : base("com.hyperbid.unitybridge.banner.BannerListener")
         {
             
         }
 
-
         public void loadBannerAd(string placementId, string mapJson)
         {
-
             //如果不存在则直接创建对应广告位的helper
             if(!bannerHelperMap.ContainsKey(placementId))
             {
@@ -66,12 +87,6 @@ namespace HyperBid.Android
             return adStatusJsonString;
         }
 
-        public void setListener(HBBannerAdListener listener)
-        {
-            anyThinkListener = listener;
-        }
-
-
         public void showBannerAd(string placementId, string position, string mapJson)
         {
             Debug.Log("HBBannerAdClient : showBannerAd by position" );
@@ -104,7 +119,6 @@ namespace HyperBid.Android
 			}catch(System.Exception e){
 				System.Console.WriteLine("Exception caught: {0}", e);
                 Debug.Log ("HBBannerAdClient :  error."+e.Message);
-
 			}
         }
 
@@ -171,67 +185,48 @@ namespace HyperBid.Android
         public void onBannerLoaded(string placementId)
         {
             Debug.Log("onBannerLoaded...unity3d.");
-            if(anyThinkListener != null){
-                anyThinkListener.onAdLoad(placementId);
-            } 
+            onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementId));
         }
 
         //广告加载失败
         public void onBannerFailed(string placementId,string code, string error)
         {
             Debug.Log("onBannerFailed...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdLoadFail(placementId, code, error);
-            }
+            onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
         }
 
         //广告点击
         public void onBannerClicked(string placementId, string callbackJson)
         {
             Debug.Log("onBannerClicked...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdClick(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            
         }
 
         //广告展示
         public void onBannerShow(string placementId, string callbackJson)
         {
             Debug.Log("onBannerShow...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdImpress(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //广告关闭
         public void onBannerClose(string placementId, string callbackJson)
         {
             Debug.Log("onBannerClose...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdCloseButtonTapped(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdCloseButtonTappedEvent?.Invoke(placementId, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
         //广告关闭
         public void onBannerAutoRefreshed(string placementId, string callbackJson)
         {
             Debug.Log("onBannerAutoRefreshed...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdAutoRefresh(placementId, new HBCallbackInfo(callbackJson));
-            }
+            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
         //广告自动刷新失败
         public void onBannerAutoRefreshFail(string placementId, string code, string msg)
         {
             Debug.Log("onBannerAutoRefreshFail...unity3d.");
-            if (anyThinkListener != null)
-            {
-                anyThinkListener.onAdAutoRefreshFail(placementId,code,msg);
-            }
+            onAdAutoRefreshFail?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
         }
        
     }

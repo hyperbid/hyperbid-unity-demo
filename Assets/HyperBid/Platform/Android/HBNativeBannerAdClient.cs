@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,21 +10,26 @@ namespace HyperBid.Android
 {
     public class HBNativeBannerAdClient :IHBNativeBannerAdClient
     {
+
         public HBNativeBannerAdClient() {
 
         }
 
-    	public void loadAd(string placementId, string mapJson) {
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailureEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickedEvent;
+
+        public void loadAd(string placementId, string mapJson) {
 
     	}
     	
 		public bool adReady(string placementId) {
 			return false;
 		}
-
-        public void setListener(HBNativeBannerAdListener listener) {
-
-        }
 
         public void showAd(string placementId, HBRect rect, Dictionary<string, string> pairs) {
 

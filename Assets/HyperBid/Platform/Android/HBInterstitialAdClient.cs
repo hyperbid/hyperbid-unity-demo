@@ -56,10 +56,6 @@ namespace HyperBid.Android
 
         }
 
-        public void setListener(HBInterstitialAdListener listener)
-        {
-        }
-
         public bool hasInterstitialAdReady(string placementId)
         {
 			bool isready = false;
