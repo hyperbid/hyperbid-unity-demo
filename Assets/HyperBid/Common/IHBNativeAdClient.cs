@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,15 @@ namespace HyperBid.Common
 {
     public interface IHBNativeAdClient 
     {
+		event EventHandler<HBAdEventArgs> onNativeAdLoad;
+        event EventHandler<HBAdEventArgs> onNativeAdLoadFail;
+        event EventHandler<HBAdEventArgs> onNativeAdImpressed;
+        event EventHandler<HBAdEventArgs> onNativeAdClicked;
+        event EventHandler<HBAdEventArgs> onNativeAdVideoStart;
+        event EventHandler<HBAdEventArgs> onNativeAdVideoEnd;
+        event EventHandler<HBAdEventArgs> onNativeAdVideoProgress;
+        event EventHandler<HBAdEventArgs> onNativeAdCloseButtonClicked;
+
 		/***
 		 * 请求广告  
 		 * @param placementId  广告位id
@@ -26,13 +36,6 @@ namespace HyperBid.Common
          *
          */
         string checkAdStatus(string placementId);
-		/***
-		 * 
-		 * 设置监听回调接口
-		 * 
-		 * @param listener  
-		 */
-        void setListener(HBNativeAdListener listener);
 		/***
 		 * 
 		 * 展示广告,

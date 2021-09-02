@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace HyperBid.Common
 {
 	public interface IHBNativeBannerAdClient
 	{
+		HBNativeBannerEvents events { get; set; }
 		/***
 		 * 请求广告  
 		 * @param placementId  广告位id
@@ -21,13 +23,6 @@ namespace HyperBid.Common
 		 * @param placementId  广告位id
 		 */
 		bool adReady(string placementId);
-		/***
-		 * 
-		 * 设置监听回调接口
-		 * 
-		 * @param listener  
-		 */
-        void setListener(HBNativeBannerAdListener listener);
         /***
 		 * 
 		 * 展示广告,

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ using HyperBid.Api;
 
 namespace HyperBid.Common
 {
-    public interface IHBRewardedVideoAdClient
+    public interface IHBRewardedVideoAdClient : IHBRewardedVideoEvents
     {
 		/**
 		 * 请求视屏广告
@@ -14,10 +15,6 @@ namespace HyperBid.Common
 		 * @parm mapJson 平台私有参数 一般不些
 		 */
         void loadVideoAd(string placementId, string mapJson);
-		/**
-		 * @param listener 监听回调
-		 */ 
-        void setListener(HBRewardedVideoListener listener);
 		/**
 		 * 是否存在可以展示的广告
 		 * @param unityid

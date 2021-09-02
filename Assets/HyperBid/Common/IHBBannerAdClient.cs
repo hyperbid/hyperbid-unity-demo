@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HyperBid.Api;
 
 namespace HyperBid.Common
 {
-    public interface IHBBannerAdClient 
+    public interface IHBBannerAdClient : IHBBannerEvents
     {
 		/***
 		 * 请求广告  
@@ -19,13 +20,6 @@ namespace HyperBid.Common
          *
          */
         string checkAdStatus(string placementId);
-		/***
-		 * 
-		 * 设置监听回调接口
-		 * 
-		 * @param listener  
-		 */
-        void setListener(HBBannerAdListener listener);
         /***
          * 
          * 展示广告,
