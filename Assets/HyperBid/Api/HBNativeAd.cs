@@ -19,9 +19,10 @@ namespace HyperBid.Api
 
     public class HBNativeAd
     {
-
         private static readonly HBNativeAd instance = new HBNativeAd();
         private IHBNativeAdClient client;
+
+        public IHBNativeAdEvents events { get { return client; } }
 
         public HBNativeAd(){
             client = GetHBNativeAdClient();
@@ -53,10 +54,6 @@ namespace HyperBid.Api
        public string checkAdStatus(string placementId)
         {
             return client.checkAdStatus(placementId);
-        }
-
-        public void setListener(HBNativeAdListener listener){
-            client.setListener(listener);
         }
 
         public void renderAdToScene(string placementId, HBNativeAdView anyThinkNativeAdView){

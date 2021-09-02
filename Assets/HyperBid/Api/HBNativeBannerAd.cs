@@ -30,6 +30,9 @@ namespace HyperBid.Api
     {
     	private static readonly HBNativeBannerAd instance = new HBNativeBannerAd();
 		private IHBNativeBannerAdClient client;
+
+		public IHBNativeBannerEvents events { get { return client; } }
+
 		public HBNativeBannerAd() {
             client = GetHBNativeBannerAdClient();
 		}
@@ -48,11 +51,6 @@ namespace HyperBid.Api
 		public bool adReady(string placementId) {
             Debug.Log("HBNativeBannerAd::adReady(" + placementId + ")");
 			return client.adReady(placementId);
-		}
-
-		public void setListener(HBNativeBannerAdListener listener) {
-            Debug.Log("HBNativeBannerAd::setListener");
-			client.setListener(listener);
 		}
 
 		public void showAd(string placementId, HBRect rect, Dictionary<string, string> pairs) {

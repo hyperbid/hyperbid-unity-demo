@@ -15,6 +15,8 @@ namespace HyperBid.Api
         private static readonly HBRewardedVideo instance = new HBRewardedVideo();
         private IHBRewardedVideoAdClient client;
 
+        public IHBRewardedVideoEvents events { get { return client; } }
+
         private HBRewardedVideo()
         {
             client = GetHBRewardedClient();
@@ -35,11 +37,6 @@ namespace HyperBid.Api
         public void loadVideoAd(string placementId, Dictionary<string,string> pairs)
         {
             client.loadVideoAd(placementId, Json.Serialize(pairs));
-        }
-
-		public void setListener(HBRewardedVideoListener listener)
-        {
-            client.setListener(listener);
         }
 
         public bool hasAdReady(string placementId)

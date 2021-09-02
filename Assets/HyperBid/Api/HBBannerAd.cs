@@ -37,6 +37,8 @@ namespace HyperBid.Api
 		private static readonly HBBannerAd instance = new HBBannerAd();
 		private IHBBannerAdClient client;
 
+        public IHBBannerEvents events { get { return client; } }
+
 		private HBBannerAd()
 		{
             client = GetHBBannerAdClient();
@@ -78,11 +80,6 @@ namespace HyperBid.Api
         public string checkAdStatus(string placementId)
         {
             return client.checkAdStatus(placementId);
-        }
-
-		public void setListener(HBBannerAdListener listener)
-        {
-            client.setListener(listener);
         }
 
         public void showBannerAd(string placementId, HBRect rect)
