@@ -10,7 +10,8 @@ using UnityEngine.UI;
 
 public class InterstitialAdComponent : MonoBehaviour
 {
-    static protected readonly string _placementId = "b60ac576327734";
+    static protected readonly string _placementId = PlacementId.INTERSTITIAL;
+
     protected Text _messageText;
 
     protected void OnAdLoad(object sender, HBAdEventArgs args) {
@@ -18,7 +19,7 @@ public class InterstitialAdComponent : MonoBehaviour
     }
 
     public void Start() {
-        HBInterstitialAd.Instance.onAdLoad += OnAdLoad;
+        HBInterstitialAd.Instance.events.onAdLoadEvent += OnAdLoad;
         _messageText = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
     }
 

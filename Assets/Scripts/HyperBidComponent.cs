@@ -12,22 +12,16 @@ using UnityEngine.UI;
 using HyperBid.Common;
 using HyperBid.Api;
 
-#if UNITY_ANDROID
-    using HyperBid.Android;
-#elif UNITY_IOS
-    using HyperBid.iOS;
-#endif
 
 public class HyperBidComponent : MonoBehaviour
 {
     // app key and app id taken from the HyperBid dashboard
     static readonly string _appKey = "dcd2834dba9ffd7d654cc8859174070e";
-
     static readonly string _appid =
             #if UNITY_ANDROID
                 "a60948274823ff";
             #elif UNITY_IOS
-                "";
+                "a6094783ff1cc6";
             #else
                 "";
             #endif
