@@ -128,17 +128,17 @@ namespace HyperBid
 
     class UnityBannerClient:IHBBannerAdClient
     {
-       HBBannerAdListener listener;
-       public void loadBannerAd(string unitId, string mapJson){
-            if(listener != null)
-            {
-                listener.onAdLoadFail(unitId, "-1", "Must run on Android or IOS platform!");
-            }
-       }
-     
-       public void setListener(HBBannerAdListener listener)
-       {
-            this.listener = listener;
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
+
+        public void loadBannerAd(string unitId, string mapJson){
+            onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(unitId, true, "Must run on Android or IOS platform!", "-1"));
        }
 
        public string checkAdStatus(string unitId) { return ""; }
@@ -162,18 +162,18 @@ namespace HyperBid
 
     class UnityInterstitialClient : IHBInterstitialAdClient
     {
-        public event EventHandler<HBAdEventArgs> onAdLoad;	// called when the interstitial ad is loaded from the provider
-        public event EventHandler<HBAdEventArgs> onAdLoadFailed;  // if no ad has been returned or a network error has occured
-        public event EventHandler<HBAdEventArgs> onAdShow;  // called when the ad is shown
-        public event EventHandler<HBAdEventArgs> onAdShowFailed;  // called if the ad has failed to be shown
-        public event EventHandler<HBAdEventArgs> onAdClose;  // called when the ad is closed
-        public event EventHandler<HBAdEventArgs> onAdClick;  // called when an user has clicked an ad
-        public event EventHandler<HBAdEventArgs> onAdPlayVideo;  // called when a video ad has started playing
-        public event EventHandler<HBAdEventArgs> onAdPlayVideoFailed;  // called if a video as has failed to be displayed
-        public event EventHandler<HBAdEventArgs> onAdEndVideo;  // called when ad video has finished
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdShowEvent;
+        public event EventHandler<HBAdEventArgs> onAdShowFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
+        public event EventHandler<HBAdEventArgs> onAdPlayVideoEvent;
+        public event EventHandler<HBAdEventArgs> onAdPlayVideoFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdEndVideoEvent;
 
-       public void loadInterstitialAd(string unitId, string mapJson){
-            onAdLoadFailed?.Invoke(new HBAdEventArgs(unitId, true, "Unsupported platform, HyperBid only supports Android and iOS"));
+        public void loadInterstitialAd(string unitId, string mapJson){
+            onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(unitId, true, "Must run on Android or IOS platform!", "-1"));
        }
 
        public bool hasInterstitialAdReady(string unitId) { return false; }
@@ -187,22 +187,23 @@ namespace HyperBid
 
     class UnityNativeAdClient : IHBNativeAdClient
     {
-        HBNativeAdListener listener;
-       public void loadNativeAd(string unitId, string mapJson){
-            if(listener != null)
-            {
-                listener.onAdLoadFail(unitId, "-1", "Must run on Android or IOS platform!");
-            }
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoProgressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClosedEvent;
+
+        public void loadNativeAd(string unitId, string mapJson){
+            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(unitId, true, "Must run on Android or IOS platform!", "-1"));
        }
 
        public bool hasAdReady(string unitId) { return false; }
 
        public string checkAdStatus(string unitId) { return ""; }
 
-       public void setListener(HBNativeAdListener listener){
-            this.listener = listener;
-       }
-        
        public void renderAdToScene(string unitId, HBNativeAdView anyThinkNativeAdView){}
 
        public void renderAdToScene(string unitId, HBNativeAdView anyThinkNativeAdView, string mapJson){}
@@ -220,19 +221,19 @@ namespace HyperBid
 
     class UnityNativeBannerAdClient : IHBNativeBannerAdClient
     {
-        HBNativeBannerAdListener listener;
-       public void loadAd(string unitId, string mapJson){
-            if(listener != null)
-            {
-                 listener.onAdLoadFail(unitId, "-1", "Must run on Android or IOS platform!");
-            }
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
+        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailureEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickedEvent;
+
+        public void loadAd(string unitId, string mapJson){
+            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(unitId, true, "Must run on Android or IOS platform!", "-1"));
        }
 
        public bool adReady(string unitId) { return false; }
-        
-       public void setListener(HBNativeBannerAdListener listener){
-            this.listener = listener;
-       }
        
        public void showAd(string unitId, HBRect rect, Dictionary<string, string> pairs){}
         
@@ -241,17 +242,18 @@ namespace HyperBid
 
     class UnityRewardedVideoAdClient : IHBRewardedVideoAdClient
     {
-        HBRewardedVideoListener listener;
-        public void loadVideoAd(string unitId, string mapJson){
-            if (listener != null)
-            {
-                listener.onRewardedVideoAdLoadFail(unitId, "-1", "Must run on Android or IOS platform!");
-            }
-       }
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoClosedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onRewardEvent;
 
-        public void setListener(HBRewardedVideoListener listener){
-            this.listener = listener;
-       }
+        public void loadVideoAd(string unitId, string mapJson){
+            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(unitId, true, "Must run on Android or IOS platform!", "-1"));
+        }
 
         public bool hasAdReady(string unitId) { return false; }
 
