@@ -91,7 +91,7 @@ namespace HyperBid.iOS {
 
         public void OnInterstitialAdClose(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdClose()");
-            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, HBCallbackInfo(callbackJson)));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 	}
 }

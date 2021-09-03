@@ -7,24 +7,19 @@ using HyperBid.Api;
 
 namespace HyperBid.iOS {
 	public class HBRewardedVideoAdClient : IHBRewardedVideoAdClient {
-		public event EventHandler<HBAdEventArgs> onVideoAdLoaded;       // triggers when a rewarded video has been loaded
-        public event EventHandler<HBAdEventArgs> onVideoAdLoadFail;     // triggers when a rewarded video has failed to load (or none have been returned)
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayStart;    // triggers on video start
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayEnd;      // triggers on video end
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayFail;     // triggers if the video fails to play
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayClosed;   // triggers when the user has closed the ad
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayClicked;  // triggers when the user has clicked the ad
-        public event EventHandler<HBAdEventArgs> onGiveReward;          // triggers when the user has finsihed watching the ad and should be rewarded
 
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoClosedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onRewardEvent;
 
-
-		public void addsetting (string placementId,string json){
+        public void addsetting (string placementId,string json){
 			//todo...
 		}
-		public void setListener(HBRewardedVideoListener listener) {
-			Debug.Log("Unity: HBRewardedVideoAdClient::setListener()");
-	        anyThinkListener = listener;
-	    }
 
 		public void loadVideoAd(string placementId, string mapJson) {
 			Debug.Log("Unity: HBRewardedVideoAdClient::loadVideoAd()");
@@ -68,42 +63,42 @@ namespace HyperBid.iOS {
 		//Callbacks
 	    public void onRewardedVideoAdLoaded(string placementId) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdLoaded()");
-	        onVideoAdLoaded?.Invoke(this, new HBAdEventArgs(placementId));
+	        onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementId));
 	    }
 
 	    public void onRewardedVideoAdFailed(string placementId, string code, string error) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdFailed()");
-	        onVideoAdLoadFail?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+	        onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
 	    }
 
         public void onRewardedVideoAdPlayStart(string placementId, string callbackJson) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdPlayStart()");
-            onVideoAdPlayStart?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 
         public void onRewardedVideoAdPlayEnd(string placementId, string callbackJson) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdPlayEnd()");
-            onVideoAdPlayEnd?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 
 	    public void onRewardedVideoAdPlayFailed(string placementId, string code, string error) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdPlayFailed()");
-	        onVideoAdPlayFail?.Invoke(this, new HBAdEventArgs(placementId, false, error, code));
+	        onAdVideoFailEvent?.Invoke(this, new HBAdEventArgs(placementId, false, error, code));
 	    }
 
         public void onRewardedVideoAdClosed(string placementId, bool isRewarded, string callbackJson) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdClosed()");
-            onVideoAdPlayClosed?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson, isRewarded));
+            onAdVideoClosedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson, isRewarded));
 	    }
 
         public void onRewardedVideoAdPlayClicked(string placementId, string callbackJson) {
 	        Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoAdPlayClicked()");
-            onVideoAdPlayClicked?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 
         public void onRewardedVideoReward(string placementId, string callbackJson) {
             Debug.Log("Unity: HBRewardedVideoAdClient::onRewardedVideoReward()");
-            onGiveReward?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onRewardEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 	}
 }

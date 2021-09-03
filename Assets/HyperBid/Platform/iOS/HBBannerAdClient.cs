@@ -86,12 +86,12 @@ namespace HyperBid.iOS {
 	    
 	    public void OnBannerAdImpress(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdImpress()");
-            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, new HBCallbackInfo(callbackJson)));
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 	    
         public void OnBannerAdClick(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdClick()");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, new HBCallbackInfo(callbackJson)));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 	    
         public void OnBannerAdAutoRefresh(string placementId, string callbackJson) {
