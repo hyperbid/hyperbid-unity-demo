@@ -11,14 +11,14 @@ namespace HyperBid.Android
     {
         private Dictionary<string, AndroidJavaObject> videoHelperMap = new Dictionary<string, AndroidJavaObject>();
 
-		public event EventHandler<HBAdEventArgs> onVideoAdLoaded;       // triggers when a rewarded video has been loaded
-        public event EventHandler<HBAdEventArgs> onVideoAdLoadFail;     // triggers when a rewarded video has failed to load (or none have been returned)
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayStart;    // triggers on video start
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayEnd;      // triggers on video end
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayFail;     // triggers if the video fails to play
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayClosed;   // triggers when the user has closed the ad
-        public event EventHandler<HBAdEventArgs> onVideoAdPlayClicked;  // triggers when the user has clicked the ad
-        public event EventHandler<HBAdEventArgs> onGiveReward;          // triggers when the user has finsihed watching the ad and should be rewarded
+        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoClosedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onRewardEvent;
 
         public HBRewardedVideoAdClient() : base("com.hyperbid.unitybridge.videoad.VideoListener")
         {
@@ -112,47 +112,47 @@ namespace HyperBid.Android
         public void onRewardedVideoAdFailed(string placementId,string code, string error)
         {
             Debug.Log("onRewardedVideoAdFailed...unity3d.");
-            onVideoAdLoadFail?.Invoke(this, new HBAdEventArgs(placementId, true, code, error));
+            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, code, error));
         }
 
         //开始播放
         public void onRewardedVideoAdPlayStart(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayStart...unity3d.");
-            onVideoAdPlayStart?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //结束播放
         public void onRewardedVideoAdPlayEnd(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayEnd...unity3d.");
-            onVideoAdPlayEnd?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //播放失败
         public void onRewardedVideoAdPlayFailed(string placementId,string code, string error)
         {
             Debug.Log("onRewardedVideoAdPlayFailed...unity3d.");
-            onVideoAdPlayFail?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+            onAdVideoFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
         }
         //广告关闭
         public void onRewardedVideoAdClosed(string placementId,bool isRewarded, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdClosed...unity3d.");
-            onVideoAdPlayClosed?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson, isRewarded));
+            onAdVideoClosedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson, isRewarded));
         }
         //广告点击
         public void onRewardedVideoAdPlayClicked(string placementId, string callbackJson)
         {
             Debug.Log("onRewardedVideoAdPlayClicked...unity3d.");
-            onVideoAdPlayClicked?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         //广告激励下发
         public void onReward(string placementId, string callbackJson)
         {
             Debug.Log("onReward...unity3d.");
-            onGiveReward?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onRewardEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
        
     }
