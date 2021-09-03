@@ -226,7 +226,7 @@ namespace HyperBid.Android
         public void onBannerAutoRefreshFail(string placementId, string code, string msg)
         {
             Debug.Log("onBannerAutoRefreshFail...unity3d.");
-            onAdAutoRefreshFail?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
+            onAdAutoRefreshFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
         }
        
     }
