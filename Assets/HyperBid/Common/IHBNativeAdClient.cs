@@ -7,17 +7,8 @@ using HyperBid.Api;
 
 namespace HyperBid.Common
 {
-    public interface IHBNativeAdClient 
-    {
-		event EventHandler<HBAdEventArgs> onNativeAdLoad;
-        event EventHandler<HBAdEventArgs> onNativeAdLoadFail;
-        event EventHandler<HBAdEventArgs> onNativeAdImpressed;
-        event EventHandler<HBAdEventArgs> onNativeAdClicked;
-        event EventHandler<HBAdEventArgs> onNativeAdVideoStart;
-        event EventHandler<HBAdEventArgs> onNativeAdVideoEnd;
-        event EventHandler<HBAdEventArgs> onNativeAdVideoProgress;
-        event EventHandler<HBAdEventArgs> onNativeAdCloseButtonClicked;
-
+	public interface IHBNativeAdClient : IHBNativeAdEvents
+	{
 		/***
 		 * 请求广告  
 		 * @param placementId  广告位id

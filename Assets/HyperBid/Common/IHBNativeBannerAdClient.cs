@@ -7,9 +7,8 @@ using HyperBid.Api;
 
 namespace HyperBid.Common
 {
-	public interface IHBNativeBannerAdClient
+	public interface IHBNativeBannerAdClient : IHBNativeBannerEvents
 	{
-		HBNativeBannerEvents events { get; set; }
 		/***
 		 * 请求广告  
 		 * @param placementId  广告位id

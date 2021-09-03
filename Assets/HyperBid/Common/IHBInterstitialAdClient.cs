@@ -6,10 +6,8 @@ using HyperBid.Api;
 
 namespace HyperBid.Common
 {
-    public interface IHBInterstitialAdClient 
+    public interface IHBInterstitialAdClient : IHBInterstitialAdEvents
     {
-		HBInterstitialAdEvents events { get; set; }
-
 		/***
 		 * 请求广告  
 		 * @param placementId  广告位id
