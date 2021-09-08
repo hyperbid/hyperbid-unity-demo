@@ -7,8 +7,6 @@ using UnityEngine.UI;
 using HyperBid.Common;
 using HyperBid.Api;
 
-using Newtonsoft.Json;
-
 public class BannerAdComponent : MonoBehaviour
 {
     static readonly protected string _placementId = PlacementId.AD_BANNER;
@@ -77,7 +75,7 @@ public class BannerAdComponent : MonoBehaviour
 
     protected bool CheckAdStatus()
     {
-        var json = JsonConvert.DeserializeObject<Dictionary<string, string>>(HBBannerAd.Instance.checkAdStatus(_placementId));
+        var json = JsonUtility.FromJson<Dictionary<string, string>>(HBBannerAd.Instance.checkAdStatus(_placementId));
         if (json.ContainsKey("isReady"))
             return json["isReady"].ToLower() == "true";
 
