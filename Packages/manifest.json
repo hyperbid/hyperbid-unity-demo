@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "com.google.android.appbundle": "file:/Users/dorin/workspace/demos/hyperbid_demo_unity/package",
-    "com.google.external-dependency-manager": "file:/Users/dorin/workspace/demos/hyperbid_demo_unity/gedm",
     "com.unity.2d.animation": "6.0.4",
     "com.unity.2d.pixel-perfect": "5.0.0",
     "com.unity.2d.psdimporter": "5.0.4",

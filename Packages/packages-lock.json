@@ -1,17 +1,5 @@
 {
   "dependencies": {
-    "com.google.android.appbundle": {
-      "version": "file:/Users/dorin/workspace/demos/hyperbid_demo_unity/package",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
-    "com.google.external-dependency-manager": {
-      "version": "file:/Users/dorin/workspace/demos/hyperbid_demo_unity/gedm",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
     "com.unity.2d.animation": {
       "version": "6.0.4",
       "depth": 0,
