@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.google.android.appbundle": {
+      "version": "file:../external/com.google.android.appbundle-1.5.0.tar",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
+    },
+    "com.google.external-dependency-manager": {
+      "version": "file:../external/com.google.external-dependency-manager-1.2.165.tar",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "6.0.4",
       "depth": 0,
