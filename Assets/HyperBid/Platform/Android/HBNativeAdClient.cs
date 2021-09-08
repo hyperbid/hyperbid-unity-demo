@@ -10,13 +10,13 @@ namespace HyperBid.Android
     public class HBNativeAdClient : AndroidJavaProxy, IHBNativeAdClient
     {
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoProgressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClosedEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
 
         private Dictionary<string, AndroidJavaObject> nativeAdHelperMap = new Dictionary<string, AndroidJavaObject>();
 
@@ -173,7 +173,7 @@ namespace HyperBid.Android
         public void onAdClicked(string placementId, string callbackJson)
         {
             Debug.Log("onAdClicked...unity3d.");
-            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         /**
@@ -217,7 +217,7 @@ namespace HyperBid.Android
         public void onAdCloseButtonClicked(string placementId, string callbackJson)
         {
             Debug.Log("onAdCloseButtonClicked...unity3d");
-            onAdClosedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
 
@@ -233,10 +233,10 @@ namespace HyperBid.Android
         /**
      * 广告加载失败
      */
-        public void onAdLoadFail(string placementId,string code, string msg)
+        public void onNativeAdLoadFail(string placementId,string code, string msg)
         {
             Debug.Log("onNativeAdLoadFail...unity3d. code:" + code + " msg:" + msg);
-            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
+            onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
         }
 
     }

@@ -11,12 +11,12 @@ namespace HyperBid.iOS
     public class HBNativeBannerAdClient : IHBNativeBannerAdClient
     {
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickEvent;
 
         public void loadAd(string placementId, string mapJson) {
     		Debug.Log("HBNativeBannerAdClient::loadAd()");
@@ -49,7 +49,7 @@ namespace HyperBid.iOS
         
         public void onAdLoadFail(string placementId, string code, string message) {
         	Debug.Log("HBNativeBannerAdClient::onAdLoadFail()");
-        	onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, message, code));
+        	onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, message, code));
         }
         
         public void onAdImpressed(string placementId, string callbackJson) {
@@ -59,7 +59,7 @@ namespace HyperBid.iOS
         
         public void onAdClicked(string placementId, string callbackJson) {
         	Debug.Log("HBNativeBannerAdClient::onAdClicked()");
-            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
         
         public void onAdAutoRefresh(string placementId, string callbackJson) {
@@ -74,7 +74,7 @@ namespace HyperBid.iOS
 
         public void onAdCloseButtonClicked(string placementId) {
         	Debug.Log("HBNativeBannerAdClient::onAdCloseButtonClicked()");
-        	onAdCloseButtonClickedEvent?.Invoke(this, new HBAdEventArgs(placementId));
+        	onAdCloseButtonClickEvent?.Invoke(this, new HBAdEventArgs(placementId));
         }
     }
 }

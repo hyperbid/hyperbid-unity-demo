@@ -16,7 +16,7 @@ namespace HyperBid.Android
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
 
         // triggers when a banner ad has failed to load
-        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
 
         // triggers when a banner ad generates an impression
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
@@ -192,7 +192,7 @@ namespace HyperBid.Android
         public void onBannerFailed(string placementId,string code, string error)
         {
             Debug.Log("onBannerFailed...unity3d.");
-            onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+            onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
         }
 
         //广告点击

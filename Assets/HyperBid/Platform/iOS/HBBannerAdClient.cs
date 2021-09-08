@@ -9,7 +9,7 @@ namespace HyperBid.iOS {
 	public class HBBannerAdClient : IHBBannerAdClient {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
@@ -81,7 +81,7 @@ namespace HyperBid.iOS {
 	    
 	    public void OnBannerAdLoadFail(string placementId, string code, string message) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdLoadFail()");
-	        onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, code, message));
+	        onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, false, message, code));
 	    }
 	    
 	    public void OnBannerAdImpress(string placementId, string callbackJson) {

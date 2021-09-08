@@ -9,14 +9,14 @@ namespace HyperBid.iOS {
 	public class HBInterstitialAdClient : IHBInterstitialAdClient {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdShowEvent;
-        public event EventHandler<HBAdEventArgs> onAdShowFailedEvent;
+        public event EventHandler<HBAdEventArgs> onAdShowFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
-        public event EventHandler<HBAdEventArgs> onAdPlayVideoEvent;
-        public event EventHandler<HBAdEventArgs> onAdPlayVideoFailedEvent;
-        public event EventHandler<HBAdEventArgs> onAdEndVideoEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoFailureEvent;
+        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
 
         public void addsetting(string placementId,string json){
 			//todo...
@@ -56,22 +56,22 @@ namespace HyperBid.iOS {
 
 	    public void OnInterstitialAdLoadFailure(string placementID, string code, string error) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdLoadFailure()");
-	        onAdLoadFailedEvent?.Invoke(this, new HBAdEventArgs(placementID, true , error, code));
+	        onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, true , error, code));
 	    }
 
 	     public void OnInterstitialAdVideoPlayFailure(string placementID, string code, string error) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdVideoPlayFailure()");
-	        onAdPlayVideoFailedEvent?.Invoke(this, new HBAdEventArgs(placementID, false, error, code));
+	        onAdVideoFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, false, error, code));
 	    }
 
 	    public void OnInterstitialAdVideoPlayStart(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdPlayStart()");
-	        onAdPlayVideoEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+	        onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 
 	    public void OnInterstitialAdVideoPlayEnd(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdVideoPlayEnd()");
-	        onAdEndVideoEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+	        onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
 	    }
 
         public void OnInterstitialAdShow(string placementID, string callbackJson) {
@@ -81,7 +81,7 @@ namespace HyperBid.iOS {
 
         public void OnInterstitialAdFailedToShow(string placementID) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdFailedToShow()");
-	        onAdShowFailedEvent?.Invoke(this, new HBAdEventArgs(placementID, true));
+	        onAdShowFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, true));
 	    }
 
         public void OnInterstitialAdClick(string placementID, string callbackJson) {

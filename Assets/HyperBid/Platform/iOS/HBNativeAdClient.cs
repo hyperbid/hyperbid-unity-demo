@@ -11,13 +11,13 @@ namespace HyperBid.iOS {
 	public class HBNativeAdClient : IHBNativeAdClient {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoProgressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClosedEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
 
         public void loadNativeAd(string placementId, string mapJson) {
             Debug.Log("Unity:HBNativeAdClient::loadNativeAd()");
@@ -75,13 +75,13 @@ namespace HyperBid.iOS {
 
         public void onAdClicked(string placementId, string callbackJson) {
             Debug.Log("Unity:HBNativeAdClient::onAdClicked...unity3d.");
-            onAdClickedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         public void onAdCloseButtonClicked(string placementId, string callbackJson)
         {
             Debug.Log("Unity:HBNativeAdClient::onAdCloseButtonClicked...unity3d.");
-            onAdClosedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
         }
 
         public void onAdVideoStart(string placementId) {
@@ -106,7 +106,7 @@ namespace HyperBid.iOS {
 
         public void onNativeAdLoadFail(string placementId,string code, string msg) {
             Debug.Log("Unity:HBNativeAdClient::onNativeAdLoadFail...unity3d. code:" + code + " msg:" + msg);
-            onAdLoadFailEvent?.Invoke(this, new HBAdEventArgs(placementId, false, msg, code));
+            onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, false, msg, code));
         }
 	}
 }

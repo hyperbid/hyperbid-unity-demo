@@ -16,12 +16,12 @@ namespace HyperBid.Android
         }
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailEvent;
+        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickedEvent;
+        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickEvent;
 
         public void loadAd(string placementId, string mapJson) {
 
