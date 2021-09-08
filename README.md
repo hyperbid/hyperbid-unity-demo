@@ -1,11 +1,11 @@
 <h1>HyperBid Unity Demo</h1>
 <p>HyperBid is a complete mediation solution for Android and iOS games. It offers support for a large selection of ad providers and uses header bidding to help developers maximize their revenue from ads using header bidding.</p>
-<li>dashboard: <a>https://app.hyperbid.com</a></li>
-<li>documentation: <a>https://docs.hyperbid.com</a></li>
+<li>dashboard: <a href="https://app.hyperbid.com">https://app.hyperbid.com</a></li>
+<li>documentation: <a href="https://docs.hyperbid.com">https://docs.hyperbid.com</a></li>
 <br/>
 <h1>Unity Support</h1>
 <p>HyperBid provides unity support via the HyperBid Unity SDK for seamless integreation into Unity games. Currently only Android and iOS platforms are supported</p>
-<li>documentation: <a>https://docs.hyperbid.com/#/en-us/unity</a></li>
+<li>documentation: <a href="https://docs.hyperbid.com/#/en-us/unity">https://docs.hyperbid.com/#/en-us/unity</a></li>
 <br/>
 <h2>Running the demo</h2>
 <li>Clone this repository using the command:</li>
