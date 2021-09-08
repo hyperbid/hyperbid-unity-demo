@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using HyperBid.Common;
 using HyperBid.Api;
 
+using Newtonsoft.Json;
+
 public class BannerAdComponent : MonoBehaviour
 {
     static readonly protected string _placementId = PlacementId.AD_BANNER;
@@ -15,34 +17,29 @@ public class BannerAdComponent : MonoBehaviour
     protected int  _height;
     protected bool _isHidden;
 
-
     // event callback for when the ad is loaded
     protected void OnAdLoad(object sender, HBAdEventArgs args)
     {
         Debug.Log("BannerAd - OnAdLoad");
-        var txt = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
-        txt.text = "Banner ad has been loaded succesfully";
+        Utils.SetText("Banner ad has been loaded succesfully");
     }
 
     // event callback if the ad has failed to load
     protected void OnAdLoadFail(object sender, HBAdEventArgs args) {
         Debug.Log("BannerAd - OnAdLoadFail");
-        var txt = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
-        txt.text = "Failed to load banner ad: " + args.errorMessage;
+        Utils.SetText("Failed to load banner ad: " + args.errorMessage);
     }
 
     // event callback if the ad has been clicked
     protected void OnAdClicked(object sender, HBAdEventArgs args) {
         Debug.Log("Banner Ad - OnAdClicked");
-        var txt = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
-        txt.text = "Banner Ad has been clicked";
+        Utils.SetText("Banner Ad has been clicked");
     }
 
     // event callback if the ad has been closed
     protected void OnAdClosed(object sender, HBAdEventArgs args) {
         Debug.Log("Banner Ad - OnAdClosed");
-        var txt = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
-        txt.text = "Banner Ad has been closed";
+        Utils.SetText("Banner Ad has been closed");
     }
 
     // Start is called before the first frame update
@@ -51,14 +48,14 @@ public class BannerAdComponent : MonoBehaviour
         //var adPanel = GameObject.Find("").GetComponent<RectTransform>();
 
         // set the dimensions of the banner
-        _width  = Screen.width;//(int)adPanel.sizeDelta.x;
+        _width  = Screen.width;
         _height = 100;
 
         // register the needed callbacks
-        HBBannerAd.Instance.events.onAdLoadEvent        += OnAdLoad;
-        HBBannerAd.Instance.events.onAdLoadFailedEvent  += OnAdLoadFail;
-        HBBannerAd.Instance.events.onAdClickEvent       += OnAdClicked;
-        HBBannerAd.Instance.events.onAdCloseEvent       += OnAdClosed;
+        HBBannerAd.Instance.events.onAdLoadEvent         += OnAdLoad;
+        HBBannerAd.Instance.events.onAdLoadFailureEvent  += OnAdLoadFail;
+        HBBannerAd.Instance.events.onAdClickEvent        += OnAdClicked;
+        HBBannerAd.Instance.events.onAdCloseEvent        += OnAdClosed;
     }
 
     // Update is called once per frame
@@ -77,15 +74,26 @@ public class BannerAdComponent : MonoBehaviour
         HBBannerAd.Instance.loadBannerAd(_placementId, jsonmap);
     }
 
+    protected bool CheckAdStatus()
+    {
+        var json = JsonConvert.DeserializeObject<Dictionary<string, string>>(HBBannerAd.Instance.checkAdStatus(_placementId));
+        if (json.ContainsKey("isReady"))
+            return json["isReady"].ToLower() == "true";
+
+        return false;
+    }
+
     // displays if the ad is ready
     public void IsAdReady() {
-        var detailsText = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
-        detailsText.text = HBBannerAd.Instance.checkAdStatus(_placementId);
+        string message = CheckAdStatus() ? "Ad status: ready" : "Ad status: not ready";
+        Utils.SetText(message);
     }
 
     // shows the ad on the screen
     public void ShowAd() {
-        HBBannerAd.Instance.showBannerAd(_placementId, HBBannerAdLoadingExtra.kHBBannerAdShowingPisitionBottom);
+        //if (CheckAdStatus()) {
+            HBBannerAd.Instance.showBannerAd(_placementId, HBBannerAdLoadingExtra.kHBBannerAdShowingPisitionBottom);
+        //}
     }
 
     // closes the ad

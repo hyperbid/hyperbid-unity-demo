@@ -12,28 +12,49 @@ public class InterstitialAdComponent : MonoBehaviour
 {
     static protected readonly string _placementId = PlacementId.INTERSTITIAL;
 
-    protected Text _messageText;
-
+    // callback called when the ad is ready
     protected void OnAdLoad(object sender, HBAdEventArgs args) {
-        _messageText.text = "On callback";
+        Debug.Log("InterstitialAd - OnAdLoad");
+        Utils.SetText("Interstitial Ad has been succesfully loaded");
+    }
+
+    // callback called if the ad failed to load
+    protected void OnAdLoadFail(object sender, HBAdEventArgs args) {
+        Debug.Log("InterstitialAd - OnAdLoad");
+        Utils.SetText("Interstitial Ad has been succesfully loaded");
+    }
+
+    // callback called when the video starts playing
+    protected void OnAdPlayVideo(object sender, HBAdEventArgs args) {
+        Debug.Log("InterstitialAd - OnAdPlayVideo");
+        Utils.SetText("Interstitial Ad Video is playing");
+    }
+
+    // callback called if the video has failed to play
+    protected void OnAdPlayVideoFailed(object sender, HBAdEventArgs args) {
+        Debug.Log("InterstitialAd - OnAdPlayVideoFailed");
+
     }
 
     public void Start() {
-        HBInterstitialAd.Instance.events.onAdLoadEvent += OnAdLoad;
-        _messageText = GameObject.Find("detailsHyperTxt/Text").GetComponent<Text>();
+
+        // register event callbacks
+        HBInterstitialAd.Instance.events.onAdLoadEvent           += OnAdLoad;
+        HBInterstitialAd.Instance.events.onAdLoadFailureEvent    += OnAdLoadFail;
+        HBInterstitialAd.Instance.events.onAdVideoStartEvent     += OnAdPlayVideo;
+        HBInterstitialAd.Instance.events.onAdVideoFailureEvent   += OnAdPlayVideoFailed;
     }
 
     public void LoadAd() {
-        if(!string.IsNullOrEmpty(_placementId)) {
-            HBInterstitialAd.Instance.loadInterstitialAd(_placementId, new Dictionary<string, string>());
-        }
+        Utils.SetText("Loading interstitial ad...");
+        HBInterstitialAd.Instance.loadInterstitialAd(_placementId, new Dictionary<string, string>());
     }
 
     public void IsAdReady() {
         bool isReady = HBInterstitialAd.Instance.hasInterstitialAdReady(_placementId);
-        _messageText.text = isReady ? "Ad is ready" : "Ad is not ready";
+        Utils.SetText("Ad status:" + (isReady ? "ready" : "not ready"));
     }
-
+     
     public void ShowAd() {
         if(HBInterstitialAd.Instance.hasInterstitialAdReady(_placementId)) {
             HBInterstitialAd.Instance.showInterstitialAd(_placementId);
