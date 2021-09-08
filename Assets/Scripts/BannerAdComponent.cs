@@ -71,6 +71,7 @@ public class BannerAdComponent : MonoBehaviour
         jsonmap.Add(HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraInlineAdaptiveWidth, bannerSize.width);
         jsonmap.Add(HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraInlineAdaptiveOrientation, HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraInlineAdaptiveOrientationCurrent);
 
+        Utils.SetText("Loading banner ad...");
         HBBannerAd.Instance.loadBannerAd(_placementId, jsonmap);
     }
 
