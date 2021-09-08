@@ -1,0 +1,6 @@
+framework module HyperBidSDK {
+  umbrella header "HyperBidSDK.h"
+
+  export *
+  module * { export * }
+}

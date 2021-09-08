@@ -1,0 +1,6 @@
+framework module HyperBidAdColonyAdapter {
+  umbrella header "HyperBidAdColonyAdapter.h"
+
+  export *
+  module * { export * }
+}

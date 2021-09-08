@@ -1,0 +1,6 @@
+framework module HyperBidInterstitial {
+  umbrella header "HyperBidInterstitial.h"
+
+  export *
+  module * { export * }
+}

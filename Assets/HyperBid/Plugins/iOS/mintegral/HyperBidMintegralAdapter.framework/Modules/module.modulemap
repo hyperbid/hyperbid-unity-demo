@@ -1,0 +1,6 @@
+framework module HyperBidMintegralAdapter {
+  umbrella header "HyperBidMintegralAdapter.h"
+
+  export *
+  module * { export * }
+}

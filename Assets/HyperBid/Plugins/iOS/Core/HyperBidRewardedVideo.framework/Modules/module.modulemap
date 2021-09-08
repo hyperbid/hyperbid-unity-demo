@@ -1,0 +1,6 @@
+framework module HyperBidRewardedVideo {
+  umbrella header "HyperBidRewardedVideo.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module HyperBidNative {
+  umbrella header "HyperBidNative.h"
+
+  export *
+  module * { export * }
+}

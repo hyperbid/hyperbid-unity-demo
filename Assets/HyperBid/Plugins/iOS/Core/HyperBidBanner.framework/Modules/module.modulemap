@@ -1,0 +1,6 @@
+framework module HyperBidBanner {
+  umbrella header "HyperBidBanner.h"
+
+  export *
+  module * { export * }
+}
