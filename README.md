@@ -44,8 +44,8 @@ HBSDKAPI.getUserLocation(new IsGDPRRequiredListener());
 <h5>Cannot parse project property android.enableR8=‘’ of type ‘class java.lang.String’ as boolean. Expected ‘true’ or ‘false’.</h5>
 You are running an older version of unity, this demo requires <b>2020.3.17f1</b> or newer.
 </br>
-<h5>HyperBid has failed to initalize</h3> 
+<h4>HyperBid has failed to initalize</h4> 
 Make sure you are running the apk/app on a device and not using the Unity Editor
 <br/>
-<h3>The placement load is too frequent within the specified time </h3> 
+<h4>The placement load is too frequent within the specified time </h4> 
 You are trying to load too many ads in a short period of time, please wait for the timeout until loading a subsequent ad
