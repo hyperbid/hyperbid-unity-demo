@@ -8,6 +8,8 @@
 <li>documentation: <a href="https://docs.hyperbid.com/#/en-us/unity">https://docs.hyperbid.com/#/en-us/unity</a></li>
 <br/>
 <h2>Running the demo</h2>
+
+<ol><li>Download Unity <b>2020.3.17f1</b> or newer</li>
 <li>Clone this repository using the command:</li>
 <code>
 git clone https://github.com/hyperbid/hyperbid-unity-demo
@@ -15,7 +17,7 @@ git clone https://github.com/hyperbid/hyperbid-unity-demo
 <br/>
 <li>Open the project folder with Unity</li>
 <li>Go to File->Build Settings</li>
-<li>Switch platform to iOS or Android and click *Build*</li>
+<li>Switch platform to iOS or Android and click *Build*</li></ol>
 </br>
 <img src="./images/build.png"/></img>
 <br/>
@@ -39,5 +41,11 @@ HBSDKAPI.getUserLocation(new IsGDPRRequiredListener());
 </code>
 
 <h2>Common Issues</h2>
-<li>HyperBid has failed to initalize -> make sure you are running the apk/app on a device and not using the Unity Editor</li>
-<li>The placement load is too frequent within the specified time -> you are trying to load too many ads in a short period of time, please wait for the timeout until loading a subsequent ad</li>
+<h5>Cannot parse project property android.enableR8=‘’ of type ‘class java.lang.String’ as boolean. Expected ‘true’ or ‘false’.</h5>
+You are running an older version of unity, this demo requires <b>2020.3.17f1</b> or newer.
+</br>
+<h5>HyperBid has failed to initalize</h3> 
+Make sure you are running the apk/app on a device and not using the Unity Editor
+<br/>
+<h3>The placement load is too frequent within the specified time </h3> 
+You are trying to load too many ads in a short period of time, please wait for the timeout until loading a subsequent ad
