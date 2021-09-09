@@ -28,6 +28,7 @@ public class HyperBidComponent : MonoBehaviour
     private readonly string _appChannel     = "testChannelUnity";
     private readonly string _appSubChannel  = "testSubChannelUnity";
 
+    private bool _isOffline = false;
     private bool _isLogDebug = true;
     private RectTransform _testPanel;
 
@@ -87,7 +88,7 @@ public class HyperBidComponent : MonoBehaviour
         }
     }
 
-
+    // returns the gdpr level as a readable string
     private string GetGDPRString(int level)
     {
         if(level < _gpdrStrings.Length)
@@ -98,13 +99,13 @@ public class HyperBidComponent : MonoBehaviour
 
     private void InitSdk() {
 
-        if(_isHyperbidInitialized)
-        {
+        if(_isHyperbidInitialized) {
             Utils.SetText("Hyperbid has already been initialized!");
             return;
         }
 
         #if !UNITY_HYPERBID_SUPPORT
+            Utils.SetText("Unsupported platform, please install this application on an Android or iOS device.");
             Debug.LogError("HyperBid supports only Android and iOS. Please buld the proper apk/app and test directly on the device.");
             return;
         #endif
@@ -158,5 +159,22 @@ public class HyperBidComponent : MonoBehaviour
 
     public void OnButtonPressed() {
         InitSdk();
+    }
+
+    // checks if there is an internet connection
+    public void Update() {
+        if (Utils.ShouldCheckConnection())
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Utils.SetText("No internet connection has been found");
+                _isOffline = true;
+            }
+            else if(_isOffline)
+            {
+                Utils.SetText("Internet connection restablished");
+                _isOffline = false;
+            }
+        }
     }
 }
