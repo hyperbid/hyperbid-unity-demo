@@ -9,6 +9,5 @@ namespace HyperBidDemo
         bool IsAdReady();
         bool LoadAd();
         bool ShowAd();
-        
     }
 }

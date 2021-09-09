@@ -1499,7 +1499,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 1
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1518,7 +1518,7 @@ Canvas:
   m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 500
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1565,7 +1565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -372.70004, y: -0.0019226074}
+  m_AnchoredPosition: {x: -372.70013, y: -0.001953125}
   m_SizeDelta: {x: -841.4, y: -43.580017}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &559089242
@@ -2289,7 +2289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.608795, y: -108.71332}
+  m_AnchoredPosition: {x: 4.6088257, y: -108.71332}
   m_SizeDelta: {x: -104.78, y: -265.3268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887738360
@@ -3640,8 +3640,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.620697, y: 58.463196}
-  m_SizeDelta: {x: 7.2406, y: -116.9271}
+  m_AnchoredPosition: {x: 8.244629, y: 55.1604}
+  m_SizeDelta: {x: -2.0072, y: -123.5327}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1652891360
 MonoBehaviour:
@@ -4794,8 +4794,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 237.469, y: -0.001953125}
-  m_SizeDelta: {x: -528.312, y: -43.580017}
+  m_AnchoredPosition: {x: 202.88, y: -0.001953125}
+  m_SizeDelta: {x: -536.77, y: -43.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133176260
 MonoBehaviour:
@@ -4810,14 +4810,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0.473804, b: 1, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4848,10 +4848,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
