@@ -37,7 +37,6 @@ public class InterstitialAdComponent : MonoBehaviour
     }
 
     public void Start() {
-
         // register event callbacks
         HBInterstitialAd.Instance.events.onAdLoadEvent           += OnAdLoad;
         HBInterstitialAd.Instance.events.onAdLoadFailureEvent    += OnAdLoadFail;

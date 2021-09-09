@@ -1,5 +1,14 @@
 ﻿using System;
 
+/*
+ * Placement ids for all the ad types
+ * in order to make requests for ads it is required to 
+ * create the proper placement ids & mediation in the
+ * hyperbid dashboard
+ * in the unity sdk you need to supply different
+ * placements for android & iOS as they are
+ * treated as a different application
+ */
 public class PlacementId
 {
 #if UNITY_ANDROID
@@ -8,7 +17,6 @@ public class PlacementId
     public static readonly string INTERSTITIAL     = "b60ac576327734";
     public static readonly string REWARDED_VIDEO   = "b609482b1a6f29";
     public static readonly string NATIVE_AD        = "b6137609524740";
-    public static readonly string NATIVE_BANNER    = "b6125eb849fd18";
 
 #elif UNITY_IOS || UNITY_IPHONE
 
@@ -16,7 +24,6 @@ public class PlacementId
     public static readonly string INTERSTITIAL     = "b60947896916dc";
     public static readonly string REWARDED_VIDEO   = "b6094785ed662c";
     public static readonly string NATIVE_AD        = "b613766e6ceae9";
-    public static readonly string NATIVE_BANNER    = "";
 
 #else
 

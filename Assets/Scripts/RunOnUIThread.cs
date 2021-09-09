@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+// this class is needed to update the UI from the async callbacks
 internal class RunOnUiThread : MonoBehaviour
 {
     internal static RunOnUiThread worker;
