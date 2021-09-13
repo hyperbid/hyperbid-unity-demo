@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using HyperBid.Api;
 
 
@@ -77,6 +78,12 @@ public class HyperBidComponent : MonoBehaviour
         public void initSuccess() {
             Debug.Log("HyperBid has been intialized succesfully");
             _parent.Activate();
+
+            // hide for now
+            GameObject.Find("TestPanel/NativeAdLoad").SetActive(false);
+            GameObject.Find("TestPanel/NativeAdReady").SetActive(false);
+            GameObject.Find("TestPanel/NativeAdShow").SetActive(false);
+            GameObject.Find("TestPanel/NativeAdClose").SetActive(false);
 
             Utils.SetText("Hyperbid has been initialized succesfully");
         }
