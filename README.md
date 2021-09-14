@@ -25,7 +25,7 @@ git clone https://github.com/hyperbid/hyperbid-unity-demo
 <p>Since HyperBid only supports Android and iOS, it is <b>required</b> to build the project for the specific platform in order to test it. HyperBid does not support the Unity Editor at the moment.</p>
 
 <h1>Unity Demo</h1>
-<p>The demo contains code samples for the most common types of ads that HyperBid provides.</p>
+<p>The demo contains code samples for the most common types of ads that HyperBid provides. The demo uses <b>HyperBid v5.7.54</b> as previous versions do not support ad events (using HBXXXXAdListener instead).</p>
 <li>Banner Ads       -> `Assets/Scripts/BannerAdComponent`</li>
 <li>Interstitial Ads -> `Assets/Scripts/InterstitialAdComponent`</li>
 <li>Rewarded Videos  -> `Assets/Scripts/RewardedVideoComponent`</li>
@@ -43,9 +43,10 @@ HBSDKAPI.getUserLocation(new IsGDPRRequiredListener());
 <h2>Common Issues</h2>
 <h5>Cannot parse project property android.enableR8=‘’ of type ‘class java.lang.String’ as boolean. Expected ‘true’ or ‘false’.</h5>
 You are running an older version of unity, this demo requires <b>2020.3.17f1</b> or newer.
-</br>
-<h4>HyperBid has failed to initalize</h4> 
-Make sure you are running the apk/app on a device and not using the Unity Editor
 <br/>
-<h4>The placement load is too frequent within the specified time </h4> 
-You are trying to load too many ads in a short period of time, please wait for the timeout until loading a subsequent ad
+<h5>HyperBid has failed to initalize</h5> 
+Make sure you are running the apk/app on an Android/iOS device. HyperBid does not support the Unity Editor or other platforms.
+<br/>
+<h5>The placement load is too frequent within the specified time </h5> 
+You are trying to load too many ads in a short period of time, please wait for the timeout to finish before trying to load a subsequent ad.
+<br/>
