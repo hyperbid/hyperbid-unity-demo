@@ -19,7 +19,7 @@ public class PlacementId
     public static readonly string NATIVE_AD        = "b6137609524740";
 
 #elif UNITY_IOS || UNITY_IPHONE
-
+ 
     public static readonly string AD_BANNER        = "b609cb47492e07";
     public static readonly string INTERSTITIAL     = "b60947896916dc";
     public static readonly string REWARDED_VIDEO   = "b6094785ed662c";

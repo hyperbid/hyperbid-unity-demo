@@ -16,7 +16,7 @@ namespace HyperBid.Android
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
 
         // triggers when a banner ad has failed to load
-        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
 
         // triggers when a banner ad generates an impression
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
@@ -28,7 +28,7 @@ namespace HyperBid.Android
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
 
         // triggers when the ad fails to auto refresh
-        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
 
         // triggers when the banner ad is closed
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
@@ -192,14 +192,14 @@ namespace HyperBid.Android
         public void onBannerFailed(string placementId,string code, string error)
         {
             Debug.Log("onBannerFailed...unity3d.");
-            onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+            onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, error, code));
         }
 
         //广告点击
         public void onBannerClicked(string placementId, string callbackJson)
         {
             Debug.Log("onBannerClicked...unity3d.");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
             
         }
 
@@ -207,26 +207,26 @@ namespace HyperBid.Android
         public void onBannerShow(string placementId, string callbackJson)
         {
             Debug.Log("onBannerShow...unity3d.");
-            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
 
         //广告关闭
         public void onBannerClose(string placementId, string callbackJson)
         {
             Debug.Log("onBannerClose...unity3d.");
-            onAdCloseButtonTappedEvent?.Invoke(placementId, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdCloseButtonTappedEvent?.Invoke(placementId, new HBAdEventArgs(placementId, callbackJson));
         }
         //广告关闭
         public void onBannerAutoRefreshed(string placementId, string callbackJson)
         {
             Debug.Log("onBannerAutoRefreshed...unity3d.");
-            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         //广告自动刷新失败
         public void onBannerAutoRefreshFail(string placementId, string code, string msg)
         {
             Debug.Log("onBannerAutoRefreshFail...unity3d.");
-            onAdAutoRefreshFailEvent?.Invoke(this, new HBAdEventArgs(placementId, true, msg, code));
+            onAdAutoRefreshFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, msg, code));
         }
        
     }

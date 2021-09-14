@@ -27,7 +27,7 @@ public class NativeAdComponent : MonoBehaviour
         Utils.SetText("Native Ad loaded succesfully: " + args.placementId);
     }
 
-    protected void OnAdLoadFail(object sender, HBAdEventArgs args)
+    protected void OnAdLoadFail(object sender, HBAdErrorEventArgs args)
     {
         Debug.Log("Native Ad - onAdLoadFail");
         Utils.SetText(string.Format("Failed to load native ad ({0}): {1}", args.placementId, args.errorMessage));
@@ -39,7 +39,7 @@ public class NativeAdComponent : MonoBehaviour
         Utils.SetText("Native Ad played succesfully: " + args.placementId);
     }
 
-    protected void OnAdVideoFail(object sender, HBAdEventArgs args)
+    protected void OnAdVideoFail(object sender, HBAdErrorEventArgs args)
     {
         Debug.Log("Native Ad - onAdVideoFail");
         Utils.SetText(string.Format("Failed to play native ad ({0}): {1}", args.placementId, args.errorMessage));
@@ -70,7 +70,7 @@ public class NativeAdComponent : MonoBehaviour
         Dictionary<string,object> jsonmap = new Dictionary<string,object>();
 
         #if UNITY_ANDROID
-        HBSize nativeSize = new HBSize(_width, _height);
+            HBSize nativeSize = new HBSize(_width, _height);
             jsonmap.Add(HBNativeAdLoadingExtra.kHBNativeAdLoadingExtraNativeAdSizeStruct, nativeSize);
         #elif UNITY_IOS || UNITY_IPHONE
             HBSize nativeSize = new HBSize(_width, _height, false);

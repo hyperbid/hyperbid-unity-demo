@@ -23,7 +23,7 @@ public class BannerAdComponent : MonoBehaviour
     }
 
     // event callback if the ad has failed to load
-    protected void OnAdLoadFail(object sender, HBAdEventArgs args) {
+    protected void OnAdLoadFail(object sender, HBAdErrorEventArgs args) {
         Debug.Log("BannerAd - OnAdLoadFail");
         Utils.SetText("Failed to load banner ad: " + args.errorMessage);
     }

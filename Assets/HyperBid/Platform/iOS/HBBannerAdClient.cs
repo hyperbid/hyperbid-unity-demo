@@ -9,11 +9,11 @@ namespace HyperBid.iOS {
 	public class HBBannerAdClient : IHBBannerAdClient {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
-        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
 
@@ -81,27 +81,27 @@ namespace HyperBid.iOS {
 	    
 	    public void OnBannerAdLoadFail(string placementId, string code, string message) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdLoadFail()");
-	        onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, false, message, code));
+	        onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, message, code));
 	    }
 	    
 	    public void OnBannerAdImpress(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdImpress()");
-            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
 	    }
 	    
         public void OnBannerAdClick(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdClick()");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
 	    }
 	    
         public void OnBannerAdAutoRefresh(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdAutoRefresh()");
-            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
 	    }
 	    
 	    public void OnBannerAdAutoRefreshFail(string placementId, string code, string message) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdAutoRefreshFail()");
-	        onAdAutoRefreshFailEvent?.Invoke(this, new HBAdEventArgs(placementId, false, message, code));
+	        onAdAutoRefreshFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, message, code));
 	    }
 
 	    public void OnBannerAdClose(string placementId) {
@@ -111,7 +111,7 @@ namespace HyperBid.iOS {
 
 	    public void OnBannerAdCloseButtonTapped(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdCloseButton()");
-	        onAdCloseButtonTappedEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+	        onAdCloseButtonTappedEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
 	    }
 	}
 }

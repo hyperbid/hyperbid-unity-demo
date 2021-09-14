@@ -19,7 +19,7 @@ public class RewardedVideoComponent : MonoBehaviour
         Utils.SetText("The Rewarded Video has been loaded succesfully");
     }
 
-    protected void OnAdLoadFailed(object sender, HBAdEventArgs args) {
+    protected void OnAdLoadFailed(object sender, HBAdErrorEventArgs args) {
         Debug.Log("RewardedVideo - OnAdLoadFailed");
         Utils.SetText("The Rewarded Video has failed to load: " + args.errorMessage);
     }
@@ -29,7 +29,7 @@ public class RewardedVideoComponent : MonoBehaviour
         Utils.SetText("The Rewarded Video is currently playing." );
     }
 
-    protected void OnAdVideoPlayFailed(object sender, HBAdEventArgs args) {
+    protected void OnAdVideoPlayFailed(object sender, HBAdErrorEventArgs args) {
         Debug.Log("RewardedVideo - OnAdVideoPlayFailed");
         Utils.SetText("The Rewarded Video has failed to play: " + args.errorMessage);
     }

@@ -13,15 +13,15 @@ namespace HyperBid.Android
     {
         private Dictionary<string, AndroidJavaObject> interstitialHelperMap = new Dictionary<string, AndroidJavaObject>();
 
-        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdShowEvent;
-        public event EventHandler<HBAdEventArgs> onAdShowFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdCloseEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickEvent;
-        public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
-        public event EventHandler<HBAdEventArgs> onAdVideoFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs>        onAdLoadEvent;
+        public event EventHandler<HBAdErrorEventArgs>   onAdLoadFailureEvent;
+        public event EventHandler<HBAdEventArgs>        onAdShowEvent;
+        public event EventHandler<HBAdErrorEventArgs>   onAdShowFailureEvent;
+        public event EventHandler<HBAdEventArgs>        onAdCloseEvent;
+        public event EventHandler<HBAdEventArgs>        onAdClickEvent;
+        public event EventHandler<HBAdEventArgs>        onAdVideoStartEvent;
+        public event EventHandler<HBAdErrorEventArgs>   onAdVideoFailureEvent;
+        public event EventHandler<HBAdEventArgs>        onAdVideoEndEvent;
 
         public HBInterstitialAdClient() : base("com.hyperbid.unitybridge.interstitial.InterstitialListener")
         {
@@ -159,45 +159,45 @@ namespace HyperBid.Android
         public void onInterstitialAdLoadFail(string placementId,string code, string error)
         {
             Debug.Log("onInterstitialAdFailed...unity3d.");
-            onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+            onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, error, code));
         }
 
         //开始播放
         public void onInterstitialAdVideoStart(string placementId, string callbackJson)
         {
             Debug.Log("onInterstitialAdPlayStart...unity3d.");
-            onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
 
         //结束播放
         public void onInterstitialAdVideoEnd(string placementId, string callbackJson)
         {
             Debug.Log("onInterstitialAdPlayEnd...unity3d.");
-            onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
 
         //播放失败
         public void onInterstitialAdVideoError(string placementId,string code, string error)
         {
             Debug.Log("onInterstitialAdPlayFailed...unity3d.");
-            onAdVideoFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, error, code));
+            onAdVideoFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, error, code));
         }
         //广告关闭
         public void onInterstitialAdClose(string placementId, string callbackJson)
         {
             Debug.Log("onInterstitialAdClosed...unity3d.");
-            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         //广告点击
         public void onInterstitialAdClicked(string placementId, string callbackJson)
         {
             Debug.Log("onInterstitialAdClicked...unity3d.");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
 
         public void onInterstitialAdShow(string placementId, string callbackJson){
             Debug.Log("onInterstitialAdShow...unity3d.");
-            onAdShowEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdShowEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
        
     }

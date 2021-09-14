@@ -11,11 +11,11 @@ namespace HyperBid.iOS
     public class HBNativeBannerAdClient : IHBNativeBannerAdClient
     {
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdImpressEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
-        public event EventHandler<HBAdEventArgs> onAdAutoRefreshFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseButtonClickEvent;
 
         public void loadAd(string placementId, string mapJson) {
@@ -49,27 +49,27 @@ namespace HyperBid.iOS
         
         public void onAdLoadFail(string placementId, string code, string message) {
         	Debug.Log("HBNativeBannerAdClient::onAdLoadFail()");
-        	onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, message, code));
+        	onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, message, code));
         }
         
         public void onAdImpressed(string placementId, string callbackJson) {
         	Debug.Log("HBNativeBannerAdClient::onAdImpressed()");
-            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdImpressEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         
         public void onAdClicked(string placementId, string callbackJson) {
         	Debug.Log("HBNativeBannerAdClient::onAdClicked()");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         
         public void onAdAutoRefresh(string placementId, string callbackJson) {
         	Debug.Log("HBNativeBannerAdClient::onAdAutoRefresh()");
-            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdAutoRefreshEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         
 		public void onAdAutoRefreshFailure(string placementId, string code, string message) {
         	Debug.Log("HBNativeBannerAdClient::onAdAutoRefreshFailure()");
-        	onAdAutoRefreshFailureEvent?.Invoke(this, new HBAdEventArgs(placementId, true, message, code));
+        	onAdAutoRefreshFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, message, code));
         }
 
         public void onAdCloseButtonClicked(string placementId) {

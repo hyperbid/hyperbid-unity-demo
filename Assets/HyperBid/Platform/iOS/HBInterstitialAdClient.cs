@@ -9,13 +9,13 @@ namespace HyperBid.iOS {
 	public class HBInterstitialAdClient : IHBInterstitialAdClient {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdEventArgs> onAdLoadFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdShowEvent;
-        public event EventHandler<HBAdEventArgs> onAdShowFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdShowFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
-        public event EventHandler<HBAdEventArgs> onAdVideoFailureEvent;
+        public event EventHandler<HBAdErrorEventArgs> onAdVideoFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
 
         public void addsetting(string placementId,string json){
@@ -56,42 +56,42 @@ namespace HyperBid.iOS {
 
 	    public void OnInterstitialAdLoadFailure(string placementID, string code, string error) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdLoadFailure()");
-	        onAdLoadFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, true , error, code));
+	        onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementID, error, code));
 	    }
 
 	     public void OnInterstitialAdVideoPlayFailure(string placementID, string code, string error) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdVideoPlayFailure()");
-	        onAdVideoFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, false, error, code));
+	        onAdVideoFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementID, error, code));
 	    }
 
 	    public void OnInterstitialAdVideoPlayStart(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdPlayStart()");
-	        onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+	        onAdVideoStartEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
 	    }
 
 	    public void OnInterstitialAdVideoPlayEnd(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdVideoPlayEnd()");
-	        onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+	        onAdVideoEndEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
 	    }
 
         public void OnInterstitialAdShow(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdShow()");
-            onAdShowEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdShowEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
 	    }
 
         public void OnInterstitialAdFailedToShow(string placementID) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdFailedToShow()");
-	        onAdShowFailureEvent?.Invoke(this, new HBAdEventArgs(placementID, true));
+	        onAdShowFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementID, "Failed to show video ad", "-1"));
 	    }
 
         public void OnInterstitialAdClick(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdClick()");
-            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdClickEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
 	    }
 
         public void OnInterstitialAdClose(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdClose()");
-            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementID, false, HBAdEventArgs.noValue, HBAdEventArgs.noValue, callbackJson));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
 	    }
 	}
 }
