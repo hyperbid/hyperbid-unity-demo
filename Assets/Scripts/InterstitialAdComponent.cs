@@ -19,9 +19,9 @@ public class InterstitialAdComponent : MonoBehaviour
     }
 
     // callback called if the ad failed to load
-    protected void OnAdLoadFail(object sender, HBAdEventArgs args) {
+    protected void OnAdLoadFail(object sender, HBAdErrorEventArgs args) {
         Debug.Log("InterstitialAd - OnAdLoad");
-        Utils.SetText("Interstitial Ad has been succesfully loaded");
+        Utils.SetText("Interstitial Ad has failed to load:" + args.errorMessage);
     }
 
     // callback called when the video starts playing
@@ -33,6 +33,7 @@ public class InterstitialAdComponent : MonoBehaviour
     // callback called if the video has failed to play
     protected void OnAdPlayVideoFailed(object sender, HBAdEventArgs args) {
         Debug.Log("InterstitialAd - OnAdPlayVideoFailed");
+        Utils.SetText("Interstitial Ad has failed to play");
 
     }
 
