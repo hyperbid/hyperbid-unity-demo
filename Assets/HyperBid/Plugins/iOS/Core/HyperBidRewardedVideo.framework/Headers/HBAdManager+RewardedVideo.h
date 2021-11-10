@@ -21,9 +21,16 @@ extern NSString *const kHBAdLoadingExtraRewardAmountKey;
 
 extern NSString *const kHBRewardedVideoCallbackExtraAdsourceIDKey;
 extern NSString *const kHBRewardedVideoCallbackExtraNetworkIDKey;
+
+// Klevin SDK
+extern NSString *const kHBRewardedVideoKlevinRewardTimeKey;
+extern NSString *const kHBRewardedVideoKlevinRewardTriggerKey;
+
+
 @interface HBAdManager (RewardedVideo)
 -(BOOL) isReadyRewardedVideoWithPlacementID:(NSString*)placementID;
 -(HBCheckLoadModel*) checkRewardedVideoReadyAdInfo:(NSString*)placementID;
+- (NSArray<NSDictionary *> *)getRewardedVideoValidAdsForPlacementID:(NSString *)placementID;
 -(void) showRewardedVideoAd:(NSString*)placementID inViewController:(UIViewController*)viewController delegate:(id<HBRewardedVideoDelegate>)delegate;
 -(void) showRewardedVideoAd:(NSString*)placementID scene:(NSString*)scene inViewController:(UIViewController*)viewController delegate:(id<HBRewardedVideoDelegate>)delegate;
 @end

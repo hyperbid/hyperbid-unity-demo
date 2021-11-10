@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependencies>
+    <iosPods>
+        <iosPod name="FBAudienceNetwork" version="6.7.0" />
+        <iosPod name="FBSDKCoreKit_Basics" version="11.0.0" />
+    </iosPods>
+</dependencies>

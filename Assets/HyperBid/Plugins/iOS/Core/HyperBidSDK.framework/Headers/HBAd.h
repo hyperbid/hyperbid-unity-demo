@@ -48,6 +48,7 @@
 @property(nonatomic, readonly) NSString *tpBidId;
 @property(nonatomic, readonly, weak) HBWaterfall *finalWaterfall;
 @property(nonatomic, readonly) NSInteger autoReqType;
+@property(nonatomic) BOOL adReportClicked;
 @end
 
 #endif /* HBAd_h */

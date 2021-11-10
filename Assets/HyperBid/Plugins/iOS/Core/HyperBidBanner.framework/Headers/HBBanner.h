@@ -34,7 +34,7 @@
 @property(nonatomic, readonly, weak) HBWaterfall *finalWaterfall;
 @property(nonatomic, readonly) NSInteger autoReqType;
 @property(nonatomic) BOOL defaultPlayIfRequired;
-
+@property(nonatomic) BOOL adReportClicked;
 @property(nonatomic, copy) NSString *scene;
 
 @end

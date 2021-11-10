@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependencies>
+    <iosPods>
+        <iosPod name="MintegralAdSDK" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/RewardVideoAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/BidRewardVideoAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/BidInterstitialVideoAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/InterstitialVideoAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/InterstitialAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/BannerAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/BidBannerAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/SplashAd" version="7.0.3" />
+        <iosPod name="MintegralAdSDK/NativeAdvancedAd" version="7.0.3" />
+    </iosPods>
+</dependencies>

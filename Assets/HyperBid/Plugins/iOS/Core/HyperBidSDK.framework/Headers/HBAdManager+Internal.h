@@ -14,7 +14,6 @@
 #import "HBAdManager.h"
 #import "HBAd.h"
 //The value is (subclass of) UIViewController
-extern NSString *const kHBExtraInfoRootViewControllerKey;
 extern NSString *const kHBAdLoadingExtraRefreshFlagKey;//Defined in loader
 extern NSString *const kHBAdLoadingExtraAutoloadFlagKey;
 extern NSString *const kHBAdLoadingTrackingExtraStatusKey;
@@ -52,6 +51,10 @@ typedef NS_ENUM(NSInteger, HBAdManagerReadyAPICaller) {
     HBAdManagerReadyAPICallerReady = 0,
     HBAdManagerReadyAPICallerShow = 1
 };
+
+
+@protocol HBBaiduTemplateRenderingAttributeDelegate;
+
 @interface HBAdManager(Internal)
 #pragma mark - for inner usage
 //TODO: Packing the following method in a category and hide it from the client code.
@@ -63,6 +66,8 @@ typedef NS_ENUM(NSInteger, HBAdManagerReadyAPICaller) {
 -(BOOL) psIDExpired;
 @property(nonatomic, readonly) dispatch_queue_t show_api_control_queue;
 @property(nonatomic, readonly) NSString *psID;
+
+@property(nonatomic, strong) id<HBBaiduTemplateRenderingAttributeDelegate> baiduTemplateRenderingAttributeValue;
 
 /**
  Contains all the placement ids the developer has configured for this app. This property is thread-safe.
@@ -106,6 +111,19 @@ typedef NS_ENUM(NSInteger, HBAdManagerReadyAPICaller) {
 -(void) setAdBeingShownFlagForPlacementID:(NSString*)placementID;
 -(void) clearAdBeingShownFlagForPlacementID:(NSString*)placementID;
 -(BOOL) adBeingShownForPlacementID:(NSString*)placementID;
+
+#pragma mark - auto_refresh
+
+- (void)autoRefreshIsReadyPlacementID:(NSString *)placementID;
+
+- (BOOL)getFirstSplashLoadStatus:(NSString *)placementID;
+
+- (void)setFirstSplashLoadStatus:(NSString *)placementID status:(BOOL)status;
+
+- (BOOL)getFirstSplashTimeoutStatus:(NSString *)placementID;
+
+- (void)setFirstSplashTimeoutStatus:(NSString *)placementID status:(BOOL)status;
+
 @end
 
 @interface NSObject(DelegateBinding)

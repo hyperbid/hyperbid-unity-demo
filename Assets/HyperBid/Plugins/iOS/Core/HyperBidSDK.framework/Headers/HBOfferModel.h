@@ -49,13 +49,19 @@ typedef NS_ENUM(NSInteger, HBOfferInterActableArea) {
 @property(nonatomic, readwrite) NSString *storeURL;
 @property(nonatomic, readwrite) HBLinkType linkType;
 @property(nonatomic, readwrite) NSString *clickURL;
-@property(nonatomic, readwrite) NSString *deeplinkUrl;
+@property(nonatomic, readwrite) NSString *deeplinkUrl; 
 @property(nonatomic, readwrite) NSString *localResourceID;
 @property(nonatomic, readwrite) HBOfferModelType offerModelType;
 @property(nonatomic, readwrite) HBOfferCrtType crtType;
 
 @property(nonatomic, copy) NSString *jumpUrl;
 @property(nonatomic) NSInteger offerFirmID;
+
+// ad attributes
+@property(nonatomic, readwrite) NSString *adPublisher;
+@property(nonatomic, readwrite) NSString *adVersion;
+@property(nonatomic, readwrite) NSString *adPrivacy;
+@property(nonatomic, readwrite) NSString *adPermission;
 
 //banner(myoffer:5.6.6)
 @property(nonatomic, readwrite) NSString *bannerImageUrl;
@@ -79,10 +85,15 @@ typedef NS_ENUM(NSInteger, HBOfferInterActableArea) {
 // If it is YES, it means that the feedback has been done.
 @property(nonatomic) BOOL feedback;
 
-// v5.7.45 +
+// v5.7.47 +
 @property(nonatomic, readwrite) NSArray<NSString*>* deeplinkSuccessUrl;
-@property(nonatomic, readwrite) NSDictionary* at_deeplinkSuccessUrl;
+@property(nonatomic, readwrite) NSDictionary* hb_deeplinkSuccessUrl;
 
+// v5.7.56+
+@property(nonatomic, readwrite) HBSplashImageScaleType splashImageScaleType;
+
+
+- (BOOL)showAdAttributes;
 @end
 
 

@@ -23,5 +23,6 @@ extern NSString *const kHBNativeAdConfigurationContextNetworkLogoViewFrameKey;//
 @property(nonatomic, weak) UIViewController *rootViewController;
 @property(nonatomic, weak) id<HBNativeADDelegate> delegate;
 @property(nonatomic) BOOL sizeToFit;
+@property(nonatomic) BOOL useCustomPlayer;
 
 @end

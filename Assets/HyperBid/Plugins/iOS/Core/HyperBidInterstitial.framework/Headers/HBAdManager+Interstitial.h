@@ -23,6 +23,10 @@ extern NSString *const kHBInterstitialExtraAdSize600_900;
 @interface HBAdManager (Interstitial)
 -(BOOL) isReadyInterstitialWithPlacementID:(NSString*)placementID;
 -(HBCheckLoadModel*) checkInterstitialReadyAdInfo:(NSString*)placementID;
+
+// v5.7.53+
+- (NSArray<NSDictionary *> *)getInterstitialValidAdsForPlacementID:(NSString *)placementID;
+
 -(void) showInterstitialAd:(NSString*)placementID inViewController:(UIViewController*)viewController delegate:(id<HBInterstitialDelegate>)delegate;
 -(void) showInterstitialAd:(NSString*)placementID scene:(NSString*)scene inViewController:(UIViewController*)viewController delegate:(id<HBInterstitialDelegate>)delegate;
 @end

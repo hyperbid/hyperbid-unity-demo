@@ -1,0 +1,6 @@
+framework module HyperBidFacebookAdapter {
+  umbrella header "HyperBidFacebookAdapter.h"
+
+  export *
+  module * { export * }
+}

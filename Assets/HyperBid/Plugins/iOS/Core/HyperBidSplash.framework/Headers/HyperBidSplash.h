@@ -12,6 +12,8 @@
 #import <HyperBidSplash/HBAdManager+Splash.h>
 #import <HyperBidSplash/HBSplashDelegate.h>
 #import <HyperBidSplash/HBSplashCustomEvent.h>
+#import <HyperBidSplash/HBSplashManager.h>
+#import <HyperBidSplash/HBSplash.h>
 
 //! Project version number for HyperBidSplash.
 FOUNDATION_EXPORT double HyperBidSplashVersionNumber;

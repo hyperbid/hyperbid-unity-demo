@@ -44,6 +44,8 @@ extern NSString *const kHBTrackerExtraUGUnitIDKey;
 extern NSString *const kHBTrackerExtraASIDKey;
 extern NSString *const kHBTrackerExtraFormatKey;
 extern NSString *const kHBTrackerExtraRequestExpectedOfferNumberFlagKey;
+extern NSString *const kHBTrackerExtraClickImpKey;
+extern NSString *const kHBTrackerExtraPlacementModelKey;
 
 // ofm
 extern NSString *const kHBTrackerExtraOFMTrafficIDKey;

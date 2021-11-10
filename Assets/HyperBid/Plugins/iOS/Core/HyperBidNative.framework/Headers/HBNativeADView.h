@@ -9,6 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "HBNativeAd.h"
 #import "HBNativeRendering.h"
+
+typedef NS_ENUM(NSInteger, HBNativeAdRenderType) {
+    HBNativeAdRenderSelfRender = 1,
+    HBNativeAdRenderExpress = 2
+};
+
+typedef NS_ENUM(NSInteger, HBNativeAdType) {
+    HBNativeAdTypeFeed = 1,
+    HBNativeAdTypePaster = 2
+};
+
+typedef NS_ENUM(NSInteger, HBPlayerStatus) {
+    HBPlayerStatusStartPlay,
+    HBPlayerStatusPause,
+    HBPlayerStatusFinish,
+    HBPlayerStatusResume,
+    HBPlayerStatusAbort
+};
 /**
  * Subclasses are expected to call super when overriding willMoveToSuperview: because it it within this method the base class kick off the rendering process.
  */
@@ -55,6 +73,42 @@
  * The native ad that is being shown.
  */
 @property(nonatomic, readonly) HBNativeAd *nativeAd;
+/**
+ * The networkFirm id of native ad.
+ */
+@property(nonatomic, readonly) NSInteger networkFirmID;
+
+/**
+ * The duration of the video ad playing, unit ms
+ */
+- (CGFloat)videoPlayTime;
+/**
+ * Video ad duration, unit ms
+ */
+- (CGFloat)videoDuration;
+/**
+ Play mute switch
+ @param flag whether to mute
+ */
+- (void)muteEnable:(BOOL)flag;
+/**
+ * The video ad play
+ */
+- (void)videoPlay;
+/**
+ * The video ad pause
+ */
+- (void)videoPause;
+/**
+ * The native ad type
+ */
+- (HBNativeAdType)getNativeAdType;
+/**
+ * The native ad render type
+ */
+- (HBNativeAdRenderType)getCurrentNativeAdRenderType;
+
+- (void)recordCustomPlayerStatus:(HBPlayerStatus)status currentTime:(NSTimeInterval)time;
 
 @end
 
@@ -62,6 +116,9 @@
 extern NSString const* kHBExtraNativeImageSize228_150;
 extern NSString const* kHBExtraNativeImageSize690_388;
 extern NSString *const kHBExtraNativeImageSizeKey;
+extern NSString const* kHBExtraNativeImageSize1280_720;
+extern NSString const* kHBExtraNativeImageSize1200_628;
+extern NSString const* kHBExtraNativeImageSize640_640;
 
 @interface HBNativeADView(DrawVideo)
 /*

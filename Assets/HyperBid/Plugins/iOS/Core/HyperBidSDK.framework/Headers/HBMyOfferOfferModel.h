@@ -31,6 +31,14 @@
 //@property(nonatomic, readonly) NSInteger screenOrientation;
 @property(nonatomic, readwrite) HBClickMode performsAsynchronousRedirection;
 
+// v5.7.47
+@property(nonatomic, readwrite) HBMyOfferInterType interType;
+
+@property(nonatomic, readwrite) HBUserAgentType impressionUAType;
+@property(nonatomic, readwrite) HBUserAgentType clickUAType;
+
+@property (nonatomic, readwrite) HBMyOfferSetting *myOfferSetting;
+
 
 +(instancetype) mockOfferModel;
 @end

@@ -26,6 +26,7 @@ extern NSString *const kHBInterstitialDelegateExtraPriority;
 -(void) interstitialDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra;
 -(void) interstitialDeepLinkOrJumpForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra result:(BOOL)success;
 
+
 @end
 
 #endif /* HBInterstitialDelegate_h */

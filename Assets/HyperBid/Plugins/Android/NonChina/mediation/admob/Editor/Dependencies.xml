@@ -1,5 +1,5 @@
 <dependencies>
     <androidPackages>
-        <androidPackage spec="com.google.android.gms:play-services-ads:20.1.0"/>
+        <androidPackage spec="com.google.android.gms:play-services-ads:20.3.0"/>
     </androidPackages>
 </dependencies>

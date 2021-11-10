@@ -165,4 +165,8 @@ extern NSString *const kHBPlacementModelCustomDataKey;
 //todo: just for in-house list. It's not a good solution.
 @property(nonatomic, copy) NSArray<HBUnitGroupModel*>* waterfallA;
 
+// v5.7.56+
+@property(nonatomic, readonly) NSInteger encryptFlag;
+@property(nonatomic, readonly, copy) NSString *encryptPublicKey;
+
 @end

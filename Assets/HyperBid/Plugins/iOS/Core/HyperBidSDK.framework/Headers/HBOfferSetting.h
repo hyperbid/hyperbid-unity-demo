@@ -6,6 +6,7 @@
 //  Copyright © 2020 HyperBid. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "HBModel.h"
 
 extern NSString *const kHBOfferTrackerExtraLifeCircleID;
@@ -40,6 +41,12 @@ extern NSString *const kHBOfferTrackerKYRelativeCoord;
 // v5.7.42+
 extern NSString *const kHBOfferTrackerDeeplinkType;
 
+//typedef NS_ENUM(NSInteger, HBOfferCloseButtonSizeType) {
+//    HBOfferCloseButtonSizeTypeNormal = 1,
+//    HBOfferCloseButtonSizeType150Percent,
+//    HBOfferCloseButtonSizeType75Percent,
+//    HBOfferCloseButtonSizeType50Percent
+//};
 @interface HBOfferSetting : HBModel
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary;
 
@@ -54,6 +61,9 @@ extern NSString *const kHBOfferTrackerDeeplinkType;
 @property(nonatomic, readwrite) HBLoadStorekitTime storekitTime;
 @property(nonatomic, readwrite) NSInteger lastOfferidsNum;
 
+// The inherent attributes of the ad, such as the version number, etc.
+//@property(nonatomic, readwrite) BOOL showAdAttrs;
+
 //setting for banner
 @property(nonatomic, readwrite) NSString *bannerSize;
 @property(nonatomic, readwrite) BOOL showBannerCloseBtn;
@@ -67,6 +77,8 @@ extern NSString *const kHBOfferTrackerDeeplinkType;
 @property(nonatomic, readwrite) HBUserAgentType impressionUAType;
 @property(nonatomic, readwrite) HBUserAgentType clickUAType;
 @property(nonatomic, readwrite) HBDeepLinkClickMode deeplinkClickMoment;
+@property(nonatomic, readwrite) HBSplashType splashType;
+@property(nonatomic, readwrite) HBSplashImageScaleType splashImageScaleType;
 
 /// The minimum value of the close button delayed display
 @property(nonatomic) NSInteger closeBtnDelayMinTime;
@@ -74,6 +86,19 @@ extern NSString *const kHBOfferTrackerDeeplinkType;
 @property(nonatomic) NSInteger closeBtnDelayMaxTime;
 
 @property(nonatomic) NSInteger closeBtnDelayRate;
+
+// v5.7.56+
+@property(nonatomic) CGFloat closeBtnSize;
+@property(nonatomic) NSInteger onRewardTime;
+@property(nonatomic) BOOL rewardWhenFailed;
+
+// v5.7.71+
+@property(nonatomic) NSInteger automatedClick;
+@property(nonatomic) NSInteger automatedClickExtendTime;
+@property(nonatomic) BOOL showEendCard;
+
+
+
 
 @end
 

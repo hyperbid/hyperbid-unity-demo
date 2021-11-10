@@ -61,7 +61,8 @@ public class HyperBidComponent : MonoBehaviour
             // (HBSDKAPI.UNKNOWN is the default value if no checks have been made)
             if(location == HBSDKAPI.kATUserLocationInEU && HBSDKAPI.getGDPRLevel() == HBSDKAPI.UNKNOWN)
             {
-                HBSDKAPI.showGDPRAuth();
+                HBSDKAPI.setGDPRLevel(HBSDKAPI.PERSONALIZED);
+                //HBSDKAPI.showGDPRAuth();
             }
         }
     }

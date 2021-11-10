@@ -23,7 +23,7 @@ extern NSString *const kHBNativeADAssetsIconURLKey;
 extern NSString *const kHBNativeADAssetsImageURLKey;
 extern NSString *const kHBNativeADAssetsLogoURLKey;
 extern NSString *const kHBNativeADAssetsSponsoredImageKey;
-
+extern NSString *const kHBNativeADAssetsVideoUrlKey;
 extern NSString *const kHBAdAssetsCustomObjectKey;
 
 extern NSString *const kHBADLoadingStartLoadNotification;
@@ -34,6 +34,11 @@ extern NSString *const kHBADLoadingNotificationUserInfoPlacementKey;//Not used
 extern NSString *const kHBADLoadingNotificationUserInfoUnitGroupKey;//Not used
 extern NSString *const kHBADLoadingNotificationUserInfoErrorKey;
 extern NSString *const kHBADLoadingNotificationUserInfoExtraKey;
+
+
+extern NSString *const kHBADUserAreaKey;
+
+
 
 /**
  Adopters are expected to implement logic for network offers, for which storage mechanisms must be devise.
@@ -75,7 +80,12 @@ extern NSString *const kHBADLoadingNotificationUserInfoExtraKey;
 -(void) setInitFlag:(NSInteger)flag forNetwork:(NSString*)networkName;
 -(BOOL) initWithAppID:(NSString*)appID appKey:(NSString*)appKey error:(NSError**)error isOfm:(BOOL) isOfm shouldUpdateOfm:(BOOL)shouldUpdateOfm completion:(void (^)(NSDictionary *, NSError *)) completion;
 -(void) applyAppSettingWithCompletion:(void (^)(NSDictionary * setting, NSError * error)) completion shouldUpdateOfm:(BOOL)shouldUpdateOfm;
+
 @property(nonatomic, readonly) NSString *userAgent;
+
+
+
+
 @end
 
 #endif /* HBAPI_Internal_h */

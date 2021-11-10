@@ -47,6 +47,8 @@ typedef NS_ENUM(NSInteger, HBUnitGroupFinishType) {
 @property(nonatomic, readonly) NSUInteger numberOfTimeoutRequests;
 @property(nonatomic, readonly) HBWaterfallType type;
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
+
+- (NSMutableArray<HBUnitGroupModel *> *)getWaterfallUnitGroups;
 @end
 
 @interface HBWaterfallManager : NSObject

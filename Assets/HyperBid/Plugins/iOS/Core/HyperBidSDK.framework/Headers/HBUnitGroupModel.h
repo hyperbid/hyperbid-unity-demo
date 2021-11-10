@@ -51,8 +51,15 @@
 @property(nonatomic, readonly) BOOL waterfallTimeOutSW;
 @property(nonatomic, readonly) BOOL reportBidPriceSW;
 @property(nonatomic, readonly) BOOL bidRealTimeLoadSW;
+@property(nonatomic, readonly) BOOL returnHBEcpmSW;
 @property(nonatomic, readwrite) HBBidInfo *bidInfo;
 
 @property(nonatomic, readonly, getter=isBidInfoNoPrice) BOOL bidInfoNoPrice;
+@property(nonatomic, readonly) BOOL unitGroupS2SSW;
+
+@property(nonatomic) BOOL s2sRewardEnabled;
+
+// v5.7.61+
+@property(nonatomic, readonly) NSInteger weight;
 
 @end

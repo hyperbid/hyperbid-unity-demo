@@ -19,6 +19,8 @@ extern NSString *const kHBAdapterCustomInfoExtraKey;
 @class HBMyOfferOfferModel;
 @class HBBidInfo;
 @class HBWaterfall;
+@class HBInHouseBidRequest;
+
 @protocol HBAdAdapter<NSObject>
 @property (nonatomic,copy) void (^metaDataDidLoadedBlock)(void);
 /*
@@ -33,6 +35,7 @@ extern NSString *const kHBAdapterCustomInfoExtraKey;
 +(void) bidRequestWithPlacementModel:(HBPlacementModel*)placementModel unitGroupModel:(HBUnitGroupModel*)unitGroupModel info:(NSDictionary*)info completion:(void(^)(HBBidInfo *bidInfo, NSError *error))completion;
 @optional
 +(NSDictionary*)headerBiddingParametersWithUnitGroupModel:(HBUnitGroupModel*)model extra:(NSDictionary *)extra;
++(HBInHouseBidRequest*)inHouseBiddingRequestWithPlacementModel:(HBPlacementModel*)placementModel unitGroupModel:(HBUnitGroupModel*)unitGroupModel extra:(NSDictionary *)extra;
 +(NSString*) adsourceRemoteKeyWithContent:(NSDictionary*)content unitGroupModel:(HBUnitGroupModel *)unitGroupModel;
 @end
 #endif /* HBAdAdapter_h */

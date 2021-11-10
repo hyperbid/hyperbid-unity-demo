@@ -98,7 +98,18 @@ typedef NS_ENUM(NSInteger, HBUnitGroupType) {
     HBUnitGroupTypeNormal = 1,
     HBUnitGroupTypeAdx,
     HBUnitGroupTypeC2S,
-    HBUnitGroupTypeS2S
+    HBUnitGroupTypeS2S,
+    HBUnitGroupTypeInHouse
+};
+
+typedef NS_ENUM(NSInteger, HBSplashType) {
+    HBSplashTypeSplice = 1,
+    HBSplashTypeFullScreen
+};
+
+typedef NS_ENUM(NSInteger, HBSplashImageScaleType) {
+    HBSplashImageScaleTypeFit = 1,
+    HBSplashImageScaleTypeFill
 };
 
 @interface HBModel : NSObject

@@ -26,5 +26,7 @@ extern NSString *const kHBNativeDelegateExtraPriority;
 -(void) didLoadSuccessDrawWith:(NSArray*)views placementID:(NSString*)placementID extra:(NSDictionary *)extra;
 -(void) didDeepLinkOrJumpInAdView:(HBNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary*)extra result:(BOOL)success;
 
+// v5.7.47
+-(void) didCloseDetailInAdView:(HBNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra;
 @end
 #endif /* HBNativeADDelegate_h */

@@ -59,6 +59,7 @@ extern NSInteger const HBADLoadingErrorCodeNoUnitGroupsFoundInPlacement;
 extern NSInteger const HBADLoadingErrorCodeUnitGroupsFilteredOut;
 extern NSInteger const HBADLoadingErrorCodeFailureTooFrequent;
 extern NSInteger const HBADLoadingErrorCodeLoadCapsExceeded;
+extern NSInteger const HBADLoadingErrorCodeUnitGroupsExpired;
 
 extern NSInteger const HBADLoadingADXFailedCode;
 
@@ -103,6 +104,7 @@ extern NSString *const kHBNetworkNameKidoz;
 extern NSString *const kHBNetworkNameMyTarget;
 extern NSString *const kHBNetworkNameMobrain;
 extern NSString *const kHBNetworkNameMax;
+extern NSString *const kHBNetworkNameklevin;
 
 extern NSString *const kHBInmobiGDPRStringKey;
 extern NSString *const kHBInmobiConsentStringKey;
@@ -153,6 +155,9 @@ extern NSString *const kHBDeviceDataInfoOrientKey;
 extern NSString *const kHBDeviceDataInfoIDFAKey;
 extern NSString *const kHBDeviceDataInfoIDFVKey;
 
+extern NSString *const kHBAdLoadingExtraBUAdLoadTypeKey;
+
+
 typedef NS_ENUM(NSInteger, HBUserLocation) {
     HBUserLocationUnknown = 0,
     HBUserLocationInEU = 1,
@@ -171,6 +176,19 @@ typedef NS_ENUM(NSUInteger, HBNetworkTerritory) {
     HBNetworkTerritory_NO_CN,
 };
 
+typedef NS_ENUM(NSUInteger, HBAreaCode) {
+    HBAreaCodeGlobal = 1,
+    HBAreaCodeChinese_mainland,
+};
+
+typedef NS_ENUM(NSInteger, HBBUAdLoadType) {
+    HBBUAdLoadTypeUnknown                    = -1,//Unknown
+    HBBUAdLoadTypePreload                    = 1,//Preload resources
+    HBBUAdLoadTypeLoad                       = 3,//Load resources in real time
+};
+
+
+
 @interface HBAPI : NSObject
 
 +(NSDictionary<NSNumber*, NSString*>*)networkNameMap;
@@ -179,6 +197,15 @@ typedef NS_ENUM(NSUInteger, HBNetworkTerritory) {
 +(instancetype)sharedInstance;
 +(BOOL) getMPisInit;
 +(void) setMPisInit:(BOOL)MPisInit;
+
++ (void)testModeInfo;
+
+-(void) setLocationLongitude:(double)longitude dimension:(double)dimension;
+
+-(void) setWXStatus:(BOOL)isInstallWX;
+
+
+
 /*
  only for adx，onlineApi，MyOffer  banner&splash adLogo，NO by default
  */
@@ -203,6 +230,12 @@ typedef NS_ENUM(NSUInteger, HBNetworkTerritory) {
 -(BOOL)inDataProtectionArea;
 
 -(void) getGDPRWithCallback:(void(^)(HBUserLocation location))callback;
+
+- (void) getAreaSuccess:(void(^)(NSString *areaCodeStr))success
+                failure: (void(^)(NSError *error))failure;
+
+- (void) setUserDataArea:(HBAreaCode)areaCode;
+
 
 -(NSString*)psID;
     
@@ -295,4 +328,7 @@ set denied Upload Info list for sdk to Control report
 -(NSArray*) deniedUploadInfoArray;
 -(BOOL) isContainsForDeniedUploadInfoArray:(NSString *)key;
 
+
 @end
+
+

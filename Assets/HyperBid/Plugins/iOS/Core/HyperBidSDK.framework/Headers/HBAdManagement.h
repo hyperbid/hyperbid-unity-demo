@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, HBAdSourceStatus) {
 @protocol HBAdManagement<NSObject>
 -(void) addAdWithADAssets:(NSDictionary*)assets withPlacementSetting:(HBPlacementModel*)placementModel unitGroup:(HBUnitGroupModel*)unitGroup finalWaterfall:(HBWaterfall*)finalWaterfall requestID:(NSString*)requestID;
 -(BOOL) inspectAdSourceStatusWithPlacementModel:(HBPlacementModel*)placementModel unitGroup:(HBUnitGroupModel*)unitGroup finalWaterfall:(HBWaterfall*)finalWaterfall requestID:(NSString*)requestID extraInfo:(NSArray<NSDictionary*>*__autoreleasing*)extraInfo;
+-(void) updateAdSourceOffersWithPlacementModel:(HBPlacementModel*)placementModel finalWaterfall:(HBWaterfall*)finalWaterfall requestID:(NSString*)requestID;
 -(void) invalidateStatusForAd:(id<HBAd>)ad;
 -(BOOL) adSourceStatusInPlacementModel:(HBPlacementModel*)placementModel unitGroup:(HBUnitGroupModel*)unitGroup;
 
@@ -58,7 +59,7 @@ typedef NS_ENUM(NSInteger, HBAdSourceStatus) {
  */
 -(NSDictionary<NSNumber*, NSNumber*>*)placementStatusWithPlacementID:(NSString*)placementID;
 -(void) clearCahceForPlacementID:(NSString*)placementID;
--(void) removeAdForPlacementID:(NSString*)placementID unitGroupID:(NSString*)unitGroupID;
+-(void) removeAdForPlacementID:(NSString*)placementID unitID:(NSString*)unitID;
 -(NSInteger) highestPriorityOfShownAdInPlacementID:(NSString*)placementID requestID:(NSString*)requestID;
 @end
 

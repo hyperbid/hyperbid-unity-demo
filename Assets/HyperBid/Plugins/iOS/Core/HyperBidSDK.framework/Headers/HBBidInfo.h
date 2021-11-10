@@ -9,12 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "HBModel.h"
 
+#define kHBBiddingInitiatingFailedCode -2
+#define kHBBiddingNetworkTimeoutCode -3
+#define KHBBiddingS2SConnectionErrorCode -4
+#define kHBBiddingBiddingFailedByCapCode -5
+#define kHBBiddingBiddingFailedByPacingCode -6
+#define kHBBiddingBiddingFailedIntervalCode -7
+#define kHBBiddingBiddingFailedByExcludedCode -8
+#define kHBBiddingBiddingFailedIntegrationErrorCode -9
+
 @interface HBBidInfo : HBModel
 @property(nonatomic, readonly) NSDate *expireDate;
 @property(nonatomic, readonly) NSDictionary *offerDataDict;
 @property(nonatomic, readonly) NSString *bidId;
 @property(nonatomic, readonly) NSString *tpBidId;
 @property(nonatomic, readonly) NSString *price;
+@property(nonatomic, readonly) NSString *curRate;
 @property(nonatomic, readonly) id customObject;
 @property(nonatomic, readonly) NSString *placementID;
 @property(nonatomic, readonly) NSString *unitGroupUnitID;
@@ -25,7 +35,7 @@
 @property(nonatomic, readonly) NSString *bURLWin;
 @property(nonatomic, readwrite) BOOL bidPriceSmallerlast;
 @property(nonatomic, readwrite) BOOL bidResultIsFailed;
-@property(nonatomic, readwrite) NSString *errormsg;
+@property(nonatomic, readwrite) NSError *error;
 @property(nonatomic, readonly, getter=isValid) BOOL valid;
 @property(nonatomic, readonly, getter=isExpired) BOOL expired;
 @property(nonatomic, readonly, getter=isSendNotif) BOOL sendNotif;
