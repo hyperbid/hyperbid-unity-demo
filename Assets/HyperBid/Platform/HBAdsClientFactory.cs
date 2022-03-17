@@ -55,21 +55,6 @@ namespace HyperBid
             return new UnityNativeAdClient();
         }
 
-        public static IHBNativeBannerAdClient BuildNativeBannerAdClient()
-        {
-           #if UNITY_EDITOR
-            // Testing UNITY_EDITOR first because the editor also responds to the currently
-            // selected platform.
-            #elif UNITY_ANDROID
-                return new HyperBid.Android.HBNativeBannerAdClient();
-            #elif (UNITY_5 && UNITY_IOS) || UNITY_IPHONE
-                return new HyperBid.iOS.HBNativeBannerAdClient();
-            #else
-
-            #endif
-            return new UnityNativeBannerAdClient();
-        }
-
         public static IHBRewardedVideoAdClient BuildRewardedVideoAdClient()
         {
             #if UNITY_EDITOR
@@ -105,6 +90,23 @@ namespace HyperBid
             return new UnitySDKAPIClient();
         }
 
+        public static IHBDownloadClient BuildDownloadClient()
+        {
+            Debug.Log("BuildDownloadClient");
+            #if UNITY_EDITOR
+                Debug.Log("Unity Editor");
+                        // Testing UNITY_EDITOR first because the editor also responds to the currently
+                        // selected platform.
+
+            #elif UNITY_ANDROID
+                return new HyperBid.Android.ATDownloadClient();
+               
+            #else
+
+            #endif
+                return new UnityDownloadClient();
+        }
+
     }
 
     class UnitySDKAPIClient:IHBSDKAPIClient
@@ -120,13 +122,19 @@ namespace HyperBid
         public void initCustomMap(string cutomMap){ }
         public void setCustomDataForPlacementID(string customData, string placementID){ }
         public void setLogDebug(bool isDebug){ }
-        public void setNetworkTerritory(int territory){ }
         public int getGDPRLevel(){ return HBSDKAPI.PERSONALIZED; }
         public bool isEUTraffic() { return false; }
         public void deniedUploadDeviceInfo(string deniedInfo) { }
+        public void setExcludeBundleIdArray(string bundleIds) { }
+        public void setExcludeAdSourceIdArrayForPlacementID(string placementID, string adsourceIds) { }
+        public void setSDKArea(int area) { }
+        public void getArea(ATGetAreaListener listener) { }
+        public void setWXStatus(bool install) { }
+        public void setLocation(double longitude, double latitude) { }
+
     }
 
-    class UnityBannerClient:IHBBannerAdClient
+    class UnityBannerClient: IHBBannerAdClient
     {
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
         public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
@@ -136,6 +144,12 @@ namespace HyperBid
         public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
 
         public void loadBannerAd(string unitId, string mapJson){
             onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(unitId, "Must run on the Android or IOS platform!", "-1"));
@@ -158,7 +172,9 @@ namespace HyperBid
        public void showBannerAd(string unitId){ }
       
        public void cleanCache(string unitId){}
-   }
+
+        public string getValidAdCaches(string unitId) { return ""; }
+    }
 
     class UnityInterstitialClient : IHBInterstitialAdClient
     {
@@ -171,6 +187,12 @@ namespace HyperBid
         public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
         public event EventHandler<HBAdErrorEventArgs> onAdVideoFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
 
         public void loadInterstitialAd(string unitId, string mapJson){
             onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(unitId, "Must run on the Android or IOS platform!", "-1"));
@@ -182,7 +204,29 @@ namespace HyperBid
 
         public void showInterstitialAd(string unitId, string mapJson){}
         
-       public void cleanCache(string unitId){}
+        public void cleanCache(string unitId){}
+
+        public string getValidAdCaches(string unitId) { return ""; }
+
+        public void entryScenarioWithPlacementID(string placementId, string scenarioID){}
+
+        
+		public void addAutoLoadAdPlacementID(string[] placementIDList) {}
+
+        public void removeAutoLoadAdPlacementID(string placementId){}
+
+		public bool autoLoadInterstitialAdReadyForPlacementID(string placementId){return false;}
+
+		public string getAutoValidAdCaches(string placementId){return "";}
+        public string checkAutoAdStatus(string unitId) { return ""; }
+
+
+        public void setAutoLocalExtra(string placementId, string mapJson){}
+
+        public void entryAutoAdScenarioWithPlacementID(string placementId, string scenarioID){}
+
+		public void showAutoAd(string placementId, string mapJson){}
+
     }
 
     class UnityNativeAdClient : IHBNativeAdClient
@@ -195,6 +239,12 @@ namespace HyperBid
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
         public event EventHandler<HBAdProgressEventArgs> onAdVideoProgressEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
 
         public void loadNativeAd(string unitId, string mapJson){
             onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(unitId,  "Must run on the Android or IOS platform!", "-1"));
@@ -204,6 +254,10 @@ namespace HyperBid
 
        public string checkAdStatus(string unitId) { return ""; }
 
+       public string getValidAdCaches(string unitId) { return ""; }
+
+       public void entryScenarioWithPlacementID(string placementId, string scenarioID){}
+        
        public void renderAdToScene(string unitId, HBNativeAdView anyThinkNativeAdView){}
 
        public void renderAdToScene(string unitId, HBNativeAdView anyThinkNativeAdView, string mapJson){}
@@ -219,26 +273,6 @@ namespace HyperBid
        public void setLocalExtra(string unitid, string mapJson){}
     }
 
-    class UnityNativeBannerAdClient : IHBNativeBannerAdClient
-    {
-        public event EventHandler<HBAdEventArgs> onAdLoadEvent;
-        public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdImpressEvent;
-        public event EventHandler<HBAdEventArgs> onAdClickEvent;
-        public event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
-        public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
-        public event EventHandler<HBAdEventArgs> onAdCloseButtonClickEvent;
-
-        public void loadAd(string unitId, string mapJson){
-            onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(unitId, "Must run on the Android or IOS platform!", "-1"));
-       }
-
-       public bool adReady(string unitId) { return false; }
-       
-       public void showAd(string unitId, HBRect rect, Dictionary<string, string> pairs){}
-        
-       public void removeAd(string unitId){}
-    }
 
     class UnityRewardedVideoAdClient : IHBRewardedVideoAdClient
     {
@@ -250,6 +284,17 @@ namespace HyperBid
         public event EventHandler<HBAdRewardEventArgs> onAdVideoCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdClickEvent;
         public event EventHandler<HBAdRewardEventArgs> onRewardEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
+        public event EventHandler<HBAdEventArgs> onPlayAgainStart;
+        public event EventHandler<HBAdEventArgs> onPlayAgainEnd;
+        public event EventHandler<HBAdErrorEventArgs> onPlayAgainFailure;
+        public event EventHandler<HBAdEventArgs> onPlayAgainClick;
+        public event EventHandler<HBAdEventArgs> onPlayAgainReward;
 
         public void loadVideoAd(string unitId, string mapJson){
             onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(unitId, "Must run on the Android or IOS platform!", "-1"));
@@ -259,7 +304,39 @@ namespace HyperBid
 
         public string checkAdStatus(string unitId) { return ""; }
 
+        public string getValidAdCaches(string unitId) { return ""; }
+
+        public void entryScenarioWithPlacementID(string placementId, string scenarioID){}
+
         public void showAd(string unitId, string mapJson){}
 
+		public void addAutoLoadAdPlacementID(string[] placementIDList) {}
+
+        public void removeAutoLoadAdPlacementID(string placementId){}
+
+		public bool autoLoadRewardedVideoReadyForPlacementID(string placementId){return false;}
+
+		public string getAutoValidAdCaches(string placementId){return "";}
+        
+        public string checkAutoAdStatus(string unitId) { return ""; }
+
+        public void setAutoLocalExtra(string placementId, string mapJson){}
+
+        public void entryAutoAdScenarioWithPlacementID(string placementId, string scenarioID){}
+
+		public void showAutoAd(string placementId, string mapJson){}
+
+
+
+
+    }
+
+
+    class UnityDownloadClient : IHBDownloadClient
+    {
+        public void setListener(HBDownloadAdListener listener)
+        {
+            Debug.Log("Must run on Android platform");
+        }
     }
 }

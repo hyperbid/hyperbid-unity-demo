@@ -12,7 +12,8 @@
 
 extern NSString *const kHBSplashDelegateExtraNetworkIDKey;
 extern NSString *const kHBSplashDelegateExtraAdSourceIDKey;
-extern NSString *const kHBSplashDelegateExtraIsHeaderBidding;
+extern NSString *const kHBSplashDelegateExtraIsHeaderBidding DEPRECATED_MSG_ATTRIBUTE("The kHBSplashDelegateExtraIsHeaderBidding class will be obsolete, please use kHBSplashDelegateExtraAdSourceIsHeaderBidding");
+extern NSString *const kHBSplashDelegateExtraAdSourceIsHeaderBidding;
 extern NSString *const kHBSplashDelegateExtraPrice;
 extern NSString *const kHBSplashDelegateExtraPriority;
 

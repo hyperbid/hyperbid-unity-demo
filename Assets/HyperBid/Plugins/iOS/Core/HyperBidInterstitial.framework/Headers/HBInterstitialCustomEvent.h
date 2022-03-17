@@ -27,7 +27,7 @@
 -(HBNativeADSourceType) adSourceType;
 -(instancetype) initWithInfo:(NSDictionary*)serverInfo localInfo:(NSDictionary*)localInfo ;
 @property(nonatomic, weak) id<HBInterstitialDelegate> delegate;
-@property(nonatomic, weak) HBInterstitial *interstitial;
+@property(nonatomic, strong) HBInterstitial *interstitial;
 @property(nonatomic, readonly) NSString *unitID;
 @property(nonatomic, assign) NSInteger priorityIndex;
 @end

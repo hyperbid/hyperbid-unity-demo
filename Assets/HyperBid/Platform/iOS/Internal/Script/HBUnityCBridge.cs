@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AOT;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 using System;
 
 public class HBUnityCBridge {
@@ -23,18 +23,16 @@ public class HBUnityCBridge {
     [MonoPInvokeCallback(typeof(CCallBack))]
     static public void MessageFromC(string wrapperClass, string msg) {
         Debug.Log("Unity: HBUnityCBridge::MessageFromC(" + wrapperClass + "," + msg + ")");
-        Dictionary<string, object> msgDict = Json.Deserialize(msg) as Dictionary<string, object>;
+        JsonData jsonData = JsonMapper.ToObject(msg);
         if (wrapperClass.Equals("HBRewardedVideoWrapper")) {
             Debug.Log("Unity: HBUnityCBridge::MessageFromC(), hit rv");
-            HBRewardedVideoWrapper.InvokeCallback((string)msgDict["callback"], (Dictionary<string, object>)msgDict["msg"]);
+            HBRewardedVideoWrapper.InvokeCallback(jsonData);
         } else if (wrapperClass.Equals("HBNativeAdWrapper")) {
-            HBNativeAdWrapper.InvokeCallback((string)msgDict["callback"], (Dictionary<string, object>)msgDict["msg"]);
+            HBNativeAdWrapper.InvokeCallback(jsonData);
         } else if (wrapperClass.Equals("HBInterstitialAdWrapper")) {
-            HBInterstitialAdWrapper.InvokeCallback((string)msgDict["callback"], (Dictionary<string, object>)msgDict["msg"]);
+            HBInterstitialAdWrapper.InvokeCallback(jsonData);
         } else if (wrapperClass.Equals("HBBannerAdWrapper")) {
-            HBBannerAdWrapper.InvokeCallback((string)msgDict["callback"], (Dictionary<string, object>)msgDict["msg"]);
-        } else if (wrapperClass.Equals("HBNativeBannerAdWrapper")) {
-            HBNativeBannerAdWrapper.InvokeCallback((string)msgDict["callback"], (Dictionary<string, object>)msgDict["msg"]);
+            HBBannerAdWrapper.InvokeCallback(jsonData);
         }
     }
 
@@ -49,7 +47,7 @@ public class HBUnityCBridge {
         msgDict.Add("selector", selector);
         msgDict.Add("arguments", arguments);
         #if UNITY_IOS || UNITY_IPHONE
-        return get_message_for_unity(Json.Serialize(msgDict), null);
+        return get_message_for_unity(JsonMapper.ToJson(msgDict), null);
         #else
         return 0;
         #endif
@@ -62,7 +60,7 @@ public class HBUnityCBridge {
         msgDict.Add("selector", selector);
         msgDict.Add("arguments", arguments);
         #if UNITY_IOS || UNITY_IPHONE
-        return get_string_message_for_unity(Json.Serialize(msgDict), null);
+        return get_string_message_for_unity(JsonMapper.ToJson(msgDict), null);
         #else 
         return "";
         #endif
@@ -77,7 +75,7 @@ public class HBUnityCBridge {
         CCallBack callback = null;
         if (carryCallback) callback = MessageFromC;
         #if UNITY_IOS || UNITY_IPHONE
-        return message_from_unity(Json.Serialize(msgDict), callback);
+        return message_from_unity(JsonMapper.ToJson(msgDict), callback);
         #else
         return false;
         #endif
@@ -95,7 +93,7 @@ public class HBUnityCBridge {
         msgDict.Add("selector", selector);
         msgDict.Add("arguments", arguments);
 #if UNITY_IOS || UNITY_IPHONE
-        message_from_unity(Json.Serialize(msgDict), callback);
+        message_from_unity(JsonMapper.ToJson(msgDict), callback);
 #endif
     }
 }

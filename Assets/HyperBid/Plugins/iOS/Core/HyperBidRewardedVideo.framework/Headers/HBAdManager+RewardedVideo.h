@@ -18,6 +18,7 @@ extern NSString *const kHBAdLoadingExtraLocationKey;
 extern NSString *const kHBAdLoadingExtraMediaExtraKey;
 extern NSString *const kHBAdLoadingExtraRewardNameKey;
 extern NSString *const kHBAdLoadingExtraRewardAmountKey;
+extern NSString *const kHBAdLoadingExtraNetworkPlacementIDKey;
 
 extern NSString *const kHBRewardedVideoCallbackExtraAdsourceIDKey;
 extern NSString *const kHBRewardedVideoCallbackExtraNetworkIDKey;
@@ -33,4 +34,7 @@ extern NSString *const kHBRewardedVideoKlevinRewardTriggerKey;
 - (NSArray<NSDictionary *> *)getRewardedVideoValidAdsForPlacementID:(NSString *)placementID;
 -(void) showRewardedVideoAd:(NSString*)placementID inViewController:(UIViewController*)viewController delegate:(id<HBRewardedVideoDelegate>)delegate;
 -(void) showRewardedVideoAd:(NSString*)placementID scene:(NSString*)scene inViewController:(UIViewController*)viewController delegate:(id<HBRewardedVideoDelegate>)delegate;
+
+-(void)entryRewardedVideoScenarioWithPlacementID:(NSString *)placementID scene:(NSString*)scene;
+
 @end

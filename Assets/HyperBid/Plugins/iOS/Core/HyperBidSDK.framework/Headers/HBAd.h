@@ -16,6 +16,8 @@
 -(void) renewAdWithPriority:(NSInteger)priority placementModel:(HBPlacementModel*)placementModel unitGroup:(HBUnitGroupModel*)unitGroup requestID:(NSString*)requestID;
 @property(nonatomic, readonly) HBPlacementModel *placementModel;
 @property(nonatomic, readonly) HBUnitGroupModel *unitGroup;
+@property(nonatomic) NSMutableArray<NSDictionary*> *unitGroupInfos;
+
 /**
  Priority is calculate by the index of the unit group in the placement's unit group list; zero is the highest
  */

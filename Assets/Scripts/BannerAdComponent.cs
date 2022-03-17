@@ -91,7 +91,7 @@ public class BannerAdComponent : MonoBehaviour
     // shows the ad on the screen
     public void ShowAd() {
         //if (CheckAdStatus()) {
-            HBBannerAd.Instance.showBannerAd(_placementId, HBBannerAdLoadingExtra.kHBBannerAdShowingPisitionBottom);
+            HBBannerAd.Instance.showBannerAd(_placementId, HBBannerAdLoadingExtra.kHBBannerAdShowingPositionBottom);
         //}
     }
 

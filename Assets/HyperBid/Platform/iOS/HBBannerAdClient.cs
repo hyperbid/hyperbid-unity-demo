@@ -16,6 +16,12 @@ namespace HyperBid.iOS {
         public event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseEvent;
         public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
 
         public void addsetting(string placementId,string json){
 			//todo...
@@ -32,7 +38,13 @@ namespace HyperBid.iOS {
             return HBBannerAdWrapper.checkAdStatus(placementId);
         }
 
-	    public void showBannerAd(string placementId, HBRect rect) {
+		public string getValidAdCaches(string placementId)
+		{
+			Debug.Log("Unity: HBBannerAdClient::getValidAdCaches()");
+			return HBBannerAdWrapper.getValidAdCaches(placementId);
+		}
+
+		public void showBannerAd(string placementId, HBRect rect) {
 			Debug.Log("Unity: HBBannerAdClient::showBannerAd()");
 			HBBannerAdWrapper.showBannerAd(placementId, rect);
 	    }
@@ -112,6 +124,37 @@ namespace HyperBid.iOS {
 	    public void OnBannerAdCloseButtonTapped(string placementId, string callbackJson) {
 			Debug.Log("Unity: HBBannerAdWrapper::OnBannerAdCloseButton()");
 	        onAdCloseButtonTappedEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+	    }
+		//auto callbacks
+	    public void startLoadingADSource(string placementId, string callbackJson) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::startLoadingADSource()");
+            onAdStartLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+	    }
+	    public void finishLoadingADSource(string placementId, string callbackJson) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::finishLoadingADSource()");
+            onAdFinishLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+	    }	
+	    public void failToLoadADSource(string placementId,string callbackJson, string code, string error) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::failToLoadADSource()");
+	        onAdFailureLoadSource?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+	    }
+		public void startBiddingADSource(string placementId, string callbackJson) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::startBiddingADSource()");
+            onAdStartBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+	    }
+	    public void finishBiddingADSource(string placementId, string callbackJson) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::finishBiddingADSource()");
+            onAdFinishBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+	    }	
+	    public void failBiddingADSource(string placementId, string callbackJson,string code, string error) 
+		{
+	        Debug.Log("Unity: HBBannerAdWrapper::failBiddingADSource()");
+	        onAdFailBidding?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
 	    }
 	}
 }

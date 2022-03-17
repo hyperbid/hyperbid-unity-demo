@@ -5,10 +5,13 @@ using HyperBid.Common;
 using HyperBid.Api;
 using AOT;
 using System;
+using HyperBid.ThirdParty.LitJson;
 
 namespace HyperBid.iOS {
 	public class HBSDKAPIClient : IHBSDKAPIClient {
         static private ATGetUserLocationListener locationListener;
+        static private ATGetAreaListener areaListener;
+
         public HBSDKAPIClient () {
             Debug.Log("Unity:HBSDKAPIClient::HBSDKAPIClient()");
 		}
@@ -37,6 +40,30 @@ namespace HyperBid.iOS {
        static public int DidGetUserLocation(string location)
         {
             if (locationListener != null) { locationListener.didGetUserLocation(Int32.Parse(location)); }
+            return 0;
+        }
+
+        [MonoPInvokeCallback(typeof(Func<string, int>))]
+        static public int GetAreaInfo(string msg)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::GetAreaInfo(" + msg + ")");
+            if (areaListener != null) 
+            { 
+                JsonData msgJsonData = JsonMapper.ToObject(msg);
+                IDictionary idic = (System.Collections.IDictionary)msgJsonData;
+
+                if (idic.Contains("areaCode")) {
+                    string areaCode = (string)msgJsonData["areaCode"];
+                    Debug.Log("Unity:HBSDKAPIClient::GetAreaInfo::areaCode(" + areaCode + ")");
+                    areaListener.onArea(areaCode);
+                }
+                
+                if (idic.Contains("errorMsg")) { 
+                    string errorMsg = (string)msgJsonData["errorMsg"];
+                    Debug.Log("Unity:HBSDKAPIClient::GetAreaInfo::errorMsg(" + errorMsg + ")");
+                    areaListener.onError(errorMsg);
+                }
+            }
             return 0;
         }
 
@@ -99,11 +126,6 @@ namespace HyperBid.iOS {
             HBManager.setLogDebug(isDebug);
         }
 
-        public void setNetworkTerritory(int territory)
-        {
-            HBManager.setNetworkTerritory(territory);
-        }
-
         public int getGDPRLevel()
         {
             return HBManager.GetDataConsent();
@@ -117,6 +139,43 @@ namespace HyperBid.iOS {
         public void deniedUploadDeviceInfo(string deniedInfo)
         {
             HBManager.deniedUploadDeviceInfo(deniedInfo);
+        }
+
+        public void setExcludeBundleIdArray(string bundleIds)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::setExcludeBundleIdArray()");
+            HBManager.setExcludeBundleIdArray(bundleIds);
+        }
+
+        public void setExcludeAdSourceIdArrayForPlacementID(string placementID, string adSourceIds) 
+        {
+            Debug.Log("Unity:HBSDKAPIClient::setExcludeAdSourceIdArrayForPlacementID()");
+            HBManager.setExcludeAdSourceIdArrayForPlacementID(placementID, adSourceIds);
+        }
+        
+        public void setSDKArea(int area)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::setSDKArea()");
+            HBManager.setSDKArea(area);
+        }
+        
+        public void getArea(ATGetAreaListener listener)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::getArea()");
+            HBSDKAPIClient.areaListener = listener;
+            HBManager.getArea(GetAreaInfo);
+        }
+        
+        public void setWXStatus(bool install)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::setWXStatus()");
+            HBManager.setWXStatus(install);
+        }
+        
+        public void setLocation(double longitude, double latitude)
+        {
+            Debug.Log("Unity:HBSDKAPIClient::setLocation()");
+            HBManager.setLocation(longitude, latitude);
         }
 	}
 }

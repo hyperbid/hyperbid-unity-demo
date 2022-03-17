@@ -5,7 +5,7 @@ using System.Reflection;
 using System;
 
 using HyperBid.Common;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 
 namespace HyperBid.Api
 {
@@ -14,8 +14,8 @@ namespace HyperBid.Api
         public static readonly string kHBBannerAdLoadingExtraBannerAdSize = "banner_ad_size";
         public static readonly string kHBBannerAdLoadingExtraBannerAdSizeStruct = "banner_ad_size_struct";
         public static readonly string kHBBannerAdSizeUsesPixelFlagKey = "uses_pixel";
-        public static readonly string kHBBannerAdShowingPisitionTop = "top";
-        public static readonly string kHBBannerAdShowingPisitionBottom = "bottom";
+        public static readonly string kHBBannerAdShowingPositionTop = "top";
+        public static readonly string kHBBannerAdShowingPositionBottom = "bottom";
 
         //Deprecated in v5.7.3
         public static readonly string kHBBannerAdLoadingExtraInlineAdaptiveWidth = "inline_adaptive_width";
@@ -32,7 +32,7 @@ namespace HyperBid.Api
         public static readonly int kHBBannerAdLoadingExtraAdaptiveOrientationLandscape = 2;
 
     }
-    public class HBBannerAd
+    public class HBBannerAd 
 	{
 		private static readonly HBBannerAd instance = new HBBannerAd();
 		private IHBBannerAdClient client;
@@ -44,9 +44,9 @@ namespace HyperBid.Api
             client = GetHBBannerAdClient();
 		}
 
-		public static HBBannerAd Instance
+		public static HBBannerAd Instance 
 		{
-			get
+			get 
 			{
 				return instance;
 			}
@@ -56,10 +56,10 @@ namespace HyperBid.Api
 		API
 		*/
 		public void loadBannerAd(string placementId, Dictionary<string,object> pairs)
-		{
+		{   
             if (pairs != null && pairs.ContainsKey(HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraBannerAdSize))
             {
-                client.loadBannerAd(placementId, Json.Serialize(pairs));
+                client.loadBannerAd(placementId, JsonMapper.ToJson(pairs));
             }
             else if (pairs != null && pairs.ContainsKey(HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraBannerAdSizeStruct))
             {
@@ -68,18 +68,23 @@ namespace HyperBid.Api
                 pairs.Add(HBBannerAdLoadingExtra.kHBBannerAdSizeUsesPixelFlagKey, size.usesPixel);
 
                 //Dictionary<string, object> newPaires = new Dictionary<string, object> { { HBBannerAdLoadingExtra.kHBBannerAdLoadingExtraBannerAdSize, size.width + "x" + size.height }, { HBBannerAdLoadingExtra.kHBBannerAdSizeUsesPixelFlagKey, size.usesPixel } };
-                client.loadBannerAd(placementId, Json.Serialize(pairs));
+                client.loadBannerAd(placementId, JsonMapper.ToJson(pairs));
             }
             else
             {
-                client.loadBannerAd(placementId, Json.Serialize(pairs));
+                client.loadBannerAd(placementId, JsonMapper.ToJson(pairs));
             }
-
+			
 		}
 
         public string checkAdStatus(string placementId)
         {
             return client.checkAdStatus(placementId);
+        }
+
+        public string getValidAdCaches(string placementId)
+        {
+            return client.getValidAdCaches(placementId);
         }
 
         public void showBannerAd(string placementId, HBRect rect)
@@ -89,7 +94,7 @@ namespace HyperBid.Api
 
         public void showBannerAd(string placementId, HBRect rect, Dictionary<string,string> pairs)
         {
-            client.showBannerAd(placementId, rect, Json.Serialize(pairs));
+            client.showBannerAd(placementId, rect, JsonMapper.ToJson(pairs));
         }
 
         public void showBannerAd(string placementId, string position)
@@ -99,7 +104,7 @@ namespace HyperBid.Api
 
         public void showBannerAd(string placementId, string position, Dictionary<string,string> pairs)
         {
-            client.showBannerAd(placementId, position, Json.Serialize(pairs));
+            client.showBannerAd(placementId, position, JsonMapper.ToJson(pairs));
         }
 
         public void showBannerAd(string placementId)

@@ -5,6 +5,7 @@
   <projectSetting name="Google.IOSResolver.PodfileEnabled" value="True" />
   <projectSetting name="Google.IOSResolver.PodToolExecutionViaShellEnabled" value="True" />
   <projectSetting name="Google.IOSResolver.VerboseLoggingEnabled" value="True" />
+  <projectSetting name="Google.PackageManagerResolver.Enable" value="False" />
   <projectSetting name="Google.PackageManagerResolver.VerboseLoggingEnabled" value="False" />
   <projectSetting name="Google.VersionHandler.VerboseLoggingEnabled" value="False" />
   <projectSetting name="GooglePlayServices.PromptBeforeAutoResolution" value="False" />

@@ -46,6 +46,7 @@ extern NSString *const kHBAdStorageExtraUnitGroupInfoUnitIDKey;
 extern NSString *const kHBAdStorageExtraUnitGroupInfoNetworkSDKVersionKey;
 extern NSString *const kHBAdStorageExtraUnitGroupInfoReadyFlagKey;
 extern NSString *const kHBAdStorageExtraFinalWaterfallKey;
+extern NSString *const kHBAdStorageExtraAdapterClassKey;
 
 typedef NS_ENUM(NSInteger, HBAdManagerReadyAPICaller) {
     HBAdManagerReadyAPICallerReady = 0,
@@ -123,6 +124,14 @@ typedef NS_ENUM(NSInteger, HBAdManagerReadyAPICaller) {
 - (BOOL)getFirstSplashTimeoutStatus:(NSString *)placementID;
 
 - (void)setFirstSplashTimeoutStatus:(NSString *)placementID status:(BOOL)status;
+
+
+#pragma mark - real time TK
+
++ (NSArray *)getRealTimeNetworkArray;
+
+#pragma mark - send_tracking
+- (void)sendEntryScenarioTrackingWithPlacementID:(NSString *)placementID scene:(NSString *)scene isLoading:(BOOL)isLoading isReady:(BOOL)isReady extraInfo: (NSDictionary *)extraInfo;
 
 @end
 

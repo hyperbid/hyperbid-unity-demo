@@ -27,6 +27,18 @@ typedef NS_ENUM(NSInteger, HBPlayerStatus) {
     HBPlayerStatusResume,
     HBPlayerStatusAbort
 };
+
+
+typedef NS_ENUM(NSInteger, HBStartAppNativeAdImageSize) {
+    HB_SIZE_72X72      = 0,
+    HB_SIZE_100X100    = 1,
+    /// Default size
+    HB_SIZE_150X150    = 2,
+    HB_SIZE_340X340    = 3,
+    /// Not supported by secondaryImageSize, default will be used instead
+    HB_SIZE_1200X628   = 4,
+};
+
 /**
  * Subclasses are expected to call super when overriding willMoveToSuperview: because it it within this method the base class kick off the rendering process.
  */
@@ -119,6 +131,8 @@ extern NSString *const kHBExtraNativeImageSizeKey;
 extern NSString const* kHBExtraNativeImageSize1280_720;
 extern NSString const* kHBExtraNativeImageSize1200_628;
 extern NSString const* kHBExtraNativeImageSize640_640;
+extern NSString *const kHBExtraStartAPPNativeMainImageSizeKey;
+extern NSString *const kHBExtraNativeIconImageSizeKey;
 
 @interface HBNativeADView(DrawVideo)
 /*

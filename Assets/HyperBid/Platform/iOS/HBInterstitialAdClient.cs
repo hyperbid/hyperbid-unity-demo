@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using HyperBid.Common;
 using HyperBid.Api;
+using HyperBid.ThirdParty.LitJson;
+
 
 namespace HyperBid.iOS {
-	public class HBInterstitialAdClient : IHBInterstitialAdClient {
+
+    public class HBInterstitialAdClient : IHBInterstitialAdClient
+    {
 
         public event EventHandler<HBAdEventArgs> onAdLoadEvent;
         public event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
@@ -17,6 +21,12 @@ namespace HyperBid.iOS {
         public event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
         public event EventHandler<HBAdErrorEventArgs> onAdVideoFailureEvent;
         public event EventHandler<HBAdEventArgs> onAdVideoEndEvent;
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
 
         public void addsetting(string placementId,string json){
 			//todo...
@@ -48,8 +58,20 @@ namespace HyperBid.iOS {
 			return HBInterstitialAdWrapper.checkAdStatus(placementId);
 		}
 
+		public string getValidAdCaches(string placementId)
+		{
+			Debug.Log("Unity: HBInterstitialAdClient::getValidAdCaches()");
+			return HBInterstitialAdWrapper.getValidAdCaches(placementId);
+		}
+
+		public void entryScenarioWithPlacementID(string placementId, string scenarioID){
+            Debug.Log("Unity: HBInterstitialAdClient::entryScenarioWithPlacementID()");
+			HBInterstitialAdWrapper.entryScenarioWithPlacementID(placementId,scenarioID);
+		}
+
+
 		//Callbacks
-	    public void OnInterstitialAdLoaded(string placementID) {
+		public void OnInterstitialAdLoaded(string placementID) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdLoaded()");
 	        onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementID));
 	    }
@@ -92,6 +114,101 @@ namespace HyperBid.iOS {
         public void OnInterstitialAdClose(string placementID, string callbackJson) {
 	    	Debug.Log("Unity: HBInterstitialAdClient::OnInterstitialAdClose()");
             onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementID, callbackJson));
+	    }
+		//auto callbacks
+		public void startLoadingADSource(string placementId, string callbackJson)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::startLoadingADSource()");
+			onAdStartLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+		}
+		public void finishLoadingADSource(string placementId, string callbackJson)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::finishLoadingADSource()");
+			onAdFinishLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+		}
+		public void failToLoadADSource(string placementId, string callbackJson, string code, string error)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::failToLoadADSource()");
+			onAdFailureLoadSource?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+		}
+		public void startBiddingADSource(string placementId, string callbackJson)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::startBiddingADSource()");
+			onAdStartBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+		}
+		public void finishBiddingADSource(string placementId, string callbackJson)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::finishBiddingADSource()");
+			onAdFinishBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+		}
+		public void failBiddingADSource(string placementId, string callbackJson, string code, string error)
+		{
+			Debug.Log("Unity: HInterstitialAdClient::failBiddingADSource()");
+			onAdFailBidding?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+		}
+
+		// Auto
+		public void addAutoLoadAdPlacementID(string[] placementIDList) 
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:addAutoLoadAdPlacementID()");
+
+		
+
+	     	if (placementIDList != null && placementIDList.Length > 0)
+            {
+				foreach (string placementID in placementIDList)
+        		{
+					HBInterstitialAdWrapper.setClientForPlacementID(placementID, this);
+				}
+
+                string placementIDListString = JsonMapper.ToJson(placementIDList);
+				HBInterstitialAdWrapper.addAutoLoadAdPlacementID(placementIDListString);
+                Debug.Log("addAutoLoadAdPlacementID, placementIDList === " + placementIDListString);
+            }
+            else
+            {
+                Debug.Log("addAutoLoadAdPlacementID, placementIDList = null");
+            } 		
+
+		}
+
+		public void removeAutoLoadAdPlacementID(string placementId) 
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:removeAutoLoadAdPlacementID()");
+			HBInterstitialAdWrapper.removeAutoLoadAdPlacementID(placementId);
+		}
+
+		public bool autoLoadInterstitialAdReadyForPlacementID(string placementId) 
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:autoLoadInterstitialAdReadyForPlacementID()");
+			return HBInterstitialAdWrapper.autoLoadInterstitialAdReadyForPlacementID(placementId);
+		}
+		public string getAutoValidAdCaches(string placementId)
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:getAutoValidAdCaches()");
+			return HBInterstitialAdWrapper.getAutoValidAdCaches(placementId);
+		}
+
+		public string checkAutoAdStatus(string placementId) {
+			Debug.Log("Unity: HBInterstitialAdClient::checkAutoAdStatus()");
+			return HBInterstitialAdWrapper.checkAutoAdStatus(placementId);
+		}	
+
+
+		public void setAutoLocalExtra(string placementId, string mapJson) 
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:setAutoLocalExtra()");
+			HBInterstitialAdWrapper.setAutoLocalExtra(placementId, mapJson);
+		}
+		public void entryAutoAdScenarioWithPlacementID(string placementId, string scenarioID) 
+		{
+			Debug.Log("Unity: HBInterstitialAdClient:entryAutoAdScenarioWithPlacementID()");
+			HBInterstitialAdWrapper.entryAutoAdScenarioWithPlacementID(placementId, scenarioID);
+		}
+		public void showAutoAd(string placementId, string mapJson) 
+		{
+	    	Debug.Log("Unity: HBInterstitialAdClient::showAutoAd()");
+	    	HBInterstitialAdWrapper.showAutoInterstitialAd(placementId, mapJson);
 	    }
 	}
 }

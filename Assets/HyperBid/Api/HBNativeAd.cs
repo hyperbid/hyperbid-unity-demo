@@ -5,7 +5,7 @@ using System.Reflection;
 using System;
 
 using HyperBid.Common;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 
 
 namespace HyperBid.Api
@@ -19,6 +19,7 @@ namespace HyperBid.Api
 
     public class HBNativeAd
     {
+
         private static readonly HBNativeAd instance = new HBNativeAd();
         private IHBNativeAdClient client;
 
@@ -44,16 +45,26 @@ namespace HyperBid.Api
                 pairs.Add(HBNativeAdLoadingExtra.kHBNativeAdLoadingExtraNativeAdSize, size.width + "x" + size.height);
                 pairs.Add(HBNativeAdLoadingExtra.kHBNativeAdSizeUsesPixelFlagKey, size.usesPixel);
             }
-            client.loadNativeAd(placementId,Json.Serialize(pairs));
+            client.loadNativeAd(placementId,JsonMapper.ToJson(pairs));
         }
 
         public bool hasAdReady(string placementId){
             return client.hasAdReady(placementId);
         }
 
-       public string checkAdStatus(string placementId)
+        public string checkAdStatus(string placementId)
         {
             return client.checkAdStatus(placementId);
+        }
+
+        public string getValidAdCaches(string placementId)
+        {
+            return client.getValidAdCaches(placementId);
+        }
+        
+        public void entryScenarioWithPlacementID(string placementId, string scenarioID)
+        {
+            client.entryScenarioWithPlacementID(placementId,scenarioID);
         }
 
         public void renderAdToScene(string placementId, HBNativeAdView anyThinkNativeAdView){
@@ -61,7 +72,7 @@ namespace HyperBid.Api
         }
 
         public void renderAdToScene(string placementId, HBNativeAdView anyThinkNativeAdView, Dictionary<string,string> pairs){
-            client.renderAdToScene(placementId, anyThinkNativeAdView, Json.Serialize(pairs));
+            client.renderAdToScene(placementId, anyThinkNativeAdView, JsonMapper.ToJson(pairs));
         }
 
         public void cleanAdView(string placementId, HBNativeAdView anyThinkNativeAdView){

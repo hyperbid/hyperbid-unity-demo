@@ -84,6 +84,7 @@ extern NSString *const kHBNetworkNameVungle;
 extern NSString *const kHBNetworkNameAdColony;
 extern NSString *const kHBNetworkNameUnityAds;
 extern NSString *const kHBNetworkNameTT;
+extern NSString *const kHBNetworkNamePangle;
 extern NSString *const kHBNetworkNameOneway;
 extern NSString *const kHBNetworkNameAppnext;
 extern NSString *const kHBNetworkNameYeahmobi;
@@ -187,7 +188,10 @@ typedef NS_ENUM(NSInteger, HBBUAdLoadType) {
     HBBUAdLoadTypeLoad                       = 3,//Load resources in real time
 };
 
-
+typedef NS_ENUM(NSInteger, HBPersonalizedAdState) {
+    HBPersonalizedAdStateType = 1,
+    HBNonpersonalizedAdStateType = 2
+};
 
 @interface HBAPI : NSObject
 
@@ -204,7 +208,7 @@ typedef NS_ENUM(NSInteger, HBBUAdLoadType) {
 
 -(void) setWXStatus:(BOOL)isInstallWX;
 
-
++ (void) setInitializationType:(int)type;
 
 /*
  only for adx，onlineApi，MyOffer  banner&splash adLogo，NO by default
@@ -328,7 +332,17 @@ set denied Upload Info list for sdk to Control report
 -(NSArray*) deniedUploadInfoArray;
 -(BOOL) isContainsForDeniedUploadInfoArray:(NSString *)key;
 
+/*
+set header bidding test mode, only support incoming device idfa. setDebugLog must be turned on before use
+*/
++(void) setHeaderBiddingTestModeWithDeviceID:(NSString *)idfa;
 
+/**
+ Set personalized recommendation state
+ @param state 1 is to close personalized recommendation, other values or not set to open
+ */
+-(void) setPersonalizedAdState:(HBPersonalizedAdState)state;
+-(HBPersonalizedAdState) getPersonalizedAdState;
 @end
 
 

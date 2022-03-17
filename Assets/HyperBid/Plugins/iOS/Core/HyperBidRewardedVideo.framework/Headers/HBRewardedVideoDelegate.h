@@ -12,9 +12,13 @@
 
 extern NSString *const kHBRewardedVideoCallbackExtraAdsourceIDKey;
 extern NSString *const kHBRewardedVideoCallbackExtraNetworkIDKey;
-extern NSString *const kHBRewardedVideoCallbackExtraIsHeaderBidding;
+extern NSString *const kHBRewardedVideoCallbackExtraIsHeaderBidding DEPRECATED_MSG_ATTRIBUTE("The kHBRewardedVideoCallbackExtraIsHeaderBidding class will be obsolete, please use kHBRewardedVideoDelegateExtraAdSourceIsHeaderBidding");
+extern NSString *const kHBRewardedVideoDelegateExtraAdSourceIsHeaderBidding;
 extern NSString *const kHBRewardedVideoCallbackExtraPrice;
 extern NSString *const kHBRewardedVideoCallbackExtraPriority;
+
+extern NSString *const kHBRewardedVideoAgainFlag;
+
 @protocol HBRewardedVideoDelegate<HBAdLoadingDelegate>
 
 -(void) rewardedVideoDidStartPlayingForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra;
@@ -25,5 +29,11 @@ extern NSString *const kHBRewardedVideoCallbackExtraPriority;
 -(void) rewardedVideoDidRewardSuccessForPlacemenID:(NSString*)placementID extra:(NSDictionary*)extra;
 -(void) rewardedVideoDidDeepLinkOrJumpForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra result:(BOOL)success;
 
+// rewarded video again
+-(void) rewardedVideoAgainDidStartPlayingForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra;
+-(void) rewardedVideoAgainDidEndPlayingForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra;
+-(void) rewardedVideoAgainDidFailToPlayForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary*)extra;
+-(void) rewardedVideoAgainDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary*)extra;
+-(void) rewardedVideoAgainDidRewardSuccessForPlacemenID:(NSString*)placementID extra:(NSDictionary*)extra;
 @end
 #endif /* HBRewardedVideoDelegate_h */

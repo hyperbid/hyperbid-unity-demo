@@ -47,7 +47,7 @@ public class InterstitialAdComponent : MonoBehaviour
 
     public void LoadAd() {
         Utils.SetText("Loading interstitial ad...");
-        HBInterstitialAd.Instance.loadInterstitialAd(_placementId, new Dictionary<string, string>());
+        HBInterstitialAd.Instance.loadInterstitialAd(_placementId, new Dictionary<string, object>());
     }
 
     public void IsAdReady() {

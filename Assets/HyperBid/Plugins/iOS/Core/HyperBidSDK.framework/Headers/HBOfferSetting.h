@@ -41,6 +41,8 @@ extern NSString *const kHBOfferTrackerKYRelativeCoord;
 // v5.7.42+
 extern NSString *const kHBOfferTrackerDeeplinkType;
 
+extern NSString *const kHBOfferTrackerOPDPType;
+
 //typedef NS_ENUM(NSInteger, HBOfferCloseButtonSizeType) {
 //    HBOfferCloseButtonSizeTypeNormal = 1,
 //    HBOfferCloseButtonSizeType150Percent,

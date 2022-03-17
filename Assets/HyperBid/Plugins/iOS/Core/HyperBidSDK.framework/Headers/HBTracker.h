@@ -8,7 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "HBAd.h"
+
+typedef NS_ENUM(NSInteger, HBRefreshType){
+    HBRefreshTypeNone,
+    HBRefreshTypeAutoRefresh,
+    HBRefreshTypePlayAgain,
+    HBRefreshTypeInitiation,
+    HBRefreshTypeLoadFailed,
+    HBRefreshTypeNotReady,
+    HBRefreshTypeShowStart,
+    HBRefreshTypeShowFailed
+} ;
+
 extern NSString *const kHBTrackerExtraErrorKey;
+extern NSString *const kHBTrackerExtraAgainLookFlagKey;
 extern NSString *const kHBTrackerExtraAutoloadFlagKey;
 extern NSString *const kHBTrackerExtraSDKCalledFlagKey;
 extern NSString *const kHBTrackerExtraSDKNotCalledReasonKey;
@@ -25,6 +38,7 @@ extern NSString *const kHBTrackerExtraDefaultLoadFlagKey;
 extern NSString *const kHBTrackerExtraFilledWithinNetworkTimeoutFlagKey;
 extern NSString *const kHBTrackerExtraFillRequestFlagKey;
 extern NSString *const kHBTrackerExtraFillTimeKey;
+extern NSString *const kHBTrackerExtraDataFillTimeKey;
 extern NSString *const kHBTrackerExtraASResultKey;
 extern NSString *const kHBTrackerExtraAppIDKey;
 extern NSString *const kHBTrackerExtraLastestRequestIDKey;
@@ -46,6 +60,8 @@ extern NSString *const kHBTrackerExtraFormatKey;
 extern NSString *const kHBTrackerExtraRequestExpectedOfferNumberFlagKey;
 extern NSString *const kHBTrackerExtraClickImpKey;
 extern NSString *const kHBTrackerExtraPlacementModelKey;
+extern NSString *const kHBTrackerExtraAdCacheStatusKey;
+extern NSString *const kHBTrackerExtraAdRequestUsedTimeKey;
 
 // ofm
 extern NSString *const kHBTrackerExtraOFMTrafficIDKey;
@@ -69,7 +85,8 @@ typedef NS_ENUM(NSInteger, HBNativeADTrackType) {
     HBNativeAdTrackTypeBidSort = 11,
     HBNativeAdTrackTypeLoadResult = 12,//currently sent when loading succeeds
     HBNativeAdTrackTypeShowAPICall = 13,
-    HBNativeADTrackTypeRankAndShuffle = 15
+    HBNativeADTrackTypeRankAndShuffle = 15,
+    HBNativeADTrackTypeEntryScenario = 16
 };
 
 typedef NS_ENUM(NSInteger, HBNativeADSourceType) {

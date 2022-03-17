@@ -25,8 +25,12 @@ extern NSString *const kHBAdAssetsAppIDKey;
 -(void) handleAssets:(NSDictionary*)assets;
 -(void) handleLoadingFailure:(NSError*)error;
 -(void) handleClose;
+-(void) handleShow;
+-(void) handleShowFailed;
+
 -(void) trackShow;
 -(void) trackClick;
+
 -(HBNativeADSourceType) adSourceType;
 @property(nonatomic, weak) id<HBAd> ad;
 @property(nonatomic) NSNumber *sdkTime;
@@ -50,7 +54,5 @@ extern NSString *const kHBAdAssetsAppIDKey;
 
 @property (nonatomic, assign) NSString *networkUnitId;
 @property (nonatomic) NSDictionary *networkCustomInfo;
-@property (nonatomic) NSDictionary *headerBiddingExtra;
--(void)assetsHeaderBiddingTrackingExtraWithBidInfo:(HBBidInfo*)bidInfo;
 
 @end

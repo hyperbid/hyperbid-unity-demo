@@ -18,9 +18,15 @@ namespace HyperBid.Common
         void initCustomMap(string cutomMap);
         void setCustomDataForPlacementID(string customData, string placementID);
         void setLogDebug(bool isDebug);
-        void setNetworkTerritory(int territory);
         int getGDPRLevel();
         bool isEUTraffic();
         void deniedUploadDeviceInfo(string deniedInfo);
+
+        void setExcludeBundleIdArray(string bundleIds);
+        void setExcludeAdSourceIdArrayForPlacementID(string placementID, string adsourceIds);
+        void setSDKArea(int area);
+        void getArea(ATGetAreaListener listener);
+        void setWXStatus(bool install);
+        void setLocation(double longitude, double latitude);
     }
 }

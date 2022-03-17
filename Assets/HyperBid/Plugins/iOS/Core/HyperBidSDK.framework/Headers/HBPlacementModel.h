@@ -23,6 +23,12 @@ typedef NS_ENUM(NSInteger, HBADShowType) {
     HBADShowTypeSerial = 1
 };
 
+typedef enum : NSUInteger {
+    HBLoadingApiUnknown,
+    HBLoadingApiTypeOld,
+    HBLoadingApiTypeNew,
+} HBLoadingApiType;
+
 typedef NS_ENUM(NSInteger, HBAdFormat) {
     HBAdFormatNative = 0,
     HBAdFormatRewardedVideo = 1,
@@ -96,6 +102,11 @@ extern NSString *const kHBPlacementModelCustomDataKey;
 @property(nonatomic, readonly) NSArray<HBUnitGroupModel*>* S2SHeaderBiddingUnitGroups;
 @property(nonatomic, readonly) NSArray<HBUnitGroupModel*>* olApiUnitGroups;
 @property(nonatomic, readonly) NSArray<HBUnitGroupModel*>* inhouseUnitGroups;
+@property(nonatomic, readonly) NSArray<HBUnitGroupModel*>* bksUnitGroups;
+@property(nonatomic, readonly) NSArray<HBUnitGroupModel*>* bottomListUnitGroups;
+@property(nonatomic, strong) NSArray <HBUnitGroupModel*>* directOfferHeaderBiddingUnitGroups;
+
+@property(nonatomic, readonly) NSTimeInterval bottomRreqts;     // bottomAd dalay request time
 
 @property(nonatomic, readonly) NSTimeInterval headerBiddingRequestTimeout;
 @property(nonatomic, readonly) NSTimeInterval headerBiddingRequestTolerateInterval;
@@ -106,6 +117,10 @@ extern NSString *const kHBPlacementModelCustomDataKey;
 @property(nonatomic, readonly) NSInteger loadCap;
 
 @property(nonatomic, readonly) NSInteger expectedNumberOfOffers;
+
+
+@property(nonatomic, readonly) NSTimeInterval bidWaitTimeout;
+@property(nonatomic, readonly) NSTimeInterval reqWaitTimeout;
 
 @property(nonatomic, readonly) NSTimeInterval loadFailureInterval;
 @property(nonatomic, readonly) NSTimeInterval offerLoadingTimeout;
@@ -138,6 +153,7 @@ extern NSString *const kHBPlacementModelCustomDataKey;
 
 @property(nonatomic, readonly) NSDictionary* olApiSettingDict;
 
+@property(nonatomic, readonly) NSInteger waterfallCheckTime;
 
 @property(nonatomic, readonly) NSString *currency;
 @property(nonatomic, readonly) NSString *exchangeRate;
@@ -165,8 +181,26 @@ extern NSString *const kHBPlacementModelCustomDataKey;
 //todo: just for in-house list. It's not a good solution.
 @property(nonatomic, copy) NSArray<HBUnitGroupModel*>* waterfallA;
 
+
+@property(nonatomic, copy) NSArray *directOfferUnitIDArray;
+
+
 // v5.7.56+
 @property(nonatomic, readonly) NSInteger encryptFlag;
 @property(nonatomic, readonly, copy) NSString *encryptPublicKey;
+
+/**
+ Maximum waiting time for s2s HB adSource to get buyeruid
+ */
+@property(nonatomic, readonly) NSInteger getBuyeruIdWaitTime;
+
+@property(nonatomic, readonly, copy) NSString *inhouseUrl;
+@property(nonatomic, readonly, copy) NSString *thirdInhouseUrl; // bks url of third plantforms
+
+@property(nonatomic, readonly) NSString *exchRateC2U;
+
+@property(nonatomic) HBLoadingApiType loadingApiType;
+
+@property(nonatomic, assign) BOOL isExistHBAdSource;
 
 @end

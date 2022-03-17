@@ -17,6 +17,12 @@ namespace HyperBid.Android
         public event EventHandler<HBAdEventArgs>            onAdVideoEndEvent;
         public event EventHandler<HBAdProgressEventArgs>    onAdVideoProgressEvent;
         public event EventHandler<HBAdEventArgs>            onAdCloseEvent;
+        public event EventHandler<HBAdEventArgs>            onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs>            onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs>       onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs>            onAdStartBidding;
+        public event EventHandler<HBAdEventArgs>            onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs>       onAdFailBidding;
 
         private Dictionary<string, AndroidJavaObject> nativeAdHelperMap = new Dictionary<string, AndroidJavaObject>();
 
@@ -59,6 +65,24 @@ namespace HyperBid.Android
 			}
 			return isready;   
         }
+        
+        public void entryScenarioWithPlacementID(string placementId, string scenarioID){
+            Debug.Log("HBNativeAdClient : entryScenarioWithPlacementID....");
+            try
+            {
+                if (nativeAdHelperMap.ContainsKey(placementId))
+                {
+                    nativeAdHelperMap[placementId].Call("entryAdScenario", scenarioID);
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine("Exception caught: {0}", e);
+                Debug.Log("HBNativeAdClient entryScenarioWithPlacementID:  error." + e.Message);
+            }
+
+
+        }
 
         public string checkAdStatus(string placementId)
         {
@@ -68,7 +92,7 @@ namespace HyperBid.Android
             {
                 if (nativeAdHelperMap.ContainsKey(placementId))
                 {
-                    adStatusJsonString = nativeAdHelperMap[placementId].Call<string>("getReadyAdInfo");
+                    adStatusJsonString = nativeAdHelperMap[placementId].Call<string>("checkAdStatus");
                 }
             }
             catch (System.Exception e)
@@ -78,6 +102,26 @@ namespace HyperBid.Android
             }
 
             return adStatusJsonString;
+        }
+
+        public string getValidAdCaches(string placementId)
+        {
+            string validAdCachesString = "";
+            Debug.Log("HBNativeAdClient : getValidAdCaches....");
+            try
+            {
+                if (nativeAdHelperMap.ContainsKey(placementId))
+                {
+                    validAdCachesString = nativeAdHelperMap[placementId].Call<string>("getValidAdCaches");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine("Exception caught: {0}", e);
+                Debug.Log("HBNativeAdClient :  error." + e.Message);
+            }
+
+            return validAdCachesString;
         }
 
 		public void renderAdToScene(string placementId, HBNativeAdView anyThinkNativeAdView, string mapJson)
@@ -113,6 +157,8 @@ namespace HyperBid.Android
 
         public void onApplicationForces(string placementId, HBNativeAdView anyThinkNativeAdView)
         {
+
+
 			Debug.Log ("onApplicationForces.... ");
 			try{
 
@@ -132,6 +178,8 @@ namespace HyperBid.Android
 
 			Debug.Log ("onApplicationPasue.... ");
 			try{
+				
+
 				if (nativeAdHelperMap.ContainsKey(placementId)) {
 					nativeAdHelperMap[placementId].Call ("onPause");
 				}
@@ -224,7 +272,7 @@ namespace HyperBid.Android
         /**
      * 广告加载成功
      */
-        public void onAdLoaded(string placementId)
+        public void onNativeAdLoaded(string placementId)
         {
             Debug.Log("onNativeAdLoaded...unity3d.");
             onAdLoadEvent?.Invoke(this, new HBAdEventArgs(placementId));
@@ -239,5 +287,36 @@ namespace HyperBid.Android
             onAdLoadFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, msg, code));
         }
 
+        // Adsource Listener
+        public void startLoadingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBNativeAdClient::startLoadingADSource()");
+            onAdStartLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void finishLoadingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBNativeAdClient::finishLoadingADSource()");
+            onAdFinishLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void failToLoadADSource(string placementId, string callbackJson, string code, string error)
+        {
+            Debug.Log("Unity: HBNativeAdClient::failToLoadADSource()");
+            onAdFailureLoadSource?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+        }
+        public void startBiddingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBNativeAdClient::startBiddingADSource()");
+            onAdStartBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void finishBiddingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBNativeAdClient::finishBiddingADSource()");
+            onAdFinishBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void failBiddingADSource(string placementId, string callbackJson, string code, string error)
+        {
+            Debug.Log("Unity: HBNativeAdClient::failBiddingADSource()");
+            onAdFailBidding?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+        }
     }
 }

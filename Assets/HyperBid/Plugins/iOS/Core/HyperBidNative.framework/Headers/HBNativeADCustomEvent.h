@@ -40,6 +40,7 @@
 
 -(NSDictionary*)delegateExtra;
 - (NSMutableDictionary *)delegateExtraWithNativeAD:(HBNativeADCache *)cache;
+-(instancetype) initWithInfo:(NSDictionary*)serverInfo localInfo:(NSDictionary *)localInfo;
 
 -(HBNativeADSourceType) sourceType;
 @property(nonatomic, copy) void(^requestCompletionBlock)(NSArray<NSDictionary*> *assets, NSError *error);
@@ -50,8 +51,6 @@
  */
 @property(nonatomic) NSInteger numberOfFinishedRequests;
 @property(nonatomic, readonly) NSMutableArray<NSDictionary*>* assets;
-@property(nonatomic) NSDictionary *requestExtra;
-@property(nonatomic) NSDictionary *serverExtra;
 @end
 
 @interface HBNativeADView(Event)
@@ -63,4 +62,5 @@
 -(void) notifyCloseButtonTapped;
 -(void) notifyDeeplinkOrJumpResult:(BOOL)success;
 -(void) notifyAdDetailClosed;
+-(void) notifyNativeAdShow;
 @end

@@ -5,7 +5,7 @@ using System.Reflection;
 using System;
 
 using HyperBid.Common;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 
 
 namespace HyperBid.Api
@@ -36,7 +36,7 @@ namespace HyperBid.Api
 		 */
         public void loadVideoAd(string placementId, Dictionary<string,string> pairs)
         {
-            client.loadVideoAd(placementId, Json.Serialize(pairs));
+            client.loadVideoAd(placementId, JsonMapper.ToJson(pairs));
         }
 
         public bool hasAdReady(string placementId)
@@ -44,25 +44,37 @@ namespace HyperBid.Api
             return client.hasAdReady(placementId);
         }
 
+        public void entryScenarioWithPlacementID(string placementId, string scenarioID)
+        {
+            client.entryScenarioWithPlacementID(placementId,scenarioID);
+        }
+        
         public string checkAdStatus(string placementId)
         {
             return client.checkAdStatus(placementId);
         }
 
+        public string getValidAdCaches(string placementId)
+        {
+            return client.getValidAdCaches(placementId);
+        }
+
         public void showAd(string placementId)
         {
-            client.showAd(placementId, Json.Serialize(new Dictionary<string, string>()));
+            client.showAd(placementId, JsonMapper.ToJson(new Dictionary<string, string>()));
         }
 
         public void showAd(string placementId, Dictionary<string, string> pairs)
         {
-            client.showAd(placementId, Json.Serialize(pairs));
+            client.showAd(placementId, JsonMapper.ToJson(pairs));
         }
-
+                
         public IHBRewardedVideoAdClient GetHBRewardedClient()
         {
             return HyperBid.HBAdsClientFactory.BuildRewardedVideoAdClient();
         }
+
+
 
     }
 }

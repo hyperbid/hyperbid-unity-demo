@@ -80,13 +80,44 @@ public class HBManager {
         HBUnityCBridge.SendMessageToC("HBUnityManager", "setDebugLog:", new object[] { isDebug ? "true" : "false" });
     }
 
-    public static void setNetworkTerritory(int territory)
-    {
-        HBUnityCBridge.SendMessageToC("HBUnityManager", "setNetworkTerritory:", new object[] {territory});
-    }
-
     public static void deniedUploadDeviceInfo(string deniedInfo)
     {
         HBUnityCBridge.SendMessageToC("HBUnityManager", "deniedUploadDeviceInfo:", new object[] {deniedInfo});
+    }
+
+    public static void setExcludeBundleIdArray(string bundleIds)
+    {
+        Debug.Log("Unity:HBManager::setExcludeBundleIdArray()");
+        HBUnityCBridge.SendMessageToC("HBUnityManager", "setExcludeBundleIdArray:", new object[] {bundleIds});
+    }
+
+    public static void setExcludeAdSourceIdArrayForPlacementID(string placementID, string adSourceIds) 
+    {
+        Debug.Log("Unity:HBManager::setExcludeAdSourceIdArrayForPlacementID()");
+        HBUnityCBridge.SendMessageToC("HBUnityManager", "setExludePlacementid:unitIDArray:", new object[] {placementID, adSourceIds});
+    }
+    
+    public static void setSDKArea(int area)
+    {
+        Debug.Log("Unity:HBManager::setSDKArea()");
+        HBUnityCBridge.SendMessageToC("HBUnityManager", "setSDKArea:", new object[] {area});
+    }
+    
+    public static void getArea(Func<string, int> callback)
+    {
+        Debug.Log("Unity:HBManager::getArea()");
+        HBUnityCBridge.SendMessageToCWithCallBack("HBUnityManager", "getArea:", new object[] { }, callback);
+    }
+    
+    public static void setWXStatus(bool install)
+    {
+        Debug.Log("Unity:HBManager::setWXStatus()");
+    	HBUnityCBridge.SendMessageToC("HBUnityManager", "setWXStatus:", new object[] {install});
+    }
+    
+    public static void setLocation(double longitude, double latitude)
+    {
+        Debug.Log("Unity:HBManager::setLocation()");
+    	HBUnityCBridge.SendMessageToC("HBUnityManager", "setLocationLongitude:dimension:", new object[] {longitude, latitude});
     }
 }

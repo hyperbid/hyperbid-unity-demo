@@ -35,6 +35,13 @@ namespace HyperBid.Api
             errorMessage = message;
             errorCode = code;
         }
+
+        public HBAdErrorEventArgs(String placementId, String callbackJson, String message, String code)
+            : base(placementId, callbackJson)
+        {
+            errorMessage = message;
+            errorCode = code;
+        }
     }
 
     public class HBAdProgressEventArgs : HBAdEventArgs
@@ -60,14 +67,36 @@ namespace HyperBid.Api
     }
 
 
-    public interface IHBBannerEvents
+    public interface IHCommonEvents
     {
-        // triggers when a banner ad has been succesfully loaded
+        // triggers when the ad has been succesfully loaded
         event EventHandler<HBAdEventArgs> onAdLoadEvent;
 
-        // triggers when a banner ad has failed to load
+        // triggers when the ad has failed to load
         event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
 
+        // triggers when a the ad has started to load
+        event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+
+        // triggers when a the ad has finished to load
+        event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+
+        // triggers when a the ad has started to load
+        event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+
+        // triggers when a the ad has started to load
+        event EventHandler<HBAdEventArgs> onAdStartBidding;
+
+        // triggers when a the ad has started to load
+        event EventHandler<HBAdEventArgs> onAdFinishBidding;
+
+        // triggers when a the ad has started to load
+        event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
+    }
+
+
+    public interface IHBBannerEvents: IHCommonEvents
+    {
         // triggers when a banner ad generates an impression
         event EventHandler<HBAdEventArgs> onAdImpressEvent;
 
@@ -87,14 +116,8 @@ namespace HyperBid.Api
         event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
     }
     
-    public interface IHBInterstitialAdEvents
+    public interface IHBInterstitialAdEvents : IHCommonEvents
     {
-        // called when the interstitial ad is loaded from the provider
-        event EventHandler<HBAdEventArgs> onAdLoadEvent;
-
-        // if no ad has been returned or a network error has occured
-        event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
-
         // called when the ad is shown
         event EventHandler<HBAdEventArgs> onAdShowEvent;
 
@@ -117,14 +140,8 @@ namespace HyperBid.Api
         event EventHandler<HBAdEventArgs> onAdVideoEndEvent;          
     }
 
-    public interface IHBNativeAdEvents
+    public interface IHBNativeAdEvents : IHCommonEvents
     {
-        // triggers when the native ad is loaded
-        event EventHandler<HBAdEventArgs> onAdLoadEvent;
-
-        // triggers in the case the ad fails to load
-        event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
-
         // triggers when the ad generates an impression
         event EventHandler<HBAdEventArgs> onAdImpressEvent;
 
@@ -144,38 +161,8 @@ namespace HyperBid.Api
         event EventHandler<HBAdEventArgs> onAdCloseEvent;           
     }
 
-    public interface IHBNativeBannerEvents
+    public interface IHBRewardedVideoEvents : IHCommonEvents
     {
-        // triggers when the native banner is loaded
-        event EventHandler<HBAdEventArgs> onAdLoadEvent;
-
-        // triggers in the case the ad fails to load
-        event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
-
-        // triggers if an impression is registered
-        event EventHandler<HBAdEventArgs> onAdImpressEvent;
-
-        // triggers if the banner has been clicked
-        event EventHandler<HBAdEventArgs> onAdClickEvent;
-
-        // triggers when the ad refreshes
-        event EventHandler<HBAdEventArgs> onAdAutoRefreshEvent;
-
-        // triggers on refresh failure
-        event EventHandler<HBAdErrorEventArgs> onAdAutoRefreshFailureEvent;
-
-        // triggers when the user closes the ad
-        event EventHandler<HBAdEventArgs> onAdCloseButtonClickEvent; 
-    }
-
-    public interface IHBRewardedVideoEvents
-    {
-        // triggers when a rewarded video has been loaded
-        event EventHandler<HBAdEventArgs> onAdLoadEvent;
-
-        // triggers when a rewarded video has failed to load (or none have been returned)
-        event EventHandler<HBAdErrorEventArgs> onAdLoadFailureEvent;
-
         // triggers on video start
         event EventHandler<HBAdEventArgs> onAdVideoStartEvent;
 
@@ -192,6 +179,16 @@ namespace HyperBid.Api
         event EventHandler<HBAdEventArgs> onAdClickEvent;
 
         // triggers when the user has finsihed watching the ad and should be rewarded
-        event EventHandler<HBAdRewardEventArgs> onRewardEvent;           
+        event EventHandler<HBAdRewardEventArgs> onRewardEvent;
+
+        event EventHandler<HBAdEventArgs> onPlayAgainStart;
+
+        event EventHandler<HBAdEventArgs> onPlayAgainEnd;
+
+        event EventHandler<HBAdErrorEventArgs> onPlayAgainFailure;
+
+        event EventHandler<HBAdEventArgs> onPlayAgainClick;
+
+        event EventHandler<HBAdEventArgs> onPlayAgainReward;
     }
 }

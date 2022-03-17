@@ -12,7 +12,8 @@
 
 extern NSString *const kHBInterstitialDelegateExtraNetworkIDKey;
 extern NSString *const kHBInterstitialDelegateExtraAdSourceIDKey;
-extern NSString *const kHBInterstitialDelegateExtraIsHeaderBidding;
+extern NSString *const kHBInterstitialDelegateExtraIsHeaderBidding DEPRECATED_MSG_ATTRIBUTE("The kHBInterstitialDelegateExtraIsHeaderBidding class will be obsolete, please use kHBInterstitialDelegateExtraAdSourceIsHeaderBidding");
+extern NSString *const kHBInterstitialDelegateExtraAdSourceIsHeaderBidding;
 extern NSString *const kHBInterstitialDelegateExtraPrice;
 extern NSString *const kHBInterstitialDelegateExtraPriority;
 @protocol HBInterstitialDelegate<HBAdLoadingDelegate>

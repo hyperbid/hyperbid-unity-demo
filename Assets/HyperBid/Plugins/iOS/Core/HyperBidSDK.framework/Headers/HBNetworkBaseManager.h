@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "HBAPI+Internal.h"
+#import "HBUnitGroupModel.h"
+#import "HBAdAdapter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

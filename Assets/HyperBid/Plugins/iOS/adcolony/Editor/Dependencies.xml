@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<dependencies>
+<?xml version="1.0" encoding="utf-8"?><dependencies>
     <iosPods>
         <iosPod name="AdColony" version="4.7.2" />
     </iosPods>

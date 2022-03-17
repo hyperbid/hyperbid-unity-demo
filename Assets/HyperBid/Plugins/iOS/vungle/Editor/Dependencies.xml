@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<dependencies>
-    <iosPods>
-        <iosPod name="VungleSDK-iOS" version="6.10.3" />
-    </iosPods>
-</dependencies>

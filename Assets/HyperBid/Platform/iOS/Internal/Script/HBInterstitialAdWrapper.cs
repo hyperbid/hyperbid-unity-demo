@@ -3,44 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using AOT;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 using HyperBid.iOS;
 
 public class HBInterstitialAdWrapper:HBAdWrapper {
 	static private Dictionary<string, HBInterstitialAdClient> clients;
 	static private string CMessaageReceiverClass = "HBInterstitialAdWrapper";
 
-	static public void InvokeCallback(string callback, Dictionary<string, object> msgDict) {
+	static public new void InvokeCallback(JsonData jsonData) {
         Debug.Log("Unity: HBInterstitialAdWrapper::InvokeCallback()");
-        Dictionary<string, object> extra = new Dictionary<string, object>();
-        if (msgDict.ContainsKey("extra")) { extra = msgDict["extra"] as Dictionary<string, object>; }
+        string extraJson = "";
+        string callback = (string)jsonData["callback"];
+        Dictionary<string, object> msgDict = JsonMapper.ToObject<Dictionary<string, object>>(jsonData["msg"].ToJson());
+        JsonData msgJsonData = jsonData["msg"];
+        IDictionary idic = (System.Collections.IDictionary)msgJsonData;
+
+        if (idic.Contains("extra")) { 
+            JsonData extraJsonDate = msgJsonData["extra"];
+            if (extraJsonDate != null) {
+                extraJson = msgJsonData["extra"].ToJson();
+            }
+        }
+        
         if (callback.Equals("OnInterstitialAdLoaded")) {
     		OnInterstitialAdLoaded((string)msgDict["placement_id"]);
     	} else if (callback.Equals("OnInterstitialAdLoadFailure")) {
     		Dictionary<string, object> errorDict = new Dictionary<string, object>();
-            Dictionary<string, object> errorMsg = msgDict["error"] as Dictionary<string, object>;
+            Dictionary<string, object> errorMsg = JsonMapper.ToObject<Dictionary<string, object>>(msgJsonData["error"].ToJson());
     		if (errorMsg.ContainsKey("code")) { errorDict.Add("code", errorMsg["code"]); }
             if (errorMsg.ContainsKey("reason")) { errorDict.Add("message", errorMsg["reason"]); }
     		OnInterstitialAdLoadFailure((string)msgDict["placement_id"], errorDict);
     	} else if (callback.Equals("OnInterstitialAdVideoPlayFailure")) {
     		Dictionary<string, object> errorDict = new Dictionary<string, object>();
-    		Dictionary<string, object> errorMsg = msgDict["error"] as Dictionary<string, object>;
+    		Dictionary<string, object> errorMsg = JsonMapper.ToObject<Dictionary<string, object>>(msgJsonData["error"].ToJson());
             if (errorMsg.ContainsKey("code")) { errorDict.Add("code", errorMsg["code"]); }
             if (errorMsg.ContainsKey("reason")) { errorDict.Add("message", errorMsg["reason"]); }
     		OnInterstitialAdVideoPlayFailure((string)msgDict["placement_id"], errorDict);
     	} else if (callback.Equals("OnInterstitialAdVideoPlayStart")) {
-    		OnInterstitialAdVideoPlayStart((string)msgDict["placement_id"], Json.Serialize(extra));
+    		OnInterstitialAdVideoPlayStart((string)msgDict["placement_id"], extraJson);
     	} else if (callback.Equals("OnInterstitialAdVideoPlayEnd")) {
-    		OnInterstitialAdVideoPlayEnd((string)msgDict["placement_id"], Json.Serialize(extra));
+    		OnInterstitialAdVideoPlayEnd((string)msgDict["placement_id"], extraJson);
     	} else if (callback.Equals("OnInterstitialAdShow")) {
-    		OnInterstitialAdShow((string)msgDict["placement_id"], Json.Serialize(extra));
+    		OnInterstitialAdShow((string)msgDict["placement_id"], extraJson);
     	} else if (callback.Equals("OnInterstitialAdClick")) {
-    		OnInterstitialAdClick((string)msgDict["placement_id"], Json.Serialize(extra));
+    		OnInterstitialAdClick((string)msgDict["placement_id"], extraJson);
     	} else if (callback.Equals("OnInterstitialAdClose")) {
-            OnInterstitialAdClose((string)msgDict["placement_id"], Json.Serialize(extra));
+            OnInterstitialAdClose((string)msgDict["placement_id"], extraJson);
         } else if (callback.Equals("OnInterstitialAdFailedToShow")) {
             OnInterstitialAdFailedToShow((string)msgDict["placement_id"]);
+        }else if (callback.Equals("startLoadingADSource")) {
+            StartLoadingADSource((string)msgDict["placement_id"], extraJson);
+        }else if (callback.Equals("finishLoadingADSource")) {
+            FinishLoadingADSource((string)msgDict["placement_id"], extraJson);
+        }else if (callback.Equals("failToLoadADSource")) {
+
+    		Dictionary<string, object> errorDict = new Dictionary<string, object>();
+            Dictionary<string, object> errorMsg = JsonMapper.ToObject<Dictionary<string, object>>(msgJsonData["error"].ToJson());
+    		if (errorMsg["code"] != null) { errorDict.Add("code", errorMsg["code"]); }
+    		if (errorMsg["reason"] != null) { errorDict.Add("message", errorMsg["reason"]); }
+    		FailToLoadADSource((string)msgDict["placement_id"],extraJson, errorDict);  
+
+        }else if (callback.Equals("startBiddingADSource")) {
+            StartBiddingADSource((string)msgDict["placement_id"], extraJson);
+           
+        }else if (callback.Equals("finishBiddingADSource")) {
+            FinishBiddingADSource((string)msgDict["placement_id"], extraJson);
+  
+        }else if (callback.Equals("failBiddingADSource")) {
+        	Dictionary<string, object> errorDict = new Dictionary<string, object>();
+            Dictionary<string, object> errorMsg = JsonMapper.ToObject<Dictionary<string, object>>(msgJsonData["error"].ToJson());
+    		if (errorMsg["code"] != null) { errorDict.Add("code", errorMsg["code"]); }
+    		if (errorMsg["reason"] != null) { errorDict.Add("message", errorMsg["reason"]); }
+    		FailBiddingADSource((string)msgDict["placement_id"],extraJson, errorDict);
         }
+
+        
     }
 
 	static public void setClientForPlacementID(string placementID, HBInterstitialAdClient client) {
@@ -74,6 +111,18 @@ public class HBInterstitialAdWrapper:HBAdWrapper {
         return HBUnityCBridge.GetStringMessageFromC(CMessaageReceiverClass, "checkAdStatus:", new object[]{placementID});
     }
 
+    static public string getValidAdCaches(string placementID)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::checkAdStatus(" + placementID + ")");
+        return HBUnityCBridge.GetStringMessageFromC(CMessaageReceiverClass, "getValidAdCaches:", new object[] { placementID });
+    }
+  
+    static public void entryScenarioWithPlacementID(string placementID, string scenarioID) 
+    {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::entryScenarioWithPlacementID(" + placementID + scenarioID + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "entryScenarioWithPlacementID:scenarioID:", new object[]{placementID, scenarioID});
+    }
+
     //Callbacks
     static private void OnInterstitialAdLoaded(string placementID) {
     	Debug.Log("Unity: HBInterstitialAdWrapper::OnInterstitialAdLoaded()");
@@ -82,7 +131,7 @@ public class HBInterstitialAdWrapper:HBAdWrapper {
 
     static private void OnInterstitialAdLoadFailure(string placementID, Dictionary<string, object> errorDict) {
     	Debug.Log("Unity: HBInterstitialAdWrapper::OnInterstitialAdLoadFailure()");
-        Debug.Log("placementID = " + placementID + "errorDict = " + Json.Serialize(errorDict));
+        Debug.Log("placementID = " + placementID + "errorDict = " + JsonMapper.ToJson(errorDict));
         if (clients[placementID] != null) clients[placementID].OnInterstitialAdLoadFailure(placementID, (string)errorDict["code"], (string)errorDict["message"]);
     }
 
@@ -120,6 +169,94 @@ public class HBInterstitialAdWrapper:HBAdWrapper {
     	Debug.Log("Unity: HBInterstitialAdWrapper::OnInterstitialAdClose()");
         if (clients[placementID] != null) clients[placementID].OnInterstitialAdClose(placementID, callbackJson);
     }
+    // ad source callback
+    static public void StartLoadingADSource(string placementID, string callbackJson)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::StartLoadingADSource()");
+        if (clients[placementID] != null) clients[placementID].startLoadingADSource(placementID, callbackJson);
+    }    
+    static public void FinishLoadingADSource(string placementID, string callbackJson)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::FinishLoadingADSource()");
+        if (clients[placementID] != null) clients[placementID].finishLoadingADSource(placementID, callbackJson);
+    }
+
+    static public void FailToLoadADSource(string placementID,string callbackJson, Dictionary<string, object> errorDict) 
+    {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::FailToLoadADSource()");
+
+        Debug.Log("placementID = " + placementID + "errorDict = " + JsonMapper.ToJson(errorDict));
+        if (clients[placementID] != null) clients[placementID].failToLoadADSource(placementID,callbackJson,(string)errorDict["code"], (string)errorDict["message"]);
+    }
+
+    static public void StartBiddingADSource(string placementID, string callbackJson)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::StartBiddingADSource()");
+        if (clients[placementID] != null) clients[placementID].startBiddingADSource(placementID, callbackJson);
+    }    
+    static public void FinishBiddingADSource(string placementID, string callbackJson)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::FinishBiddingADSource()");
+        if (clients[placementID] != null) clients[placementID].finishBiddingADSource(placementID, callbackJson);
+    }
+
+    static public void FailBiddingADSource(string placementID, string callbackJson,Dictionary<string, object> errorDict) 
+    {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::FailBiddingADSource()");
+
+        Debug.Log("placementID = " + placementID + "errorDict = " + JsonMapper.ToJson(errorDict));
+        if (clients[placementID] != null) clients[placementID].failBiddingADSource(placementID,callbackJson,(string)errorDict["code"], (string)errorDict["message"]);
+    }
+
+ // Auto
+     static public void addAutoLoadAdPlacementID(string placementID) 
+     {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::addAutoLoadAdPlacementID(" + placementID + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "addAutoLoadAdPlacementID:callback:", new object[]{placementID}, true);
+    }
+
+    static public void removeAutoLoadAdPlacementID(string placementID) 
+    {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::removeAutoLoadAdPlacementID(" + placementID + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "removeAutoLoadAdPlacementID:", new object[]{placementID});
+    }
+    static public bool autoLoadInterstitialAdReadyForPlacementID(string placementID) 
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::autoLoadInterstitialAdReadyForPlacementID(" + placementID + ")");
+        
+    	return HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "autoLoadInterstitialAdReadyForPlacementID:", new object[]{placementID});
+    }    
+    static public string getAutoValidAdCaches(string placementID)
+    {
+        Debug.Log("Unity: HBInterstitialAdWrapper::getAutoValidAdCaches");
+        return HBUnityCBridge.GetStringMessageFromC(CMessaageReceiverClass, "getAutoValidAdCaches:", new object[]{placementID});
+    }
+
+    static public string checkAutoAdStatus(string placementID) {
+        Debug.Log("Unity: HBInterstitialAdWrapper::checkAutoAdStatus(" + placementID + ")");
+        return HBUnityCBridge.GetStringMessageFromC(CMessaageReceiverClass, "checkAutoAdStatus:", new object[]{placementID});
+    }
+
+    static public void setAutoLocalExtra(string placementID, string customData) 
+    {
+
+    	Debug.Log("Unity: HBInterstitialAdWrapper::setAutoLocalExtra(" + placementID + customData + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "setAutoLocalExtra:customDataJSONString:", new object[] {placementID, customData != null ? customData : ""});
+    }
+
+    static public void entryAutoAdScenarioWithPlacementID(string placementID, string scenarioID) 
+    {
+    	Debug.Log("Unity: HBInterstitialAdWrapper::entryAutoAdScenarioWithPlacementID(" + placementID + scenarioID + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "entryAutoAdScenarioWithPlacementID:scenarioID:", new object[]{placementID, scenarioID});
+    }
+
+    static public void showAutoInterstitialAd(string placementID, string mapJson) {
+	    Debug.Log("Unity: HBInterstitialAdWrapper::showAutoInterstitialAd(" + placementID + ")");
+    	HBUnityCBridge.SendMessageToC(CMessaageReceiverClass, "showAutoInterstitialAd:extraJsonString:", new object[]{placementID, mapJson});
+    }
+
+
+
 }
 
 

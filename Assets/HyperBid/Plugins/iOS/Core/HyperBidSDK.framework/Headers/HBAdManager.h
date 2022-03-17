@@ -27,16 +27,21 @@ extern NSString *const kHBAdLoadingExtraGDTEnableDefaultAudioSessionKey;
 
 
 
+
+
+
 /*
  We mark this method as deprecated because we move customData into HBAPI's shared instance. customData passed via this method will just be ignored.
  */
 -(void) loadAd:(NSString*)placementID extra:(NSDictionary*)extra customData:(NSDictionary*)customData delegate:(id<HBAdLoadingDelegate>)delegate DEPRECATED_ATTRIBUTE;
 -(void) loadAd:(NSString*)placementID extra:(NSDictionary*)extra delegate:(id<HBAdLoadingDelegate>)delegate;
+
 -(void) clearCache DEPRECATED_ATTRIBUTE;
 
 - (void)setExludePlacementid:(NSString *)placementid unitIDArray:(NSArray <NSString *> *)unitIDArray;
 
+- (BOOL)splashReadyWithoutLogForPlacementID:(NSString *)placementID sendTK:(BOOL)send;
 
-
+- (NSDictionary*)extraInfoForPlacementID:(NSString*)placementID requestID:(NSString*)requestID;
 
 @end

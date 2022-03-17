@@ -5,11 +5,11 @@ using UnityEngine;
 
 using HyperBid.Common;
 using HyperBid.Api;
-
 namespace HyperBid.Android
 {
     public class HBBannerAdClient : AndroidJavaProxy, IHBBannerAdClient
     {
+
         private Dictionary<string, AndroidJavaObject> bannerHelperMap = new Dictionary<string, AndroidJavaObject>();
 
         // triggers when a banner ad has been succesfully loaded
@@ -36,13 +36,22 @@ namespace HyperBid.Android
         // triggers when the users closes the ad via the button
         public event EventHandler<HBAdEventArgs> onAdCloseButtonTappedEvent;
 
+        public event EventHandler<HBAdEventArgs> onAdStartLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdFinishLoadSource;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailureLoadSource;
+        public event EventHandler<HBAdEventArgs> onAdStartBidding;
+        public event EventHandler<HBAdEventArgs> onAdFinishBidding;
+        public event EventHandler<HBAdErrorEventArgs> onAdFailBidding;
+
         public HBBannerAdClient() : base("com.hyperbid.unitybridge.banner.BannerListener")
         {
             
         }
 
+
         public void loadBannerAd(string placementId, string mapJson)
         {
+
             //如果不存在则直接创建对应广告位的helper
             if(!bannerHelperMap.ContainsKey(placementId))
             {
@@ -75,7 +84,7 @@ namespace HyperBid.Android
             {
                 if (bannerHelperMap.ContainsKey(placementId))
                 {
-                    adStatusJsonString = bannerHelperMap[placementId].Call<string>("getReadyAdInfo");
+                    adStatusJsonString = bannerHelperMap[placementId].Call<string>("checkAdStatus");
                 }
             }
             catch (System.Exception e)
@@ -86,6 +95,27 @@ namespace HyperBid.Android
 
             return adStatusJsonString;
         }
+
+        public string getValidAdCaches(string placementId)
+        {
+            string validAdCachesString = "";
+            Debug.Log("HBBannerAdClient : getValidAdCaches....");
+            try
+            {
+                if (bannerHelperMap.ContainsKey(placementId))
+                {
+                    validAdCachesString = bannerHelperMap[placementId].Call<string>("getValidAdCaches");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine("Exception caught: {0}", e);
+                Debug.Log("HBBannerAdClient :  error." + e.Message);
+            }
+
+            return validAdCachesString;
+        }
+
 
         public void showBannerAd(string placementId, string position, string mapJson)
         {
@@ -119,6 +149,7 @@ namespace HyperBid.Android
 			}catch(System.Exception e){
 				System.Console.WriteLine("Exception caught: {0}", e);
                 Debug.Log ("HBBannerAdClient :  error."+e.Message);
+
 			}
         }
 
@@ -214,7 +245,7 @@ namespace HyperBid.Android
         public void onBannerClose(string placementId, string callbackJson)
         {
             Debug.Log("onBannerClose...unity3d.");
-            onAdCloseButtonTappedEvent?.Invoke(placementId, new HBAdEventArgs(placementId, callbackJson));
+            onAdCloseEvent?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
         }
         //广告关闭
         public void onBannerAutoRefreshed(string placementId, string callbackJson)
@@ -228,6 +259,38 @@ namespace HyperBid.Android
             Debug.Log("onBannerAutoRefreshFail...unity3d.");
             onAdAutoRefreshFailureEvent?.Invoke(this, new HBAdErrorEventArgs(placementId, msg, code));
         }
-       
+
+        // Adsource Listener
+        public void startLoadingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::startLoadingADSource()");
+            onAdStartLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void finishLoadingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::finishLoadingADSource()");
+            onAdFinishLoadSource?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void failToLoadADSource(string placementId, string callbackJson, string code, string error)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::failToLoadADSource()");
+            onAdFailureLoadSource?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+        }
+        public void startBiddingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::startBiddingADSource()");
+            onAdStartBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void finishBiddingADSource(string placementId, string callbackJson)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::finishBiddingADSource()");
+            onAdFinishBidding?.Invoke(this, new HBAdEventArgs(placementId, callbackJson));
+        }
+        public void failBiddingADSource(string placementId, string callbackJson, string code, string error)
+        {
+            Debug.Log("Unity: HBBannerAdWrapper::failBiddingADSource()");
+            onAdFailBidding?.Invoke(this, new HBAdErrorEventArgs(placementId, callbackJson, code, error));
+        }
+
     }
 }

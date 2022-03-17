@@ -21,4 +21,7 @@
 -(__kindof UIView*)createMediaView;
 @property(nonatomic, weak) HBNativeADView *ADView;
 @property(nonatomic, readonly) HBNativeADConfiguration *configuration;
+
+// for override
+- (void)closeAct;
 @end

@@ -13,7 +13,8 @@
 
 extern NSString *const kHBBannerDelegateExtraNetworkIDKey;
 extern NSString *const kHBBannerDelegateExtraAdSourceIDKey;
-extern NSString *const kHBBannerDelegateExtraIsHeaderBidding;
+extern NSString *const kHBBannerDelegateExtraIsHeaderBidding DEPRECATED_MSG_ATTRIBUTE("The kHBBannerDelegateExtraIsHeaderBidding class will be obsolete, please use kHBBannerDelegateExtraAdSourceIsHeaderBidding");
+extern NSString *const kHBBannerDelegateExtraAdSourceIsHeaderBidding;
 extern NSString *const kHBBannerDelegateExtraPrice;
 extern NSString *const kHBBannerDelegateExtraPriority;
 

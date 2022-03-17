@@ -21,6 +21,8 @@
 #import <HyperBidNative/HBNativeRenderer.h>
 #import <HyperBidNative/HBNativeADView+Internal.h>
 #import <HyperBidNative/HBNativeADCache.h>
+#import <HyperBidNative/HBNativeAdOffer.h>
+
 
 //! Project version number for HyperBidNative.
 FOUNDATION_EXPORT double HyperBidNativeVersionNumber;

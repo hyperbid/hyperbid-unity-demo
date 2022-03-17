@@ -51,11 +51,20 @@ typedef NS_ENUM(NSInteger, HBOfferInterActableArea) {
 @property(nonatomic, readwrite) NSString *clickURL;
 @property(nonatomic, readwrite) NSString *deeplinkUrl; 
 @property(nonatomic, readwrite) NSString *localResourceID;
-@property(nonatomic, readwrite) HBOfferModelType offerModelType;
-@property(nonatomic, readwrite) HBOfferCrtType crtType;
+@property(nonatomic, assign) HBOfferModelType offerModelType;
+@property(nonatomic, assign) HBOfferCrtType crtType;
 
 @property(nonatomic, copy) NSString *jumpUrl;
 @property(nonatomic) NSInteger offerFirmID;
+
+
+@property(nonatomic, assign) BOOL offerIMCapSw;
+@property(nonatomic, assign) BOOL offerCLCapSw;
+
+@property(nonatomic, assign) BOOL resourceIMCapSw;
+@property(nonatomic, assign) BOOL resourceCLCapSw;
+
+
 
 // ad attributes
 @property(nonatomic, readwrite) NSString *adPublisher;

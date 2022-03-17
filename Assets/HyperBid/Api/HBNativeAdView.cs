@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
-using HyperBid.ThirdParty.MiniJSON;
-
 namespace HyperBid.Api
 {
     public class HBNativeAdView 

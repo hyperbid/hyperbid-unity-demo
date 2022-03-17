@@ -12,6 +12,8 @@
 #import <HyperBidRewardedVideo/HBAdManager+RewardedVideo.h>
 #import <HyperBidRewardedVideo/HBRewardedVideoDelegate.h>
 #import <HyperBidRewardedVideo/HBRewardedVideoCustomEvent.h>
+#import <HyperBidRewardedVideo/HBRewardedVideoAutoAdManager.h>
+
 
 //! Project version number for HyperBidRewardedVideo.
 FOUNDATION_EXPORT double HyperBidRewardedVideoVersionNumber;

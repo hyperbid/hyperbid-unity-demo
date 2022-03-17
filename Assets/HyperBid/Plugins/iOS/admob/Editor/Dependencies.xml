@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<dependencies>
+<?xml version="1.0" encoding="utf-8"?><dependencies>
     <iosPods>
-        <iosPod name="Google-Mobile-Ads-SDK" version="8.10.0" />
-        <iosPod name="PersonalizedAdConsent" />
+        <iosPod name="Google-Mobile-Ads-SDK" version="9.0.0" />
     </iosPods>
 </dependencies>

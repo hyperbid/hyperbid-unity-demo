@@ -1,6 +1,0 @@
-framework module HyperBidVungleAdapter {
-  umbrella header "HyperBidVungleAdapter.h"
-
-  export *
-  module * { export * }
-}

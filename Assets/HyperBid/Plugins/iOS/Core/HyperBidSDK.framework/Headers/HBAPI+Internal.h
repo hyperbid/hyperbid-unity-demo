@@ -25,6 +25,9 @@ extern NSString *const kHBNativeADAssetsLogoURLKey;
 extern NSString *const kHBNativeADAssetsSponsoredImageKey;
 extern NSString *const kHBNativeADAssetsVideoUrlKey;
 extern NSString *const kHBAdAssetsCustomObjectKey;
+extern NSString *const kHBNativeADAssetsMediaViewKey;
+extern NSString *const kHBNativeADAssetsImageListKey;
+extern NSString *const kHBNativeADAssetsVideoDurationKey;
 
 extern NSString *const kHBADLoadingStartLoadNotification;
 extern NSString *const kHBADLoadingOfferSuccessfullyLoadedNotification;
@@ -69,6 +72,7 @@ extern NSString *const kHBADUserAreaKey;
 @interface HBAPI(Internal)
 +(BOOL)logEnabled;
 +(BOOL)adLogoVisible;
++(NSString *)hbTestModeDeviceID;
 +(HBNetworkTerritory)networkTerritory;
 +(BOOL)isOfm;
 -(void) setVersion:(NSString*)version forNetwork:(NSString*)network;

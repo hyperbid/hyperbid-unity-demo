@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, HBGDTNativeAdType) {
 };
 @class HBNativeADView;
 @class HBNativeADConfiguration;
+@class HBNativeAdOffer;
 
 @protocol HBBaiduTemplateRenderingAttributeDelegate <NSObject>
 
@@ -113,6 +114,9 @@ typedef NS_ENUM(NSInteger, HBGDTNativeAdType) {
 - (__kindof UIView*) retriveAdViewWithPlacementID:(NSString*)placementID configuration:(HBNativeADConfiguration*)configuration;
 - (__kindof UIView*) retriveAdViewWithPlacementID:(NSString*)placementID configuration:(HBNativeADConfiguration*)configuration scene:(NSString *)scene;
 
+- (HBNativeAdOffer*) getNativeAdOfferWithPlacementID:(NSString*)placementID;
+- (HBNativeAdOffer*) getNativeAdOfferWithPlacementID:(NSString*)placementID scene:(NSString *)scene;
+
 - (HBCheckLoadModel*)checkNativeLoadStatusForPlacementID:(NSString*)placementID;
 
 // v5.7.53+
@@ -121,5 +125,6 @@ typedef NS_ENUM(NSInteger, HBGDTNativeAdType) {
 
 - (void) setBaiduTemplateRenderingAttribute:(id<HBBaiduTemplateRenderingAttributeDelegate> )baiduTemplateRenderingAttribute;
 
+- (void)entryNativeScenarioWithPlacementID:(NSString *)placementID scene:(NSString *)scene;
 
 @end

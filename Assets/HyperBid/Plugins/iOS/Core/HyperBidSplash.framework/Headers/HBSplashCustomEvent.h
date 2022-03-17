@@ -14,6 +14,7 @@ extern NSString *const kHBSplashExtraRequestIDKey;
 @interface HBSplashCustomEvent : HBAdCustomEvent
 -(instancetype) initWithInfo:(NSDictionary*)serverInfo localInfo:(NSDictionary*)localInfo;
 @property(nonatomic, weak) id<HBSplashDelegate> delegate;
+@property(nonatomic, strong) HBSplash *splash;
 @property(nonatomic, readonly) NSString *unitID;
 @property(nonatomic, assign) NSInteger priorityIndex;
 

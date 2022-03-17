@@ -64,13 +64,16 @@ typedef NS_ENUM(NSInteger, HBVideoClickable) {
 typedef NS_ENUM(NSInteger, HBNetworkFirmId) {
     HBNetworkFirmIdADX =  66,
     HBNetworkFirmIdMyOffer = 35,
-    HBNetworkFirmIdGDTOnline = 42
+    HBNetworkFirmIdGDTOnline = 42,
+    HBNetworkFirmIdDirectOffer =  67,
+
 };
 
 typedef NS_ENUM(NSInteger, HBOfferModelType) {
     HBOfferModelMyOffer = 1,
     HBOfferModelADX =  2,
-    HBOfferModelOnlineApi =  3
+    HBOfferModelOnlineApi =  3,
+    HBOfferModelDirectOffer =  4,
 };
 
 typedef NS_ENUM(NSInteger, HBOfferCrtType) {
@@ -99,7 +102,10 @@ typedef NS_ENUM(NSInteger, HBUnitGroupType) {
     HBUnitGroupTypeAdx,
     HBUnitGroupTypeC2S,
     HBUnitGroupTypeS2S,
-    HBUnitGroupTypeInHouse
+    HBUnitGroupTypeInHouse,
+    HBUnitGroupTypeBKS,
+    HBUnitGroupTypeDirectOffer,
+    HBUnitGroupTypeDefault,
 };
 
 typedef NS_ENUM(NSInteger, HBSplashType) {
@@ -110,6 +116,11 @@ typedef NS_ENUM(NSInteger, HBSplashType) {
 typedef NS_ENUM(NSInteger, HBSplashImageScaleType) {
     HBSplashImageScaleTypeFit = 1,
     HBSplashImageScaleTypeFill
+};
+
+typedef NS_ENUM(NSInteger, HBBiddingCurrencyType) {
+    HBBiddingCurrencyTypeUS = 1,
+    HBBiddingCurrencyTypeCNY
 };
 
 @interface HBModel : NSObject

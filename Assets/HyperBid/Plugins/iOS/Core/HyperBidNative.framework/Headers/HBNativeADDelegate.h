@@ -12,7 +12,8 @@
 @class HBNativeADView;
 extern NSString *const kHBNativeDelegateExtraNetworkIDKey;
 extern NSString *const kHBNativeDelegateExtraAdSourceIDKey;
-extern NSString *const kHBNativeDelegateExtraIsHeaderBidding;
+extern NSString *const kHBNativeDelegateExtraIsHeaderBidding DEPRECATED_MSG_ATTRIBUTE("The kHBNativeDelegateExtraIsHeaderBidding class will be obsolete, please use kHBNativeDelegateExtraAdSourceIsHeaderBidding");
+extern NSString *const kHBNativeDelegateExtraAdSourceIsHeaderBidding;
 extern NSString *const kHBNativeDelegateExtraPrice;
 extern NSString *const kHBNativeDelegateExtraPriority;
 @protocol HBNativeADDelegate<HBAdLoadingDelegate>

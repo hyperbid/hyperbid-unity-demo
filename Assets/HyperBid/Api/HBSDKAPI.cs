@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 using HyperBid.Common;
-using HyperBid.ThirdParty.MiniJSON;
+using HyperBid.ThirdParty.LitJson;
 
 
 namespace HyperBid.Api
@@ -15,6 +15,12 @@ namespace HyperBid.Api
     public interface ATGetUserLocationListener
     {
         void didGetUserLocation(int location);
+    }
+
+    public interface ATGetAreaListener
+    {
+        void onArea(string area);
+        void onError(string message);
     }
 
     public class HBSDKAPI
@@ -26,6 +32,10 @@ namespace HyperBid.Api
         public static readonly int PERSONALIZED = 0;
         public static readonly int NONPERSONALIZED = 1;
         public static readonly int UNKNOWN = 2;
+
+        public static readonly int AREA_GLOBAL = 0;
+        public static readonly int AREA_CHINESE_MAINLAND = 1;
+
 
         //for android and ios
         public static readonly string OS_VERSION_NAME = "os_vn";
@@ -102,12 +112,12 @@ namespace HyperBid.Api
 
         public static void initCustomMap(Dictionary<string, string> customMap)
         {
-            client.initCustomMap(Json.Serialize(customMap));
+            client.initCustomMap(JsonMapper.ToJson(customMap));
         }
 
         public static void setCustomDataForPlacementID(Dictionary<string, string> customData, string placementID)
         {
-            client.setCustomDataForPlacementID(Json.Serialize(customData), placementID);
+            client.setCustomDataForPlacementID(JsonMapper.ToJson(customData), placementID);
         }
 
         public static void showGDPRAuth()
@@ -120,21 +130,16 @@ namespace HyperBid.Api
             client.setLogDebug(isDebug);
         }
 
-        public static void setNetworkTerritory(int territory)
-        {
-            client.setNetworkTerritory(territory);
-        }
-
 		public static void addNetworkGDPRInfo(int networkType, Dictionary<string,object> dictionary)
         {
-            client.addNetworkGDPRInfo(networkType, Json.Serialize(dictionary));
+            client.addNetworkGDPRInfo(networkType, JsonMapper.ToJson(dictionary));
         }
 
         public static void deniedUploadDeviceInfo(string[] deniedInfo)
         {
             if (deniedInfo != null && deniedInfo.Length > 0)
             {
-            	string deniedString = string.Join(",", deniedInfo);
+                string deniedString = JsonMapper.ToJson(deniedInfo);
                 client.deniedUploadDeviceInfo(deniedString);
                 Debug.Log("deniedUploadDeviceInfo, deniedInfo === " + deniedString);
             }
@@ -148,6 +153,58 @@ namespace HyperBid.Api
         private static IHBSDKAPIClient GetHBSDKAPIClient(){
             Debug.Log("GetHBSDKAPIClient");
             return HyperBid.HBAdsClientFactory.BuildSDKAPIClient();
+        }
+
+        public static void setExcludeBundleIdArray(string[] bundleIds)
+        {
+            if (bundleIds != null && bundleIds.Length > 0)
+            {
+                string bundleIdsString = JsonMapper.ToJson(bundleIds);
+                Debug.Log("setExcludeBundleIdArray, bundleIdsString === " + bundleIdsString);
+
+                client.setExcludeBundleIdArray(bundleIdsString);      
+            }
+            else
+            {
+                Debug.Log("setExcludeBundleIdArray, bundleIdsString = null");
+            }
+
+        }
+
+        public static void setExcludeAdSourceIdArrayForPlacementID(string placementID, string[] adSourceIds)
+        {
+            if (adSourceIds != null && adSourceIds.Length > 0)
+            {
+                string adSourceIdsString = JsonMapper.ToJson(adSourceIds);
+                Debug.Log("setExcludeAdSourceIdArrayForPlacementID, adSourceIdsString === " + adSourceIdsString);
+
+                client.setExcludeAdSourceIdArrayForPlacementID(placementID, adSourceIdsString);   
+            }
+            else
+            {
+                Debug.Log("setExcludeAdSourceIdArrayForPlacementID, adSourceIdsString = null");
+            }
+
+        }
+
+        public static void setSDKArea(int area)
+        {
+            client.setSDKArea(area);
+        }
+
+        public static void getArea(ATGetAreaListener listener)
+        {
+            client.getArea(listener);
+        }
+
+        public static void setWXStatus(bool install)
+        {
+            client.setWXStatus(install);
+        }
+
+        public static void setLocation(double longitude, double latitude)
+        {
+            client.setLocation(longitude, latitude);
         }
 
     }

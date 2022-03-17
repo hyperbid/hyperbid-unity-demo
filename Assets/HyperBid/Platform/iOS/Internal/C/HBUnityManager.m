@@ -130,8 +130,18 @@ char * get_string_message_for_unity(const char *msg, void(*callback)(const char*
         [self deniedUploadDeviceInfo:firstObject];
     } else if ([selector isEqualToString:@"setDataConsent:network:"]) {
         [self setDataConsent:firstObject network:[NSNumber numberWithInt:lastObject.intValue]];
-    } else if ([selector isEqualToString:@"setNetworkTerritory:"]) {
-        [self setNetworkTerritory:firstObject];
+    } else if ([selector isEqualToString:@"setExcludeBundleIdArray:"]) {
+        [self setExcludeBundleIdArray:firstObject];
+    } else if ([selector isEqualToString:@"setExludePlacementid:unitIDArray:"]) {
+        [self setExludePlacementid:firstObject unitIDArray:lastObject];
+    } else if ([selector isEqualToString:@"setSDKArea:"]) {
+        [self setSDKArea:[NSNumber numberWithInt:firstObject.intValue]];
+    } else if ([selector isEqualToString:@"getArea:"]) {
+        [self getArea:callback];
+    } else if ([selector isEqualToString:@"setWXStatus:"]) {
+        [self setWXStatus:firstObject];
+    } else if ([selector isEqualToString:@"setLocationLongitude:dimension:"]) {
+        [self setLocationLongitude:[NSNumber numberWithDouble:firstObject.doubleValue] dimension:[NSNumber numberWithDouble:lastObject.doubleValue]];
     }
     return nil;
 }
@@ -195,11 +205,6 @@ char * get_string_message_for_unity(const char *msg, void(*callback)(const char*
     [HBAPI setDebugLog:[flagStr boolValue]];
 }
 
--(void) setNetworkTerritory:(NSString*)territoryStr {
-    NSLog(@"HBUnityManager::setNetworkTerritory = %@", territoryStr);
-    [HBAPI setNetworkTerritory:[territoryStr integerValue] == 2 ? HBNetworkTerritory_NO_CN : HBNetworkTerritory_CN];
-}
-
 -(int) getDataConsent {
     return [@{@(HBDataConsentSetPersonalized):@0, @(HBDataConsentSetNonpersonalized):@1, @(HBDataConsentSetUnknown):@2}[@([HBAPI sharedInstance].dataConsentSet)] intValue];
 }
@@ -213,9 +218,11 @@ char * get_string_message_for_unity(const char *msg, void(*callback)(const char*
 }
 
 -(void) deniedUploadDeviceInfo:(NSString *)deniedInfo {
-    NSArray *deniedInfoArray = [deniedInfo componentsSeparatedByString:@","];
-    NSLog(@"deniedUploadDeviceInfo = %@", deniedInfoArray);
-    [[HBAPI sharedInstance] setDeniedUploadInfos:deniedInfoArray];
+    NSLog(@"HBUnityManager::deniedUploadDeviceInfo = %@", deniedInfo);
+    if (![HBUnityUtilities isEmpty:deniedInfo]) {
+        NSArray *deniedInfoArray = [NSJSONSerialization JSONObjectWithData:[deniedInfo dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        [[HBAPI sharedInstance] setDeniedUploadInfos:deniedInfoArray];
+    }
 }
 
 /*
@@ -223,7 +230,7 @@ char * get_string_message_for_unity(const char *msg, void(*callback)(const char*
  */
 -(void) setDataConsent:(NSString*)consentJsonString network:(NSNumber*)network {
     NSLog(@"constenJsonString = %@, network = %@", consentJsonString, network);
-    NSDictionary *networks = @{@1:kHBNetworkNameFacebook, @2:kHBNetworkNameAdmob, @3:kHBNetworkNameInmobi, @4:kHBNetworkNameFlurry, @5:kHBNetworkNameApplovin, @6:kHBNetworkNameMintegral, @7:kHBNetworkNameMopub, @8:kHBNetworkNameGDT, @9:kHBNetworkNameChartboost, @10:kHBNetworkNameTapjoy, @11:kHBNetworkNameIronSource, @12:kHBNetworkNameUnityAds, @13:kHBNetworkNameVungle, @14:kHBNetworkNameAdColony, @17:kHBNetworkNameOneway, @18:kHBNetworkNameMobPower, @20:kHBNetworkNameYeahmobi, @21:kHBNetworkNameAppnext, @22:kHBNetworkNameBaidu};
+    NSDictionary *networks = @{@1:kHBNetworkNameFacebook, @2:kHBNetworkNameAdmob, @3:kHBNetworkNameInmobi, @4:kHBNetworkNameFlurry, @5:kHBNetworkNameApplovin, @6:kHBNetworkNameMintegral, @7:kHBNetworkNameMopub, @8:kHBNetworkNameGDT, @9:kHBNetworkNameChartboost, @10:kHBNetworkNameTapjoy, @11:kHBNetworkNameIronSource, @12:kHBNetworkNameUnityAds, @13:kHBNetworkNameVungle, @14:kHBNetworkNameAdColony, @1:kHBNetworkNameOneway, @18:kHBNetworkNameMobPower, @20:kHBNetworkNameYeahmobi, @21:kHBNetworkNameAppnext, @22:kHBNetworkNameBaidu};
     if ([networks containsObjectForKey:network]) {
         if (([consentJsonString isKindOfClass:[NSString class]] && [consentJsonString dataUsingEncoding:NSUTF8StringEncoding] != nil)) {
             NSDictionary *consentDict = [NSJSONSerialization JSONObjectWithData:[consentJsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
@@ -244,5 +251,56 @@ char * get_string_message_for_unity(const char *msg, void(*callback)(const char*
         [[HBAPI sharedInstance] setNetworkConsentInfo:_consentInfo];
     }
 }
+
+-(void) setExcludeBundleIdArray:(NSString*)bundleIds {
+    NSLog(@"HBUnityManager::setExcludeBundleIdArray = %@", bundleIds);
+    if (![HBUnityUtilities isEmpty:bundleIds]) {
+        NSArray *bundleIdArray = [NSJSONSerialization JSONObjectWithData:[bundleIds dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        [[HBAPI sharedInstance] setExludeAppleIds:bundleIdArray];
+    }
+}
+
+-(void) setExludePlacementid:(NSString*)placementID unitIDArray:(NSString*)adsourceIds {
+    NSLog(@"HBUnityManager::setExludePlacementid=%@  adsourceIds= %@",placementID ,adsourceIds);
+    if (![HBUnityUtilities isEmpty:adsourceIds]) {
+        NSArray *adsourceIdArray = [NSJSONSerialization JSONObjectWithData:[adsourceIds dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        [[HBAdManager sharedManager] setExludePlacementid:placementID
+                    unitIDArray:adsourceIdArray];
+    }
+}
+
+-(void) setSDKArea:(NSNumber*)area {
+    NSLog(@"HBUnityManager::setSDKArea=%@",area);
+    [[HBAPI sharedInstance] setUserDataArea:[area intValue] == 0 ? HBAreaCodeGlobal : HBAreaCodeChinese_mainland];
+}
+
+-(void) getArea:(void(*)(const char *))callback {
+    NSLog(@"HBUnityManager::getArea");
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+    [[HBAPI sharedInstance] getAreaSuccess:^(NSString *areaCodeStr) {
+        NSLog(@"HBUnityManager::getArea:Success:%@",areaCodeStr);
+        if (areaCodeStr != nil) {
+            resultDict[@"areaCode"] = areaCodeStr;
+            if (callback != NULL) { callback(resultDict.jsonString.UTF8String); }
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"HBUnityManager::getArea:failure:%@",error.domain);
+        if (error.domain != nil) {
+            resultDict[@"errorMsg"] = error.domain;
+            if (callback != NULL) { callback(resultDict.jsonString.UTF8String); }
+        }
+    }];
+}
+
+-(void) setWXStatus:(NSString *)statusStr {
+    NSLog(@"HBUnityManager::setWXStatus=%@",statusStr);
+    [[HBAPI sharedInstance] setWXStatus:[statusStr boolValue]];
+}
+
+-(void) setLocationLongitude:(NSNumber*)longitude dimension:(NSNumber*)latitude {
+    NSLog(@"HBUnityManager::setLocationLongitude=%@  dimension=%@",longitude,latitude);
+    [[HBAPI sharedInstance] setLocationLongitude:longitude.doubleValue dimension:latitude.doubleValue];
+}
+
 @end
 

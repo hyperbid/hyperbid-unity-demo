@@ -12,6 +12,8 @@
 #import <HyperBidInterstitial/HBAdManager+Interstitial.h>
 #import <HyperBidInterstitial/HBInterstitialDelegate.h>
 #import <HyperBidInterstitial/HBInterstitialCustomEvent.h>
+#import <HyperBidInterstitial/HBInterstitialAutoAdManager.h>
+
 
 //! Project version number for HyperBidInterstitial.
 FOUNDATION_EXPORT double HyperBidInterstitialVersionNumber;

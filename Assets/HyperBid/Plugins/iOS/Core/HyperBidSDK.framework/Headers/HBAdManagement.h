@@ -15,9 +15,6 @@
 extern NSString *const kHBAdAssetsCustomEventKey;
 extern NSString *const kHBAdAssetsCustomObjectKey;
 extern NSString *const kHBAdAssetsUnitIDKey;
-extern NSString *const kHBAdAssetsPriceKey;
-extern NSString *const kHBAdAssetsBidIDKey;
-extern NSString *const kHBAdAssetsTpBidIDKey;
 
 typedef NS_ENUM(NSInteger, HBAdSourceStatus) {
     HBAdSourceStatusInvalid = 0,//pacing & cap_by_hour/cap_by_day

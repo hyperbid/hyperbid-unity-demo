@@ -56,5 +56,12 @@ namespace HyperBid.Common
 		 */ 
         void cleanCache(string placementId);
 
-    }
+		/***
+		 * 获取所有可用缓存广告
+		 */
+		string getValidAdCaches(string placementId);
+
+		void entryScenarioWithPlacementID(string placementId, string scenarioID);
+
+	}
 }
