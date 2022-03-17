@@ -1,0 +1,6 @@
+framework module HyperBidMyTargetAdapter {
+  umbrella header "HyperBidMyTargetAdapter.h"
+
+  export *
+  module * { export * }
+}
