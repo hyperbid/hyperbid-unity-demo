@@ -1,0 +1,6 @@
+framework module HyperBidKuaiShouAdapter {
+  umbrella header "HyperBidKuaiShouAdapter.h"
+
+  export *
+  module * { export * }
+}

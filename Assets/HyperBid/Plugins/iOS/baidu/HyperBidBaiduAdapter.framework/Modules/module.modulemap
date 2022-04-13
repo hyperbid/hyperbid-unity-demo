@@ -1,0 +1,6 @@
+framework module HyperBidBaiduAdapter {
+  umbrella header "HyperBidBaiduAdapter.h"
+
+  export *
+  module * { export * }
+}

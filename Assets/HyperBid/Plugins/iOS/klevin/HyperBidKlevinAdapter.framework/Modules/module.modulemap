@@ -1,0 +1,6 @@
+framework module HyperBidKlevinAdapter {
+  umbrella header "HyperBidKlevinAdapter.h"
+
+  export *
+  module * { export * }
+}

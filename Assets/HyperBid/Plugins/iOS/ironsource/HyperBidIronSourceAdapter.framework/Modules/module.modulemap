@@ -1,0 +1,6 @@
+framework module HyperBidIronSourceAdapter {
+  umbrella header "HyperBidIronSourceAdapter.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module HyperBidOguryAdapter {
+  umbrella header "HyperBidOguryAdapter.h"
+
+  export *
+  module * { export * }
+}

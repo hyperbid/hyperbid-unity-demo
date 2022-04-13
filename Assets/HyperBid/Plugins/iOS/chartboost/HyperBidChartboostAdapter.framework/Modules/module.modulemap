@@ -1,0 +1,6 @@
+framework module HyperBidChartboostAdapter {
+  umbrella header "HyperBidChartboostAdapter.h"
+
+  export *
+  module * { export * }
+}

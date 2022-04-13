@@ -1,0 +1,6 @@
+framework module HyperBidMaioAdapter {
+  umbrella header "HyperBidMaioAdapter.h"
+
+  export *
+  module * { export * }
+}

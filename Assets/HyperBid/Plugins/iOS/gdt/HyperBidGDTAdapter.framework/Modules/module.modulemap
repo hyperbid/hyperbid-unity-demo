@@ -1,0 +1,6 @@
+framework module HyperBidGDTAdapter {
+  umbrella header "HyperBidGDTAdapter.h"
+
+  export *
+  module * { export * }
+}

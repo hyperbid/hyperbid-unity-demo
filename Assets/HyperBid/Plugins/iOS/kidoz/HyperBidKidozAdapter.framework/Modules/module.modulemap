@@ -1,0 +1,6 @@
+framework module HyperBidKidozAdapter {
+  umbrella header "HyperBidKidozAdapter.h"
+
+  export *
+  module * { export * }
+}

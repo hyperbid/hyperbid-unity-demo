@@ -1,0 +1,6 @@
+framework module HyperBidStartAppAdapter {
+  umbrella header "HyperBidStartAppAdapter.h"
+
+  export *
+  module * { export * }
+}

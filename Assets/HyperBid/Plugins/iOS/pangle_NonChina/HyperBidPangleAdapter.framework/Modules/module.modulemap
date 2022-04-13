@@ -1,0 +1,6 @@
+framework module HyperBidPangleAdapter {
+  umbrella header "HyperBidPangleAdapter.h"
+
+  export *
+  module * { export * }
+}

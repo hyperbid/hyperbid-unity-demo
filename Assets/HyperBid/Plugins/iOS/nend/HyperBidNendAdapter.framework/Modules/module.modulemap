@@ -1,0 +1,6 @@
+framework module HyperBidNendAdapter {
+  umbrella header "HyperBidNendAdapter.h"
+
+  export *
+  module * { export * }
+}

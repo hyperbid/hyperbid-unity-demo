@@ -1,0 +1,6 @@
+framework module HyperBidSigmobAdapter {
+  umbrella header "HyperBidSigmobAdapter.h"
+
+  export *
+  module * { export * }
+}

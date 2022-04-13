@@ -1,0 +1,6 @@
+framework module HyperBidFyberAdapter {
+  umbrella header "HyperBidFyberAdapter.h"
+
+  export *
+  module * { export * }
+}
